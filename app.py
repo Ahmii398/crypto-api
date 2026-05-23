@@ -86,6 +86,17 @@ def home():
 def health():
     return jsonify({"status": "running"})
 
+@app.route('/check', methods=['GET'])
+def check():
+    models_exist = os.path.exists('models')
+    files = os.listdir('models') if models_exist else []
+    current_dir = os.listdir('.')
+    return jsonify({
+        "models_folder_exists": models_exist,
+        "model_files": files,
+        "root_files": current_dir
+    })
+
 @app.route('/predict', methods=['POST', 'OPTIONS'])
 def predict():
     if request.method == 'OPTIONS':
