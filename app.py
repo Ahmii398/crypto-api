@@ -115,7 +115,7 @@ def predict():
         leverage = int(data.get('leverage', 10))
         margin = int(data.get('margin', 100))
 
-        model_path = f"models/{symbol.lower()}_model.h5"
+        model_path = f"models/{symbol.lower()}_model_new.h5"
         if not os.path.exists(model_path):
             return jsonify({"error": f"Model not found for {symbol}. Available: BTCUSDT, ETHUSDT"}), 404
 
