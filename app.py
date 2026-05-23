@@ -129,7 +129,7 @@ def predict():
 
         X_input = scaled[-TIME_STEP:].reshape(1, TIME_STEP, len(features))
 
-        model = load_model(model_path)
+        model = load_model(model_path, compile=False)
         pred_scaled = model.predict(X_input)
 
         dummy = np.zeros((1, len(features)))
