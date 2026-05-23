@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CryptoNeuron — AI Trading Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #020810;
+    --bg2: #040d1a;
+    --bg3: #061224;
+    --cyan: #00f5ff;
+    --cyan2: #00bcd4;
+    --green: #00ff88;
+    --red: #ff3366;
+    --yellow: #ffd700;
+    --purple: #7c3aed;
+    --text: #e0f4ff;
+    --text2: #7ab3cc;
+    --border: rgba(0,245,255,0.15);
+    --glow: 0 0 20px rgba(0,245,255,0.3);
+    --glow2: 0 0 40px rgba(0,245,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Rajdhani', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Animated grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,245,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,245,255,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Scanline effect */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.05) 2px,
+      rgba(0,0,0,0.05) 4px
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 30px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 30px;
+  }
+
+  .logo {
+    font-family: 'Orbitron', monospace;
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--cyan);
+    text-shadow: var(--glow);
+    letter-spacing: 3px;
+  }
+
+  .logo span {
+    color: var(--green);
+  }
+
+  .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 10px var(--green);
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  /* Control Panel */
+  .control-panel {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .control-panel::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    animation: scan 3s linear infinite;
+  }
+
+  @keyframes scan {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .panel-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    color: var(--cyan2);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .controls-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 16px;
+    align-items: end;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .field-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  select, input {
+    background: var(--bg3);
+    border: 1px solid rgba(0,245,255,0.2);
+    color: var(--cyan);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    padding: 10px 14px;
+    border-radius: 2px;
+    outline: none;
+    transition: all 0.3s;
+    width: 100%;
+  }
+
+  select:focus, input:focus {
+    border-color: var(--cyan);
+    box-shadow: var(--glow);
+  }
+
+  select option { background: var(--bg3); }
+
+  .btn-analyze {
+    background: transparent;
+    border: 1px solid var(--cyan);
+    color: var(--cyan);
+    font-family: 'Orbitron', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 11px 28px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+    white-space: nowrap;
+    text-transform: uppercase;
+  }
+
+  .btn-analyze::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--cyan);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+    z-index: -1;
+  }
+
+  .btn-analyze:hover {
+    color: var(--bg);
+    box-shadow: var(--glow);
+  }
+
+  .btn-analyze:hover::before { transform: translateX(0); }
+
+  .btn-analyze:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Loading */
+  .loading-bar {
+    display: none;
+    margin-top: 16px;
+    height: 2px;
+    background: var(--bg3);
+    border-radius: 1px;
+    overflow: hidden;
+  }
+
+  .loading-bar.active { display: block; }
+
+  .loading-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--cyan), var(--green));
+    animation: loading 1.5s ease-in-out infinite;
+    width: 40%;
+  }
+
+  @keyframes loading {
+    0% { transform: translateX(-150%); }
+    100% { transform: translateX(350%); }
+  }
+
+  /* Error */
+  .error-msg {
+    display: none;
+    margin-top: 12px;
+    padding: 10px 14px;
+    background: rgba(255,51,102,0.1);
+    border: 1px solid rgba(255,51,102,0.3);
+    color: var(--red);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    border-radius: 2px;
+  }
+
+  .error-msg.active { display: block; }
+
+  /* Results Grid */
+  .results {
+    display: none;
+    animation: fadeIn 0.6s ease;
+  }
+
+  .results.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Signal Card — BIG */
+  .signal-card {
+    border-radius: 4px;
+    padding: 32px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid;
+  }
+
+  .signal-card.buy {
+    background: linear-gradient(135deg, rgba(0,255,136,0.05), rgba(0,255,136,0.02));
+    border-color: rgba(0,255,136,0.3);
+  }
+
+  .signal-card.sell {
+    background: linear-gradient(135deg, rgba(255,51,102,0.05), rgba(255,51,102,0.02));
+    border-color: rgba(255,51,102,0.3);
+  }
+
+  .signal-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .signal-card.buy::before { background: linear-gradient(90deg, transparent, var(--green), transparent); }
+  .signal-card.sell::before { background: linear-gradient(90deg, transparent, var(--red), transparent); }
+
+  .signal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+
+  .signal-badge {
+    font-family: 'Orbitron', monospace;
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: 6px;
+  }
+
+  .signal-badge.buy { color: var(--green); text-shadow: 0 0 30px var(--green); }
+  .signal-badge.sell { color: var(--red); text-shadow: 0 0 30px var(--red); }
+
+  .symbol-name {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    color: var(--cyan);
+    letter-spacing: 3px;
+  }
+
+  .price-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  .price-item {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 2px;
+  }
+
+  .price-item-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .price-item-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 18px;
+    font-weight: 700;
+  }
+
+  .price-item-value.current { color: var(--cyan); }
+  .price-item-value.predicted { color: var(--yellow); }
+  .price-item-value.target { color: var(--green); }
+  .price-item-value.stoploss { color: var(--red); }
+  .price-item-value.liquidation { color: rgba(255,51,102,0.6); }
+
+  .reason-text {
+    margin-top: 20px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    padding: 12px 16px;
+    background: rgba(0,0,0,0.3);
+    border-left: 2px solid var(--cyan2);
+  }
+
+  /* Indicators Grid */
+  .indicators-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .indicator-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 20px 16px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .indicator-card:hover {
+    border-color: rgba(0,245,255,0.4);
+    box-shadow: var(--glow2);
+  }
+
+  .indicator-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--cyan);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .indicator-card:hover::after { transform: scaleX(1); }
+
+  .ind-name {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 10px;
+    color: var(--text2);
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .ind-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--cyan);
+  }
+
+  .ind-value.rsi-overbought { color: var(--red); }
+  .ind-value.rsi-oversold { color: var(--green); }
+  .ind-value.macd-positive { color: var(--green); }
+  .ind-value.macd-negative { color: var(--red); }
+
+  .ind-bar {
+    margin-top: 10px;
+    height: 3px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .ind-fill {
+    height: 100%;
+    border-radius: 2px;
+    transition: width 1s ease;
+  }
+
+  /* RSI Gauge */
+  .rsi-gauge {
+    width: 80px;
+    height: 40px;
+    margin: 8px auto 0;
+    position: relative;
+  }
+
+  /* Trade Details */
+  .trade-details {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+
+  .trade-details-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 11px;
+    color: var(--cyan2);
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+  }
+
+  .trade-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,245,255,0.05);
+  }
+
+  .trade-row:last-child { border-bottom: none; }
+
+  .trade-row-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    color: var(--text2);
+    letter-spacing: 1px;
+  }
+
+  .trade-row-value {
+    font-family: 'Orbitron', monospace;
+    font-size: 14px;
+    font-weight: 700;
+  }
+
+  /* Corner decorations */
+  .corner-box {
+    position: relative;
+  }
+
+  .corner-box::before, .corner-box::after {
+    content: '';
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    border-color: var(--cyan);
+    border-style: solid;
+  }
+
+  .corner-box::before {
+    top: -1px; left: -1px;
+    border-width: 2px 0 0 2px;
+  }
+
+  .corner-box::after {
+    bottom: -1px; right: -1px;
+    border-width: 0 2px 2px 0;
+  }
+
+  /* Timestamp */
+  .timestamp {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    color: var(--text2);
+    text-align: right;
+    margin-top: 8px;
+    letter-spacing: 1px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .controls-row { grid-template-columns: 1fr 1fr; }
+    .btn-analyze { grid-column: span 2; }
+    .price-grid { grid-template-columns: repeat(2, 1fr); }
+    .indicators-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 480px) {
+    .price-grid { grid-template-columns: 1fr 1fr; }
+    .indicators-grid { grid-template-columns: repeat(2, 1fr); }
+    .controls-row { grid-template-columns: 1fr; }
+    .btn-analyze { grid-column: span 1; }
+  }
+
+  /* Glitch animation for signal */
+  @keyframes glitch {
+    0%, 100% { text-shadow: 0 0 30px currentColor; }
+    25% { text-shadow: -2px 0 30px currentColor, 2px 0 rgba(255,0,0,0.5); }
+    75% { text-shadow: 2px 0 30px currentColor, -2px 0 rgba(0,255,255,0.5); }
+  }
+
+  .signal-badge { animation: glitch 4s infinite; }
+
+  /* Hex decoration */
+  .hex-deco {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 80px;
+    font-weight: 900;
+    opacity: 0.04;
+    letter-spacing: -5px;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <header>
+    <div class="logo">CRYPTO<span>NEURON</span></div>
+    <div class="status-bar">
+      <div class="status-dot"></div>
+      <span>NEURAL ENGINE ONLINE</span>
+      &nbsp;|&nbsp;
+      <span id="live-time"></span>
+    </div>
+  </header>
+
+  <!-- Control Panel -->
+  <div class="control-panel corner-box">
+    <div class="panel-title">// ANALYSIS PARAMETERS</div>
+    <div class="controls-row">
+      <div class="field-group">
+        <label class="field-label">SYMBOL</label>
+        <select id="symbol">
+          <option value="BTCUSDT">BTC / USDT</option>
+          <option value="ETHUSDT">ETH / USDT</option>
+          <option value="BNBUSDT">BNB / USDT</option>
+          <option value="LINKUSDT">LINK / USDT</option>
+          <option value="ICPUSDT">ICP / USDT</option>
+          <option value="CAKEUSDT">CAKE / USDT</option>
+          <option value="BGBUSDT">BGB / USDT</option>
+          <option value="SUIUSDT">SUI / USDT</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label class="field-label">LEVERAGE</label>
+        <input type="number" id="leverage" value="10" min="1" max="100">
+      </div>
+      <div class="field-group">
+        <label class="field-label">MARGIN (USDT)</label>
+        <input type="number" id="margin" value="100" min="1">
+      </div>
+      <button class="btn-analyze" id="analyzeBtn" onclick="analyze()">
+        ⬡ ANALYZE
+      </button>
+    </div>
+    <div class="loading-bar" id="loadingBar">
+      <div class="loading-fill"></div>
+    </div>
+    <div class="error-msg" id="errorMsg"></div>
+  </div>
+
+  <!-- Results -->
+  <div class="results" id="results">
+
+    <!-- Signal Card -->
+    <div class="signal-card" id="signalCard">
+      <div class="hex-deco" id="hexDeco">⬡</div>
+      <div class="signal-header">
+        <div>
+          <div class="symbol-name" id="symbolDisplay"></div>
+          <div style="font-family:'Share Tech Mono',monospace;font-size:11px;color:var(--text2);margin-top:4px;letter-spacing:2px;">LSTM NEURAL PREDICTION</div>
+        </div>
+        <div class="signal-badge" id="signalBadge"></div>
+      </div>
+      <div class="price-grid">
+        <div class="price-item">
+          <div class="price-item-label">CURRENT PRICE</div>
+          <div class="price-item-value current" id="currentPrice"></div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-label">PREDICTED PRICE</div>
+          <div class="price-item-value predicted" id="predictedPrice"></div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-label">TARGET PRICE</div>
+          <div class="price-item-value target" id="targetPrice"></div>
+        </div>
+        <div class="price-item">
+          <div class="price-item-label">STOP LOSS</div>
+          <div class="price-item-value stoploss" id="stopLoss"></div>
+        </div>
+      </div>
+      <div class="reason-text" id="reasonText"></div>
+    </div>
+
+    <!-- Indicators -->
+    <div class="indicators-grid">
+      <div class="indicator-card corner-box">
+        <div class="ind-name">RSI</div>
+        <div class="ind-value" id="rsiVal"></div>
+        <div class="ind-bar"><div class="ind-fill" id="rsiBar" style="background:var(--cyan)"></div></div>
+      </div>
+      <div class="indicator-card corner-box">
+        <div class="ind-name">EMA</div>
+        <div class="ind-value" id="emaVal"></div>
+        <div class="ind-bar"><div class="ind-fill" id="emaBar" style="background:var(--yellow); width:60%"></div></div>
+      </div>
+      <div class="indicator-card corner-box">
+        <div class="ind-name">MACD</div>
+        <div class="ind-value" id="macdVal"></div>
+        <div class="ind-bar"><div class="ind-fill" id="macdBar" style="width:50%"></div></div>
+      </div>
+      <div class="indicator-card corner-box">
+        <div class="ind-name">BB UPPER</div>
+        <div class="ind-value" id="bbUpperVal"></div>
+        <div class="ind-bar"><div class="ind-fill" style="background:var(--green);width:75%"></div></div>
+      </div>
+      <div class="indicator-card corner-box">
+        <div class="ind-name">BB LOWER</div>
+        <div class="ind-value" id="bbLowerVal"></div>
+        <div class="ind-bar"><div class="ind-fill" style="background:var(--red);width:35%"></div></div>
+      </div>
+    </div>
+
+    <!-- Trade Details -->
+    <div class="trade-details corner-box">
+      <div class="trade-details-title">// TRADE EXECUTION PARAMETERS</div>
+      <div class="trade-row">
+        <span class="trade-row-label">ENTRY PRICE</span>
+        <span class="trade-row-value" style="color:var(--cyan)" id="entryPrice"></span>
+      </div>
+      <div class="trade-row">
+        <span class="trade-row-label">TARGET PRICE</span>
+        <span class="trade-row-value" style="color:var(--green)" id="targetPrice2"></span>
+      </div>
+      <div class="trade-row">
+        <span class="trade-row-label">STOP LOSS</span>
+        <span class="trade-row-value" style="color:var(--red)" id="stopLoss2"></span>
+      </div>
+      <div class="trade-row">
+        <span class="trade-row-label">LIQUIDATION PRICE</span>
+        <span class="trade-row-value" style="color:rgba(255,51,102,0.7)" id="liquidation"></span>
+      </div>
+      <div class="trade-row">
+        <span class="trade-row-label">MARGIN</span>
+        <span class="trade-row-value" style="color:var(--yellow)" id="marginDisplay"></span>
+      </div>
+      <div class="trade-row">
+        <span class="trade-row-label">LEVERAGE</span>
+        <span class="trade-row-value" style="color:var(--purple)" id="leverageDisplay"></span>
+      </div>
+    </div>
+
+    <div class="timestamp" id="timestamp"></div>
+  </div>
+
+</div>
+
+<script>
+  const API = 'https://web-production-a4f60.up.railway.app';
+
+  // Live clock
+  function updateTime() {
+    const now = new Date();
+    document.getElementById('live-time').textContent =
+      now.toUTCString().replace('GMT', 'UTC');
+  }
+  setInterval(updateTime, 1000);
+  updateTime();
+
+  function fmt(n, decimals = 4) {
+    if (n === undefined || n === null) return '--';
+    return parseFloat(n).toLocaleString('en-US', {
+      minimumFractionDigits: decimals,
+      maximumFractionDigits: decimals
+    });
+  }
+
+  async function analyze() {
+    const symbol = document.getElementById('symbol').value;
+    const leverage = parseInt(document.getElementById('leverage').value) || 10;
+    const margin = parseInt(document.getElementById('margin').value) || 100;
+    const btn = document.getElementById('analyzeBtn');
+    const loading = document.getElementById('loadingBar');
+    const errorMsg = document.getElementById('errorMsg');
+    const results = document.getElementById('results');
+
+    btn.disabled = true;
+    btn.textContent = 'PROCESSING...';
+    loading.classList.add('active');
+    errorMsg.classList.remove('active');
+    results.classList.remove('active');
+
+    try {
+      const res = await fetch(`${API}/predict`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ symbol, leverage, margin })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'API Error');
+      }
+
+      displayResults(data);
+
+    } catch (err) {
+      errorMsg.textContent = '⚠ ERROR: ' + err.message;
+      errorMsg.classList.add('active');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '⬡ ANALYZE';
+      loading.classList.remove('active');
+    }
+  }
+
+  function displayResults(data) {
+    const isBuy = data.signal.action === 'BUY';
+    const card = document.getElementById('signalCard');
+    const badge = document.getElementById('signalBadge');
+
+    // Signal card color
+    card.className = 'signal-card ' + (isBuy ? 'buy' : 'sell');
+    badge.className = 'signal-badge ' + (isBuy ? 'buy' : 'sell');
+    badge.textContent = data.signal.action;
+
+    document.getElementById('symbolDisplay').textContent = data.symbol;
+    document.getElementById('hexDeco').textContent = isBuy ? '▲' : '▼';
+
+    document.getElementById('currentPrice').textContent = '$ ' + fmt(data.current_price);
+    document.getElementById('predictedPrice').textContent = '$ ' + fmt(data.predicted_price);
+    document.getElementById('targetPrice').textContent = '$ ' + fmt(data.signal.target_price);
+    document.getElementById('stopLoss').textContent = '$ ' + fmt(data.signal.stop_loss);
+    document.getElementById('reasonText').textContent = '> ' + data.signal.reason;
+
+    // Indicators
+    const rsi = data.indicators.rsi;
+    const rsiEl = document.getElementById('rsiVal');
+    rsiEl.textContent = fmt(rsi, 2);
+    rsiEl.className = 'ind-value ' +
+      (rsi > 70 ? 'rsi-overbought' : rsi < 30 ? 'rsi-oversold' : '');
+    document.getElementById('rsiBar').style.width = rsi + '%';
+    document.getElementById('rsiBar').style.background =
+      rsi > 70 ? 'var(--red)' : rsi < 30 ? 'var(--green)' : 'var(--cyan)';
+
+    document.getElementById('emaVal').textContent = '$ ' + fmt(data.indicators.ema, 2);
+
+    const macd = data.indicators.macd;
+    const macdEl = document.getElementById('macdVal');
+    macdEl.textContent = fmt(macd, 4);
+    macdEl.className = 'ind-value ' + (macd >= 0 ? 'macd-positive' : 'macd-negative');
+    document.getElementById('macdBar').style.background = macd >= 0 ? 'var(--green)' : 'var(--red)';
+    document.getElementById('macdBar').style.width = Math.min(Math.abs(macd) * 10 + 30, 100) + '%';
+
+    document.getElementById('bbUpperVal').textContent = '$ ' + fmt(data.indicators.bb_upper, 2);
+    document.getElementById('bbLowerVal').textContent = '$ ' + fmt(data.indicators.bb_lower, 2);
+
+    // Trade details
+    document.getElementById('entryPrice').textContent = '$ ' + fmt(data.signal.entry_price);
+    document.getElementById('targetPrice2').textContent = '$ ' + fmt(data.signal.target_price);
+    document.getElementById('stopLoss2').textContent = '$ ' + fmt(data.signal.stop_loss);
+    document.getElementById('liquidation').textContent = '$ ' + fmt(data.signal.liquidation_price);
+    document.getElementById('marginDisplay').textContent = '$ ' + data.signal.margin + ' USDT';
+    document.getElementById('leverageDisplay').textContent = document.getElementById('leverage').value + 'x';
+
+    document.getElementById('timestamp').textContent =
+      'ANALYSIS GENERATED: ' + new Date().toUTCString();
+
+    document.getElementById('results').classList.add('active');
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
