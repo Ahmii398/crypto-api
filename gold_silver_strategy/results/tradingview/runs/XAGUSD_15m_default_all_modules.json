@@ -1,0 +1,43 @@
+{
+ "symbol": "XAGUSD",
+ "timeframe": "15m",
+ "config": "default_all_modules",
+ "tradingview_symbol": "OANDA:XAGUSD",
+ "recorded_utc": "2026-11-14T14:15:32.538Z",
+ "applied": {
+  "preset": "Custom (inputs below)",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.08,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Silver / U.S. Dollar 15 OANDA O 48.64400 H 48.80400 L 48.62000 C 48.77400 +0.13050 (+0.27%)",
+ "legend": "GSMS Strategy Custom (inputs below) 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 48.80451 48.95393 ∅ 0.00000 0.00000 0.0",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Aug 2, 2026 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": -7417.29,
+  "net_profit_pct": -7.42,
+  "max_drawdown_usd": 9114.16,
+  "max_drawdown_pct": 8.96,
+  "percent_profitable": 26.67,
+  "winning_trades": 4,
+  "total_trades": 15,
+  "profit_factor": 0.472,
+  "gross_profit_usd": 6634.91,
+  "gross_loss_usd": 14052.2,
+  "long_pnl_usd": -1881.28,
+  "short_pnl_usd": -5536.01,
+  "expectancy_usd": -494.49,
+  "avg_profit_pct": 0.84,
+  "avg_loss_pct": -0.8
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n−7,417.29USD−7.42%\nMax drawdown\n9,114.16USD8.96%\nProfitable trades\n26.67%4/15\nProfit factor\n0.472\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n−7,417.29\nBuy and hold\n−18,837.75\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n6,634.91USD6.63%\nGross loss\n14,052.20USD14.05%\nProfit factor\n0.472\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n−7,417.29\nUSD\nLong\n−1,881.28\nUSD\nShort\n−5,536.01\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n−494.49USD−0.36%\nOutliers PnL\n0USD0.00%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−0.80%\nAverage profit\n0.84%\nTrades distribution\n15\nTotal trades\nWinners\n4 trades\n26.67%\nLosers\n11 trades\n73.33%\nBreakevens\n0 trades\n0.00%",
+ "trades": [],
+ "open_trade": []
+}

@@ -16,19 +16,20 @@ For every preset:
   final_trades/<preset>.csv  every trade
 for every strategy that met the selection rules (not only the presets):
   eligible_out_of_sample.csv
-and per preset dataset:
+and for every symbol and timeframe:
   walk_forward.csv           re-optimise on 4 years, trade the next year, roll forward
 """
 
 from __future__ import annotations
 
+import argparse
 import json
 from concurrent.futures import ProcessPoolExecutor
 
 import numpy as np
 import pandas as pd
 
-from . import RESULTS_DIR, backtest, data, metrics, regimes, search, space
+from . import RESULTS_DIR, SYMBOLS, TIMEFRAMES, backtest, data, metrics, regimes, search, space
 from .params import Params
 
 ALL = (search.TRAIN[0], search.OOS[1])
@@ -218,6 +219,13 @@ def eligible_out_of_sample() -> pd.DataFrame:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--workers", type=int, default=4)
+    parser.add_argument("--only-walk-forward", action="store_true")
+    args = parser.parse_args()
+    if args.only_walk_forward:
+        run_walk_forward(args.workers)
+        return
     presets = load_presets()
     cache, tables = {}, {}
     perf, years, regime_rows, random_rows, boot = [], [], [], [], []
@@ -246,9 +254,13 @@ def main() -> None:
     for symbol, part in eligible.groupby("symbol"):
         print(f"all {len(part)} eligible {symbol} strategies out of sample: {(part['oos_net_r'] > 0).mean():.0%} profitable, median expectancy {part['oos_expectancy_r'].median():+.3f} R (before costs {part['oos_gross_expectancy_r'].median():+.3f} R)", flush=True)
 
-    datasets = sorted({(preset["symbol"], preset["timeframe"]) for preset in presets})
+    run_walk_forward(args.workers)
+
+
+def run_walk_forward(workers: int) -> None:
+    datasets = [(symbol, timeframe) for timeframe in TIMEFRAMES for symbol in SYMBOLS]
     n_random = int(search.load([datasets[0][0]], [datasets[0][1]])["group"].eq("random").sum())
-    wf = walk_forward(datasets, n_random, 11)
+    wf = walk_forward(datasets, n_random, 11, workers)
     wf.to_csv(RESULTS_DIR / "walk_forward.csv", index=False, float_format="%.5f")
     for (symbol, timeframe), part in wf.groupby(["symbol", "timeframe"]):
         print(f"walk-forward {symbol} {timeframe}: chosen {part['chosen_test_net_r'].sum():+.1f} R over {len(part)} test years ({(part['chosen_test_net_r'] > 0).sum()} profitable), top-10 mean {part['top10_test_net_r_mean'].sum():+.1f} R, pool median {part['pool_test_net_r_median'].sum():+.1f} R")

@@ -645,10 +645,10 @@
    "open_in_pine": 0,
    "wins_pine": 2,
    "wins_python": 2,
-   "net_r_pine": -5.3401707353,
-   "net_r_python": -5.340170736103262,
-   "max_dd_r_pine": 5.3401707353,
-   "max_dd_r_python": 5.340170736103262
+   "net_r_pine": -6.8164822361,
+   "net_r_python": -6.8164822369708205,
+   "max_dd_r_pine": 6.8164822361,
+   "max_dd_r_python": 6.8164822369708205
   }
  },
  {
@@ -808,10 +808,10 @@
    "open_in_pine": 0,
    "wins_pine": 3,
    "wins_python": 3,
-   "net_r_pine": -0.4140323889,
-   "net_r_python": -0.4140323921367237,
-   "max_dd_r_pine": 4.2038480569,
-   "max_dd_r_python": 4.203848058132744
+   "net_r_pine": -1.3958609444,
+   "net_r_python": -1.3958609478933564,
+   "max_dd_r_pine": 4.5605337912,
+   "max_dd_r_python": 4.560533792614119
   }
  },
  {
@@ -971,10 +971,10 @@
    "open_in_pine": 0,
    "wins_pine": 1,
    "wins_python": 1,
-   "net_r_pine": -2.1336985792,
-   "net_r_python": -2.13369857945636,
-   "max_dd_r_pine": 3.0664225506,
-   "max_dd_r_python": 3.0664225504871574
+   "net_r_pine": -2.6503817444,
+   "net_r_python": -2.6503817446424036,
+   "max_dd_r_pine": 3.3620811207,
+   "max_dd_r_python": 3.3620811206714976
   }
  }
 ]

@@ -1,0 +1,54 @@
+{
+ "symbol": "XAGUSD",
+ "timeframe": "15m",
+ "config": "preset_silver_2h_balanced",
+ "tradingview_symbol": "OANDA:XAGUSD",
+ "recorded_utc": "2026-11-14T14:16:16.034Z",
+ "applied": {
+  "preset": "Silver 2h Balanced",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.08,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Silver / U.S. Dollar 15 OANDA O 48.64400 H 48.80400 L 48.62000 C 48.77400 +0.13050 (+0.27%)",
+ "legend": "GSMS Strategy Silver 2h Balanced 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 48.80451 48.95393 49.71672 0.00000 0.00000",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Aug 2, 2026 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": 3219.25,
+  "net_profit_pct": 3.22,
+  "max_drawdown_usd": 1369.71,
+  "max_drawdown_pct": 1.37,
+  "percent_profitable": 50,
+  "winning_trades": 2,
+  "total_trades": 4,
+  "profit_factor": 2.302,
+  "gross_profit_usd": 5691.65,
+  "gross_loss_usd": 2472.4,
+  "long_pnl_usd": -2472.4,
+  "short_pnl_usd": 5691.65,
+  "expectancy_usd": 804.81,
+  "avg_profit_pct": 3.48,
+  "avg_loss_pct": -0.82
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n+3,219.25USD+3.22%\nMax drawdown\n1,369.71USD1.37%\nProfitable trades\n50.00%2/4\nProfit factor\n2.302\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n+3,219.25\nBuy and hold\n−7,042.38\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n5,691.65USD5.69%\nGross loss\n2,472.40USD2.47%\nProfit factor\n2.302\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n+3,219.25\nUSD\nShort\n+5,691.65\nUSD\nLong\n−2,472.40\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n804.81USD1.33%\nOutliers PnL\n0USD0.00%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−0.82%\nAverage profit\n3.48%\nTrades distribution\n4\nTotal trades\nWinners\n2 trades\n50.00%\nLosers\n2 trades\n50.00%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 2,
+   "side": "Short",
+   "exit_time": "Aug 31, 2026, 02:00",
+   "entry_time": "Aug 28, 2026, 15:15",
+   "exit_price": 65.92786,
+   "entry_price": 69.4125,
+   "size": 861.04,
+   "net_pnl": 2907.19
+  }
+ ],
+ "open_trade": []
+}

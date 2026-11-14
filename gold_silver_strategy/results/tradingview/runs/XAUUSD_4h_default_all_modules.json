@@ -1,0 +1,104 @@
+{
+ "symbol": "XAUUSD",
+ "timeframe": "4h",
+ "config": "default_all_modules",
+ "tradingview_symbol": "OANDA:XAUUSD",
+ "recorded_utc": "2026-11-14T14:11:32.945Z",
+ "applied": {
+  "preset": "Custom (inputs below)",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.0175,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Gold Spot / U.S. Dollar 4h OANDA O 3,885.460 H 3,888.010 L 3,869.530 C 3,884.685 −0.825 (−0.02%)",
+ "legend": "GSMS Strategy Custom (inputs below) 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 3,904.165 3,946.878 ∅ 0.000 0.000 0.000",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Jan 2, 2023 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": -219.31,
+  "net_profit_pct": -0.22,
+  "max_drawdown_usd": 2053.91,
+  "max_drawdown_pct": 2.02,
+  "percent_profitable": 33.33,
+  "winning_trades": 2,
+  "total_trades": 6,
+  "profit_factor": 0.947,
+  "gross_profit_usd": 3936.98,
+  "gross_loss_usd": 4156.3,
+  "long_pnl_usd": -121.35,
+  "short_pnl_usd": -97.96,
+  "expectancy_usd": -36.55,
+  "avg_profit_pct": 2.41,
+  "avg_loss_pct": -1.05
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n−219.31USD−0.22%\nMax drawdown\n2,053.91USD2.02%\nProfitable trades\n33.33%2/6\nProfit factor\n0.947\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n−219.31\nBuy and hold\n+114,266.62\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n3,936.98USD3.94%\nGross loss\n4,156.30USD4.16%\nProfit factor\n0.947\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n−219.31\nUSD\nShort\n−97.96\nUSD\nLong\n−121.35\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n−36.55USD0.10%\nOutliers PnL\n0USD0.00%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−1.05%\nAverage profit\n2.41%\nTrades distribution\n6\nTotal trades\nWinners\n2 trades\n33.33%\nLosers\n4 trades\n66.67%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 1,
+   "side": "Long",
+   "exit_time": "Jun 4, 2023, 21:00",
+   "entry_time": "May 30, 2023, 21:00",
+   "exit_price": 1946.065,
+   "entry_price": 1959.48,
+   "size": 74.54,
+   "net_pnl": -1050.9
+  },
+  {
+   "n": 2,
+   "side": "Long",
+   "exit_time": "Dec 22, 2023, 10:00",
+   "entry_time": "Dec 14, 2023, 02:00",
+   "exit_price": 2067.897,
+   "entry_price": 2032.45,
+   "size": 56.42,
+   "net_pnl": 1959.43
+  },
+  {
+   "n": 3,
+   "side": "Short",
+   "exit_time": "Aug 29, 2024, 05:00",
+   "entry_time": "Aug 28, 2024, 17:00",
+   "exit_price": 2519.397,
+   "entry_price": 2501.97,
+   "size": 57.44,
+   "net_pnl": -1051.48
+  },
+  {
+   "n": 4,
+   "side": "Short",
+   "exit_time": "Jun 23, 2026, 05:00",
+   "entry_time": "Jun 18, 2026, 13:00",
+   "exit_price": 4113.123,
+   "entry_price": 4246.775,
+   "size": 14.96,
+   "net_pnl": 1977.55
+  },
+  {
+   "n": 5,
+   "side": "Long",
+   "exit_time": "Oct 2, 2026, 13:00",
+   "entry_time": "Oct 2, 2026, 13:00",
+   "exit_price": 4164.937,
+   "entry_price": 4217.875,
+   "size": 18.93,
+   "net_pnl": -1029.89
+  },
+  {
+   "n": 6,
+   "side": "Short",
+   "exit_time": "Oct 9, 2026, 05:00",
+   "entry_time": "Oct 2, 2026, 17:00",
+   "exit_price": 4198.685,
+   "entry_price": 4138.935,
+   "size": 16.73,
+   "net_pnl": -1024.03
+  }
+ ],
+ "open_trade": []
+}

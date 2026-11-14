@@ -20,6 +20,9 @@ TEMPLATE = PROJECT_ROOT / "pine" / "src" / "gsms.template.pine"
 OUTPUTS = {"INDICATOR": PROJECT_ROOT / "pine" / "GSMS_Indicator.pine", "STRATEGY": PROJECT_ROOT / "pine" / "GSMS_Strategy.pine"}
 FINAL_CONFIGS = RESULTS_DIR / "final_configs.json"
 PRESET_CUSTOM = "Custom (inputs below)"
+AUTO_NAME = "Auto (by timeframe)"
+GOLD_CONFIG = RESULTS_DIR / "gold" / "timeframe_configs.json"
+GOLD_DISCLOSURE = RESULTS_DIR / "gold" / "disclosure.json"
 
 # (Pine variable, Pine type, input it falls back to, value taken from Params)
 _FIELDS = [
@@ -111,27 +114,69 @@ def load_presets(path: Path = FINAL_CONFIGS) -> list[dict]:
     return json.loads(path.read_text())["presets"]
 
 
-def render(target: str, presets: list[dict], default: str = PRESET_CUSTOM, debug: bool = False) -> str:
+def load_gold(path: Path = GOLD_CONFIG, disclosure_path: Path = GOLD_DISCLOSURE) -> list[dict]:
+    """Per-timeframe gold settings, with the out-of-sample note attached when it exists."""
+    if not path.exists():
+        return []
+    rows = json.loads(path.read_text())["timeframes"]
+    disclosure = json.loads(disclosure_path.read_text()) if disclosure_path.exists() else {}
+    out = []
+    for row in rows:
+        note = disclosure.get(row["timeframe"], {})
+        out.append({**row, "chart_note": note.get("chart_note", row.get("reason", "")), "chart_color": note.get("chart_color", row.get("chart_color", "color.new(color.gray, 30)"))})
+    return out
+
+
+def _auto_lines(gold: list[dict]) -> list[str]:
+    """Pine that switches parameters from the chart timeframe when Auto is selected."""
+    lines = [f"bool wantAuto = i_preset == {_literal('string', AUTO_NAME)}", "int chartSec = timeframe.in_seconds()"]
+    slot = "0"
+    for index, row in enumerate(gold, start=1):
+        slot = f"chartSec == {int(row['minutes']) * 60} ? {index} : " + slot
+    lines.append(f"int autoSlot = {slot}")
+    label = _literal("string", "Manual inputs")
+    note = _literal("string", "No gold configuration for this chart timeframe. Manual inputs are used.")
+    color = "color.new(color.orange, 20)"
+    for index, row in enumerate(gold, start=1):
+        params = Params.from_dict(row["active_params"])
+        label = f"autoSlot == {index} ? {_literal('string', row['chart_label'])} : " + label
+        note = f"autoSlot == {index} ? {_literal('string', row['chart_note'])} : " + note
+        color = f"autoSlot == {index} ? {row['chart_color']} : " + color
+        row["_pine_params"] = params
+        row["_slot"] = index
+    lines.append(f'string autoLabel = not wantAuto ? "" : not isGold ? "XAUUSD only" : {label}')
+    lines.append(f'string autoNote = not wantAuto ? "" : not isGold ? "Automatic settings were researched on XAUUSD only. Manual inputs are used." : {note}')
+    lines.append(f"color autoNoteColor = {color}")
+    return lines
+
+
+def render(target: str, presets: list[dict], default: str = PRESET_CUSTOM, debug: bool = False, gold: list[dict] | None = None) -> str:
     """Pine source for `target` ("INDICATOR" or "STRATEGY").
 
     `default` selects the preset the script starts with; `debug` adds plots of the internal
     series. Both exist for the parity check and are not used for the shipped scripts.
     """
-    names = [PRESET_CUSTOM] + [preset["name"] for preset in presets]
+    gold = [] if gold is None else gold
+    names = ([AUTO_NAME] if gold else []) + [PRESET_CUSTOM] + [preset["name"] for preset in presets]
     assert len(set(names)) == len(names), "preset names must be unique"
     assert default in names, f"unknown default preset {default!r}"
     params = [Params.from_dict(preset["params"]) for preset in presets]
 
-    tooltip = "A preset replaces every setting in groups 1-8. Presets are the settings that tested best on 2010-2021 data for one symbol and timeframe. They are not a performance promise: read REPORT.md for their out-of-sample results before relying on them."
+    tooltip = "Auto follows the chart timeframe with the gold settings chosen on 2010-2021 data (XAUUSD only). A named preset replaces every setting in groups 1-8. Neither is a performance promise: read REPORT.md and GOLD_REPORT.md."
     options = (
         f"string i_preset = input.string({_literal('string', default)}, \"Preset\", options = [{', '.join(_literal('string', n) for n in names)}], tooltip = {_literal('string', tooltip)})"
     )
 
-    lines = []
+    lines = _auto_lines(gold) if gold else [
+        "bool wantAuto = false", "int chartSec = timeframe.in_seconds()", "int autoSlot = 0",
+        'string autoLabel = ""', 'string autoNote = ""', "color autoNoteColor = color.new(color.gray, 30)",
+    ]
     chain = "".join(f"i_preset == {_literal('string', preset['name'])} ? {k} : " for k, preset in enumerate(presets, start=1))
-    lines.append(f"int presetId = {chain}0")
+    lines.append(f"int namedId = {chain}0")
+    lines.append("int presetId = wantAuto ? (isGold and autoSlot != 0 ? 100 + autoSlot : 0) : namedId")
     for field, kind, fallback, getter in _FIELDS:
         chain = "".join(f"presetId == {k} ? {_literal(kind, getter(p))} : " for k, p in enumerate(params, start=1))
+        chain += "".join(f"presetId == {100 + row['_slot']} ? {_literal(kind, getter(row['_pine_params']))} : " for row in gold)
         lines.append(f"{kind} {field} = {chain}{fallback}")
     # What each preset was tested on, for the on-chart mismatch warning.
     tested = [
@@ -153,10 +198,12 @@ def render(target: str, presets: list[dict], default: str = PRESET_CUSTOM, debug
     return source
 
 
-def build(presets: list[dict] | None = None) -> dict[str, Path]:
+def build(presets: list[dict] | None = None, gold: list[dict] | None = None) -> dict[str, Path]:
     presets = load_presets() if presets is None else presets
+    gold = load_gold() if gold is None else gold
+    default = AUTO_NAME if gold else PRESET_CUSTOM
     for target, path in OUTPUTS.items():
-        path.write_text(render(target, presets))
+        path.write_text(render(target, presets, default=default, gold=gold))
     return OUTPUTS
 
 

@@ -95,13 +95,21 @@ bool   i_showResults = input.bool(true, "Results table", group = G_VIS)
 //#endif
 //#if INDICATOR
 bool   i_showTable  = input.bool(true, "Dashboard", group = G_VIS)
-float  i_costPct    = input.float(0.0175, "Dashboard: trading cost per side (% of price)", minval = 0.0, step = 0.0025, group = G_VIS, tooltip = "Used only for the net results shown in the dashboard. Research values: 0.0175 for XAUUSD, 0.08 for XAGUSD.")
+bool   i_costAuto   = input.bool(true, "Dashboard: automatic trading cost (0.0175 % gold, 0.08 % silver per side)", group = G_VIS, tooltip = "Used only for the net results shown in the dashboard. Silver is recognised by XAG or SILVER in the ticker; everything else gets the gold value.")
+float  i_costPct    = input.float(0.0175, "Dashboard: manual trading cost per side (% of price)", minval = 0.0, step = 0.0025, group = G_VIS, tooltip = "Used when the automatic cost is switched off.")
 //#endif
 
 // ═════════════════════════════════════════════════════════════════════════════
-//  Effective parameters (preset or inputs)
+//  Effective parameters (preset, automatic timeframe settings, or inputs)
 // ═════════════════════════════════════════════════════════════════════════════
+string tickerUpper = str.upper(syminfo.ticker)
+bool isSilver = str.contains(tickerUpper, "XAG") or str.contains(tickerUpper, "SILVER")
+bool isGold = str.contains(tickerUpper, "XAU") or str.contains(tickerUpper, "GOLD")
 //#presets:values
+
+//#if INDICATOR
+float costPct = i_costAuto ? (isSilver ? 0.08 : 0.0175) : i_costPct
+//#endif
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  Building blocks
@@ -239,7 +247,7 @@ if vPos != 0
             else if hitTarget
                 vOut := vTarget
     if not na(vOut)
-        float r = (vPos * (vOut - vEntry) - i_costPct / 100.0 * (vEntry + vOut)) / vDist
+        float r = (vPos * (vOut - vEntry) - costPct / 100.0 * (vEntry + vOut)) / vDist
         vTrades += 1
         vNetR += r
         if r > 0
@@ -743,18 +751,20 @@ plotshape(goShort, "Short signal", style = shape.triangledown, location = locati
 plot(i_showLevels and inTrade ? liveStop : na, "Stop", color = color.new(color.red, 0), style = plot.style_linebr, linewidth = 1)
 plot(i_showLevels and inTrade ? liveTarget : na, "Target", color = color.new(color.green, 0), style = plot.style_linebr, linewidth = 1)
 
-// A preset is only meaningful on the symbol and timeframe it was tested on.
-string tickerUpper = str.upper(syminfo.ticker)
-bool presetTfOk = presetTfSec == 0 or timeframe.in_seconds() == presetTfSec
-bool presetSymOk = presetMetal == "" or str.contains(tickerUpper, presetMetal) or str.contains(tickerUpper, presetMetal == "XAU" ? "GOLD" : "SILVER")
+// A named preset is only meaningful on the symbol and timeframe it was tested on.
+// Auto carries its own note (passed checks, unoptimized, or the wrong symbol).
+bool presetTfOk = wantAuto or presetTfSec == 0 or timeframe.in_seconds() == presetTfSec
+bool presetSymOk = wantAuto or presetMetal == "" or str.contains(tickerUpper, presetMetal) or str.contains(tickerUpper, presetMetal == "XAU" ? "GOLD" : "SILVER")
 var table presetWarning = table.new(position.bottom_center, 1, 1)
-if barstate.islast and not (presetTfOk and presetSymOk)
+if barstate.islast and autoNote != ""
+    table.cell(presetWarning, 0, 0, autoNote, text_color = color.white, bgcolor = autoNoteColor, text_size = size.small)
+else if barstate.islast and not (presetTfOk and presetSymOk)
     table.cell(presetWarning, 0, 0, "Preset \"" + i_preset + "\" was tested on " + presetSymbol + " " + presetTf + " only", text_color = color.white, bgcolor = color.new(color.red, 20), text_size = size.small)
 
 //#if STRATEGY
 // Results table: the same figures as the Strategy Tester, plus the result in R and the tested span.
 var int firstBarTime = time
-var table results = table.new(position.bottom_right, 2, 8, bgcolor = color.new(color.black, 75), border_width = 1, border_color = color.new(color.gray, 60))
+var table results = table.new(position.bottom_right, 2, 9, bgcolor = color.new(color.black, 15), border_width = 1, border_color = color.new(color.gray, 60))
 f_result(int row, string name, string value, color valueColor) =>
     table.cell(results, 0, row, name, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
     table.cell(results, 1, row, value, text_color = valueColor, text_size = size.small, text_halign = text.align_right)
@@ -762,19 +772,21 @@ f_result(int row, string name, string value, color valueColor) =>
 if i_showResults and barstate.islast
     color C_TXT = color.new(color.white, 0)
     int closed = strategy.closedtrades
-    f_result(0, "GSMS Strategy", i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_TXT)
+    f_result(0, "GSMS Strategy", wantAuto ? autoLabel : i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_TXT)
     f_result(1, "Tested from", str.format_time(firstBarTime, "yyyy-MM-dd", "UTC") + "  (" + str.tostring(bar_index + 1) + " bars)", C_TXT)
     f_result(2, "Closed trades", str.tostring(closed), C_TXT)
-    f_result(3, "Win rate", closed > 0 ? str.tostring(100.0 * strategy.wintrades / closed, "#.0") + "%" : "-", C_TXT)
-    f_result(4, "Profit factor", strategy.grossloss > 0 ? str.tostring(strategy.grossprofit / strategy.grossloss, "#.00") : "-", C_TXT)
-    f_result(5, "Net profit", str.tostring(strategy.netprofit, "#.00"), strategy.netprofit >= 0 ? color.lime : color.red)
-    f_result(6, "Net result in R", str.tostring(strategy.netprofit / i_riskCash, "#.0") + " R", strategy.netprofit >= 0 ? color.lime : color.red)
-    f_result(7, "Max drawdown", str.tostring(strategy.max_drawdown, "#.00"), C_TXT)
+    f_result(3, "Win rate", closed > 0 ? str.tostring(100.0 * strategy.wintrades / closed, "0.0") + "%" : "-", C_TXT)
+    f_result(4, "Profit factor", strategy.grossloss > 0 ? str.tostring(strategy.grossprofit / strategy.grossloss, "0.00") : "-", C_TXT)
+    f_result(5, "Net profit", str.tostring(strategy.netprofit, "0.00"), strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(6, "Net result in R", str.tostring(strategy.netprofit / i_riskCash, "0.0") + " R", strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(7, "Max drawdown", str.tostring(strategy.max_drawdown, "0.00"), C_TXT)
+    // The script cannot read or change the commission; this row says what the research used.
+    f_result(8, "Commission to set", isSilver ? "0.08 % (Properties tab)" : "0.0175 % (default)", isSilver ? color.orange : C_TXT)
 //#endif
 
 //#if INDICATOR
 // Dashboard
-var table dash = table.new(position.top_right, 2, 9, bgcolor = color.new(color.black, 75), border_width = 1, border_color = color.new(color.gray, 60))
+var table dash = table.new(position.top_right, 2, 9, bgcolor = color.new(color.black, 15), border_width = 1, border_color = color.new(color.gray, 60))
 f_row(int row, string name, string value, color valueColor) =>
     table.cell(dash, 0, row, name, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
     table.cell(dash, 1, row, value, text_color = valueColor, text_size = size.small, text_halign = text.align_right)
@@ -792,15 +804,15 @@ f_ago(int lastBull, int lastBear) =>
 if i_showTable and barstate.islast
     color C_ON = color.new(color.white, 0)
     color C_OFF = color.new(color.gray, 30)
-    f_row(0, "GSMS", i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_ON)
+    f_row(0, "GSMS", wantAuto ? autoLabel : i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_ON)
     f_row(1, "EMA " + str.tostring(emaFastLen) + "/" + str.tostring(emaSlowLen), not useEma ? "off" : emaUp ? "bullish" : emaDn ? "bearish" : "flat", not useEma ? C_OFF : emaUp ? color.lime : color.red)
     f_row(2, "Liquidity sweep", useLs ? f_ago(lastLsBull, lastLsBear) : "off", useLs ? C_ON : C_OFF)
     f_row(3, "Supply / demand", useSd ? f_ago(lastSdBull, lastSdBear) : "off", useSd ? C_ON : C_OFF)
     f_row(4, "Candle pattern", useCp ? f_ago(lastCpBull, lastCpBear) : "off", useCp ? C_ON : C_OFF)
     f_row(5, "Position", vPos == 1 ? "LONG" : vPos == -1 ? "SHORT" : vPending != 0 ? "entry next bar" : "flat", vPos == 1 ? color.lime : vPos == -1 ? color.red : C_ON)
-    f_row(6, "Trades on chart", str.tostring(vTrades) + "  win " + (vTrades > 0 ? str.tostring(100.0 * vWins / vTrades, "#.0") + "%" : "-"), C_ON)
-    f_row(7, "Net result", str.tostring(vNetR, "#.0") + " R   PF " + (vGrossLoss > 0 ? str.tostring(vGrossWin / vGrossLoss, "#.00") : "-"), vNetR >= 0 ? color.lime : color.red)
-    f_row(8, "Max drawdown", str.tostring(vMaxDdR, "#.0") + " R", C_ON)
+    f_row(6, "Trades on chart", str.tostring(vTrades) + "  win " + (vTrades > 0 ? str.tostring(100.0 * vWins / vTrades, "0.0") + "%" : "-"), C_ON)
+    f_row(7, "Net result", str.tostring(vNetR, "0.0") + " R   PF " + (vGrossLoss > 0 ? str.tostring(vGrossWin / vGrossLoss, "0.00") : "-"), vNetR >= 0 ? color.lime : color.red)
+    f_row(8, "Max drawdown", str.tostring(vMaxDdR, "0.0") + " R", C_ON)
 //#endif
 //#if DEBUG
 // Internal series for the parity check against the Python engine (python -m gsms.parity).

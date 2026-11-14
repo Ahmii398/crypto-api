@@ -55,6 +55,7 @@ def _group_stats(df: pd.DataFrame) -> dict:
     both = (df["train_net_r"] > 0) & (df["val_net_r"] > 0)
     top = df[df["train_sharpe_monthly"] >= df["train_sharpe_monthly"].quantile(0.9)]
     rank = df[["train_sharpe_monthly", "val_sharpe_monthly"]].corr(method="spearman").iloc[0, 1] if len(df) >= 10 else np.nan
+    gross_rank = df[["train_gross_expectancy_r", "val_gross_expectancy_r"]].corr(method="spearman").iloc[0, 1] if len(df) >= 10 else np.nan
     return {
         "strategies": len(df),
         "median_trades_per_year": df["pre_trades_per_year"].median(),
@@ -66,6 +67,7 @@ def _group_stats(df: pd.DataFrame) -> dict:
         "share_profitable_both": both.mean(),
         "median_validation_sharpe": df["val_sharpe_monthly"].median(),
         "train_validation_rank_corr": rank,
+        "train_validation_rank_corr_before_costs": gross_rank,
         "top10pct_train_median_validation_sharpe": top["val_sharpe_monthly"].median(),
         "top10pct_train_share_profitable_validation": (top["val_net_r"] > 0).mean(),
         "best_min_sharpe": _score(df).max(),
@@ -89,7 +91,7 @@ def module_comparison(df: pd.DataFrame) -> pd.DataFrame:
         if len(base):
             b = base.iloc[0]
             row.update({f"default_{k}": b[k] for k in ("train_trades", "train_win_rate", "train_profit_factor", "train_net_r", "train_max_dd_r", "val_trades", "val_win_rate", "val_profit_factor", "val_net_r", "val_max_dd_r")})
-        row.update(_group_stats(part[_enough(part)]))
+        row.update(_group_stats(part[_enough(part) & (part["group"] == "random")]))
         rows.append(row)
     return pd.DataFrame(rows)
 

@@ -1,0 +1,43 @@
+{
+ "symbol": "XAUUSD",
+ "timeframe": "1D",
+ "config": "default_all_modules",
+ "tradingview_symbol": "OANDA:XAUUSD",
+ "recorded_utc": "2026-11-14T14:13:08.952Z",
+ "applied": {
+  "preset": "Custom (inputs below)",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.0175,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Gold Spot / U.S. Dollar 1D OANDA O 3,879.280 H 3,923.090 L 3,867.670 C 3,884.685 +7.095 (+0.18%)",
+ "legend": "GSMS Strategy Custom (inputs below) 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 3,981.523 4,028.756 ∅ 0.000 0.000 0.000",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Jan 6, 1833 — Nov 12, 2026",
+  "empty": false,
+  "net_profit_usd": -6960.32,
+  "net_profit_pct": -6.96,
+  "max_drawdown_usd": 6960.32,
+  "max_drawdown_pct": 6.96,
+  "percent_profitable": 0,
+  "winning_trades": 0,
+  "total_trades": 6,
+  "profit_factor": 0,
+  "gross_profit_usd": 0,
+  "gross_loss_usd": 6960.32,
+  "long_pnl_usd": -1741.27,
+  "short_pnl_usd": -5219.05,
+  "expectancy_usd": -1160.05,
+  "avg_profit_pct": null,
+  "avg_loss_pct": -2.86
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n−6,960.32USD−6.96%\nMax drawdown\n6,960.32USD6.96%\nProfitable trades\n0.00%0/6\nProfit factor\n0\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n−6,960.32\nBuy and hold\n+1,498,171.40\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n0USD0.00%\nGross loss\n6,960.32USD6.96%\nProfit factor\n0\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n−6,960.32\nUSD\nLong\n−1,741.27\nUSD\nShort\n−5,219.05\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n−1,160.05USD−2.86%\nOutliers PnL\n0USD0.00%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−2.86%\nAverage profit\n—\nTrades distribution\n6\nTotal trades\nWinners\n0 trades\n0.00%\nLosers\n6 trades\n100.00%\nBreakevens\n0 trades\n0.00%",
+ "trades": [],
+ "open_trade": []
+}
