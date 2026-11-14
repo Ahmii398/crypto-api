@@ -1,0 +1,2268 @@
+{
+  "XAUUSD": {
+    "clock": [
+      {
+        "year": 2009,
+        "day": "2009-01-14",
+        "window": "winter",
+        "status": "no HistData overlap",
+        "best_offset_h": NaN,
+        "residual_bp": NaN,
+        "next_best_bp": NaN,
+        "applied_offset_h": NaN,
+        "applied_is_best": NaN
+      },
+      {
+        "year": 2009,
+        "day": "2009-03-11",
+        "window": "March, US summer time only",
+        "status": "no HistData overlap",
+        "best_offset_h": NaN,
+        "residual_bp": NaN,
+        "next_best_bp": NaN,
+        "applied_offset_h": NaN,
+        "applied_is_best": NaN
+      },
+      {
+        "year": 2009,
+        "day": "2009-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 3.4728522193177453,
+        "next_best_bp": 11.038462991766718,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2009,
+        "day": "2009-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.686901562012009,
+        "next_best_bp": 15.944661070511826,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.9659512885877604,
+        "next_best_bp": 19.40988704877536,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-03-17",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.9667390500522814,
+        "next_best_bp": 13.292890556725222,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-07-14",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.4973677835492616,
+        "next_best_bp": 14.127111700374561,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-11-03",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.8553534619608905,
+        "next_best_bp": 22.66674353132587,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-01-12",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.47547920575991737,
+        "next_best_bp": 9.395129170181812,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-03-16",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.6951012608433664,
+        "next_best_bp": 13.555453772875577,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.5038010041610393,
+        "next_best_bp": 11.946762666620995,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.6393913488641021,
+        "next_best_bp": 19.454112938315696,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.4629198655501246,
+        "next_best_bp": 13.413428510545549,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-03-14",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.5252514091103248,
+        "next_best_bp": 20.002882199629408,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-07-11",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.5086303597260147,
+        "next_best_bp": 13.630111470485225,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-10-31",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.46847632335882217,
+        "next_best_bp": 7.3202322297268605,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-01-16",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.5518014947542985,
+        "next_best_bp": 7.68616472897223,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.5109128070488709,
+        "next_best_bp": 8.922192358470062,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.3454232064776548,
+        "next_best_bp": 19.29310223468568,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.7156382987431182,
+        "next_best_bp": 15.29403987422609,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.6641313316466819,
+        "next_best_bp": 10.232792506890236,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-03-12",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.8522536805470732,
+        "next_best_bp": 12.734214843139013,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-07-16",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.9165968796225527,
+        "next_best_bp": 7.153764031957767,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-10-29",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.24538593285942778,
+        "next_best_bp": 11.577191238023389,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-01-14",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.27626988031313565,
+        "next_best_bp": 17.29161522739689,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.2848083469891873,
+        "next_best_bp": 11.694214636630623,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.3418948886762406,
+        "next_best_bp": 7.655936489279541,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.3104283068924624,
+        "next_best_bp": 18.45721314321289,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.4205405324639536,
+        "next_best_bp": 13.47820834125338,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-03-16",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.31507370279625513,
+        "next_best_bp": 21.098427162375486,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.21990654556762892,
+        "next_best_bp": 12.603534639875694,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.2900866486709956,
+        "next_best_bp": 12.825746880901667,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.5369518319111993,
+        "next_best_bp": 16.964683465559776,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-03-15",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.44953690558464193,
+        "next_best_bp": 13.433890944233742,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-07-12",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.3983689495824433,
+        "next_best_bp": 8.690223645901481,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-11-01",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.4434830965782363,
+        "next_best_bp": 10.62073849587031,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-01-17",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.4467633870826542,
+        "next_best_bp": 12.80189131377812,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-03-14",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.36549714822699036,
+        "next_best_bp": 7.506441792831871,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-07-11",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.47006576641496733,
+        "next_best_bp": 9.171697362072338,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-10-31",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.22822713208759354,
+        "next_best_bp": 9.385066785868235,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-01-16",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1311108035633861e-13,
+        "next_best_bp": 5.935136489049369,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1790154362079079e-13,
+        "next_best_bp": 6.129080698248431,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.725558338414614e-13,
+        "next_best_bp": 12.389730593886023,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.7244466382224835e-13,
+        "next_best_bp": 9.679158079907925,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1986971872145128e-13,
+        "next_best_bp": 9.006506442760895,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.172163511209654e-13,
+        "next_best_bp": 19.338249496318628,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.7332372175851416e-13,
+        "next_best_bp": 8.812781472463152,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.9511161749609632e-13,
+        "next_best_bp": 13.592645089350317,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.8995451852314584e-13,
+        "next_best_bp": 10.656074110295055,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-03-17",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2495202936325659e-13,
+        "next_best_bp": 13.999726831875439,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-07-14",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.1109942173059524e-13,
+        "next_best_bp": 10.085406746710175,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-11-03",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.114663869173083e-13,
+        "next_best_bp": 14.281753751285667,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-01-12",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.008276930101752e-13,
+        "next_best_bp": 6.878187061771919,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-03-16",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.976232828593998e-13,
+        "next_best_bp": 16.40792623852314,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.267539411315385e-13,
+        "next_best_bp": 18.316656254903315,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1994009176473333e-13,
+        "next_best_bp": 18.402541055006996,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.9392232069334117e-13,
+        "next_best_bp": 10.712679522083553,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-03-15",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.9732154558982297e-13,
+        "next_best_bp": 21.30459369825736,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-07-12",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.9264904936115832e-13,
+        "next_best_bp": 11.408189960763476,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-11-01",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2960447512946236e-13,
+        "next_best_bp": 11.041008468404492,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-01-17",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.187546855279807e-13,
+        "next_best_bp": 13.971733453026552,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.8419349502891182e-13,
+        "next_best_bp": 7.0212700721119,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.0970734646625532e-13,
+        "next_best_bp": 16.169774272099882,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.954319955141715e-13,
+        "next_best_bp": 9.404317801549597,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.166038626518049e-13,
+        "next_best_bp": 9.517570769565525,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-03-12",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.0644842679136217e-13,
+        "next_best_bp": 11.52036456295745,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-07-16",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.5835814992202966e-13,
+        "next_best_bp": 14.135749446044255,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-10-29",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.091850350018993e-13,
+        "next_best_bp": 26.69430692197856,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-01-14",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.365559494042706e-13,
+        "next_best_bp": 14.561004603271645,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2241514632435934e-13,
+        "next_best_bp": 15.565553200131653,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.014554471393484595,
+        "next_best_bp": 19.729053954584078,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.008476173387676224,
+        "next_best_bp": 15.707677514978002,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      }
+    ],
+    "coverage": [
+      {
+        "year": 2009,
+        "one_minute_rows": 276109,
+        "sessions": 208,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2010,
+        "one_minute_rows": 346196,
+        "sessions": 260,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2011,
+        "one_minute_rows": 352266,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2012,
+        "one_minute_rows": 354797,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2013,
+        "one_minute_rows": 355160,
+        "sessions": 260,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2014,
+        "one_minute_rows": 351606,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2015,
+        "one_minute_rows": 351666,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2016,
+        "one_minute_rows": 353415,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2017,
+        "one_minute_rows": 352360,
+        "sessions": 257,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2018,
+        "one_minute_rows": 353778,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2019,
+        "one_minute_rows": 352628,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2020,
+        "one_minute_rows": 354291,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2021,
+        "one_minute_rows": 353386,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2022,
+        "one_minute_rows": 354568,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2023,
+        "one_minute_rows": 352700,
+        "sessions": 257,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2024,
+        "one_minute_rows": 355592,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2025,
+        "one_minute_rows": 353951,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2026,
+        "one_minute_rows": 302349,
+        "sessions": 220,
+        "sessions_with_2plus_missing_hours": 0
+      }
+    ],
+    "spread": {
+      "overall": {
+        "sample_days": 51,
+        "bp_median_all_hours": 2.068260066014829,
+        "bp_median_active_hours": 2.0673050231852406,
+        "bp_mean_all_hours": 2.0816532693835126,
+        "bp_p90": 2.518423058772053,
+        "bp_median_since_2022": 1.637978907022343,
+        "bp_max_yearly_median": 4.146922344370414,
+        "days_without_usable_ask": []
+      },
+      "by_year": [
+        {
+          "year": 2010,
+          "days": 3,
+          "price": 1220.182,
+          "spread_median": 0.5059999999998581,
+          "spread_active_median": 0.5040000000000191,
+          "spread_p90": 0.6600000000000819,
+          "bp_median": 4.146922344370414,
+          "bp_active_median": 4.13053134696315,
+          "bp_p90": 5.4090291448331635
+        },
+        {
+          "year": 2011,
+          "days": 3,
+          "price": 1490.832,
+          "spread_median": 0.3999999999998636,
+          "spread_active_median": 0.39799999999991087,
+          "spread_p90": 0.4959999999998672,
+          "bp_median": 2.6830655633891918,
+          "bp_active_median": 2.6494815309522726,
+          "bp_p90": 3.583771008592144
+        },
+        {
+          "year": 2012,
+          "days": 3,
+          "price": 1639.152,
+          "spread_median": 0.36599999999998545,
+          "spread_active_median": 0.36599999999998545,
+          "spread_p90": 0.4434999999999718,
+          "bp_median": 2.3540027855698695,
+          "bp_active_median": 2.2847179517214498,
+          "bp_p90": 2.8524596595634213
+        },
+        {
+          "year": 2013,
+          "days": 3,
+          "price": 1469.8345,
+          "spread_median": 0.31300000000010186,
+          "spread_active_median": 0.3040000000000873,
+          "spread_p90": 0.38599999999996726,
+          "bp_median": 2.262208060233989,
+          "bp_active_median": 2.068260066014829,
+          "bp_p90": 2.6663121323777155
+        },
+        {
+          "year": 2014,
+          "days": 3,
+          "price": 1255.217,
+          "spread_median": 0.3420000000000982,
+          "spread_active_median": 0.34199999999987085,
+          "spread_p90": 0.34400000000005093,
+          "bp_median": 2.724628490532698,
+          "bp_active_median": 2.724628490532698,
+          "bp_p90": 2.740561990476953
+        },
+        {
+          "year": 2015,
+          "days": 3,
+          "price": 1190.7450000000001,
+          "spread_median": 0.3079999999999927,
+          "spread_active_median": 0.30199999999990723,
+          "spread_p90": 0.34400000000005093,
+          "bp_median": 2.5454587528243247,
+          "bp_active_median": 2.495871894002364,
+          "bp_p90": 2.842979905752331
+        },
+        {
+          "year": 2016,
+          "days": 3,
+          "price": 1293.1365,
+          "spread_median": 0.31799999999998363,
+          "spread_active_median": 0.31100000000014916,
+          "spread_p90": 0.35999999999989996,
+          "bp_median": 2.459137144454461,
+          "bp_active_median": 2.405005194735043,
+          "bp_p90": 2.869766648763413
+        },
+        {
+          "year": 2017,
+          "days": 4,
+          "price": 1274.1265,
+          "spread_median": 0.24249999999994998,
+          "spread_active_median": 0.2370000000000232,
+          "spread_p90": 0.2799999999999727,
+          "bp_median": 1.8861581008834345,
+          "bp_active_median": 1.8438437237961738,
+          "bp_p90": 2.17772526011633
+        },
+        {
+          "year": 2018,
+          "days": 3,
+          "price": 1272.355,
+          "spread_median": 0.24299999999993815,
+          "spread_active_median": 0.2359999999998763,
+          "spread_p90": 0.27800000000002,
+          "bp_median": 1.9183565637766395,
+          "bp_active_median": 1.9100877854846934,
+          "bp_p90": 2.124775532369159
+        },
+        {
+          "year": 2019,
+          "days": 3,
+          "price": 1490.348,
+          "spread_median": 0.2899999999999636,
+          "spread_active_median": 0.28700000000003456,
+          "spread_p90": 0.3269999999999982,
+          "bp_median": 1.8931629399643017,
+          "bp_active_median": 1.873578495758235,
+          "bp_p90": 2.2456829356824066
+        },
+        {
+          "year": 2020,
+          "days": 3,
+          "price": 1872.525,
+          "spread_median": 0.47700000000008913,
+          "spread_active_median": 0.4470000000001164,
+          "spread_p90": 0.6069999999999709,
+          "bp_median": 2.474133119773402,
+          "bp_active_median": 2.3185272631840506,
+          "bp_p90": 3.148425164993925
+        },
+        {
+          "year": 2021,
+          "days": 3,
+          "price": 1791.028,
+          "spread_median": 0.34699999999998,
+          "spread_active_median": 0.33799999999996544,
+          "spread_p90": 0.3973000000001325,
+          "bp_median": 1.9439449196931142,
+          "bp_active_median": 1.8741253157732898,
+          "bp_p90": 2.2182791112150815
+        },
+        {
+          "year": 2022,
+          "days": 3,
+          "price": 1805.195,
+          "spread_median": 0.35200000000008913,
+          "spread_active_median": 0.32799999999997453,
+          "spread_p90": 0.41599999999994,
+          "bp_median": 1.866834330917098,
+          "bp_active_median": 1.8114386534418618,
+          "bp_p90": 2.106929188692678
+        },
+        {
+          "year": 2023,
+          "days": 3,
+          "price": 2003.255,
+          "spread_median": 0.3170000000000073,
+          "spread_active_median": 0.3170000000000073,
+          "spread_p90": 0.36999999999989086,
+          "bp_median": 1.6286388256985833,
+          "bp_active_median": 1.612877804805096,
+          "bp_p90": 1.8819371472925448
+        },
+        {
+          "year": 2024,
+          "days": 3,
+          "price": 2465.07,
+          "spread_median": 0.4099999999998545,
+          "spread_active_median": 0.4070000000001528,
+          "spread_p90": 0.45010000000024786,
+          "bp_median": 1.7201702548992528,
+          "bp_active_median": 1.7075836432792857,
+          "bp_p90": 1.888411296904524
+        },
+        {
+          "year": 2025,
+          "days": 3,
+          "price": 3349.072,
+          "spread_median": 0.5799999999999272,
+          "spread_active_median": 0.5599999999994907,
+          "spread_p90": 0.680000000000291,
+          "bp_median": 1.6123869537590223,
+          "bp_active_median": 1.552668918434664,
+          "bp_p90": 1.872160407420183
+        },
+        {
+          "year": 2026,
+          "days": 2,
+          "price": 4581.2575,
+          "spread_median": 0.650000000000091,
+          "spread_active_median": 0.6585000000000036,
+          "spread_p90": 0.8005000000001481,
+          "bp_median": 1.4158040774389478,
+          "bp_active_median": 1.4297468695107285,
+          "bp_p90": 1.7517027279805184
+        }
+      ]
+    },
+    "daily_reference": {
+      "vendor": "Twelve Data XAU/USD 1day",
+      "days_compared": 4354,
+      "first_day": "2010-01-04",
+      "last_day": "2026-11-06",
+      "vendor_price_inside_our_daily_range": 0.9993109784106569,
+      "median_abs_close_gap_bp": 2.6657387754979687,
+      "p95_abs_close_gap_bp": 11.613570950169727,
+      "daily_return_correlation": 0.9966316310554558,
+      "median_abs_close_gap_bp_by_year": {
+        "2010": 3.1424183496944176,
+        "2011": 2.7379402446317638,
+        "2012": 3.093066140683973,
+        "2013": 3.239523392147733,
+        "2014": 3.4207083867156722,
+        "2015": 3.32510962792235,
+        "2016": 3.5663954656187467,
+        "2017": 2.8696757266421433,
+        "2018": 2.2719995959550197,
+        "2019": 2.9781259405005667,
+        "2020": 3.7259907228318587,
+        "2021": 1.3415890970269992,
+        "2022": 1.5413904941891292,
+        "2023": 1.9031303567263673,
+        "2024": 1.4209671581602408,
+        "2025": 2.5618156537631993,
+        "2026": 3.2498728458080715
+      },
+      "median_abs_high_gap_bp": 2.2008899911835123,
+      "median_abs_low_gap_bp": 1.6081584589384814
+    }
+  },
+  "XAGUSD": {
+    "clock": [
+      {
+        "year": 2009,
+        "day": "2009-01-14",
+        "window": "winter",
+        "status": "no HistData overlap",
+        "best_offset_h": NaN,
+        "residual_bp": NaN,
+        "next_best_bp": NaN,
+        "applied_offset_h": NaN,
+        "applied_is_best": NaN
+      },
+      {
+        "year": 2009,
+        "day": "2009-03-11",
+        "window": "March, US summer time only",
+        "status": "no HistData overlap",
+        "best_offset_h": NaN,
+        "residual_bp": NaN,
+        "next_best_bp": NaN,
+        "applied_offset_h": NaN,
+        "applied_is_best": NaN
+      },
+      {
+        "year": 2009,
+        "day": "2009-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 3.0,
+        "residual_bp": 31.925404444300586,
+        "next_best_bp": 32.3711570048517,
+        "applied_offset_h": 4.0,
+        "applied_is_best": false
+      },
+      {
+        "year": 2009,
+        "day": "2009-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.8328786630941645,
+        "next_best_bp": 31.396162592785995,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 3.624402611132685,
+        "next_best_bp": 24.867852567395367,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-03-17",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 5.204686247658032,
+        "next_best_bp": 21.396865151186987,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-07-14",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 5.296858359560105,
+        "next_best_bp": 26.21773050777042,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2010,
+        "day": "2010-11-03",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 6.658728845687035,
+        "next_best_bp": 43.833247662854035,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-01-12",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 4.792519319967145,
+        "next_best_bp": 19.36099938465095,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-03-16",
+        "window": "March, US summer time only",
+        "status": "no HistData overlap",
+        "best_offset_h": NaN,
+        "residual_bp": NaN,
+        "next_best_bp": NaN,
+        "applied_offset_h": NaN,
+        "applied_is_best": NaN
+      },
+      {
+        "year": 2011,
+        "day": "2011-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 3.5386968063399635,
+        "next_best_bp": 55.93016789318541,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2011,
+        "day": "2011-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.428391521102345,
+        "next_best_bp": 41.486813218937854,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.3387147391039609,
+        "next_best_bp": 27.73749876745995,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-03-14",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.5024552835707063,
+        "next_best_bp": 39.38984597720817,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-07-11",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.7690651757096174,
+        "next_best_bp": 22.048524107522617,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2012,
+        "day": "2012-10-31",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.435760117454505,
+        "next_best_bp": 14.488348504615837,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-01-16",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.5295830039822915,
+        "next_best_bp": 15.781271603936927,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.1111991672995027,
+        "next_best_bp": 16.55580229177992,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.9672866345505989,
+        "next_best_bp": 40.24232048503364,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2013,
+        "day": "2013-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.9621517933682764,
+        "next_best_bp": 30.443642208696232,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.9698066171419321,
+        "next_best_bp": 19.498634656839666,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-03-12",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.9384521424711149,
+        "next_best_bp": 28.200635637611118,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-07-16",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.1778739765809416,
+        "next_best_bp": 13.788280039255442,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2014,
+        "day": "2014-10-29",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 6.590398270209793,
+        "next_best_bp": 16.28500350392557,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-01-14",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 6.527789560555757,
+        "next_best_bp": 37.620814954020645,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 6.212404716182674,
+        "next_best_bp": 24.983038722005748,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.695470541976903,
+        "next_best_bp": 18.98738611552795,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2015,
+        "day": "2015-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.694053966808086,
+        "next_best_bp": 34.48392468744477,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 4.95397622026197,
+        "next_best_bp": 21.526251708895643,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-03-16",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 5.510105087238397,
+        "next_best_bp": 25.94752118262733,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 3.95076919991552,
+        "next_best_bp": 27.853091044190535,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2016,
+        "day": "2016-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.480742212558777,
+        "next_best_bp": 21.27957249480565,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 4.887285627697955,
+        "next_best_bp": 19.89870184688928,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-03-15",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.2635444023263345,
+        "next_best_bp": 21.708173552306985,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-07-12",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.709056784502482,
+        "next_best_bp": 18.88240211682214,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2017,
+        "day": "2017-11-01",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.961997431656838,
+        "next_best_bp": 24.18977766633653,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-01-17",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 4.731284048746891,
+        "next_best_bp": 18.391437085719627,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-03-14",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 4.601834837515659,
+        "next_best_bp": 11.576720353776274,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-07-11",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 3.1970673620105514,
+        "next_best_bp": 13.662105380119595,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2018,
+        "day": "2018-10-31",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 3.498484837743136,
+        "next_best_bp": 13.246657316793586,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-01-16",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.8729930529991556e-13,
+        "next_best_bp": 11.612317589622878,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2117388565831178e-13,
+        "next_best_bp": 10.164379354671787,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.2303051042075107e-13,
+        "next_best_bp": 21.375839760788708,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2019,
+        "day": "2019-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.8122796559765118e-13,
+        "next_best_bp": 20.054784830780886,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2492643576125665e-13,
+        "next_best_bp": 16.437875790847155,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.6598493127740017e-13,
+        "next_best_bp": 21.68701075223986,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.334071205929267e-13,
+        "next_best_bp": 19.032042240116983,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2020,
+        "day": "2020-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.0360723910974527e-13,
+        "next_best_bp": 41.12623886814766,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-01-13",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.3078182621361295e-13,
+        "next_best_bp": 23.555887051786126,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-03-17",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1205835109270608e-13,
+        "next_best_bp": 27.358840900954167,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-07-14",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.302376019760985e-13,
+        "next_best_bp": 18.26850563128792,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2021,
+        "day": "2021-11-03",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.8413907030327134e-13,
+        "next_best_bp": 29.83285899780683,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-01-12",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.28761598675001e-13,
+        "next_best_bp": 18.976545380504888,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-03-16",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2576444324368237e-13,
+        "next_best_bp": 28.25250861898302,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-07-13",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.2009250626488754e-13,
+        "next_best_bp": 24.28739415811773,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2022,
+        "day": "2022-11-02",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.6095832071418547e-13,
+        "next_best_bp": 38.888733092188154,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-01-11",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.157840719439203e-13,
+        "next_best_bp": 29.088660088266153,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-03-15",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2660273308008293e-13,
+        "next_best_bp": 37.011419670788385,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-07-12",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 1.8609128406514314e-13,
+        "next_best_bp": 22.2314943145473,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2023,
+        "day": "2023-11-01",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1065341406609546e-13,
+        "next_best_bp": 27.08561488773217,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-01-17",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.2248302835720822e-13,
+        "next_best_bp": 20.527142774547443,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-03-13",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.9428869629509028e-13,
+        "next_best_bp": 21.675296383297948,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-07-17",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.0142225607980855e-13,
+        "next_best_bp": 29.638082902223925,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2024,
+        "day": "2024-10-30",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.0890662023928937e-13,
+        "next_best_bp": 25.395983902389165,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-01-15",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1346841552203577e-13,
+        "next_best_bp": 23.303502436660462,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-03-12",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.0616875224636012e-13,
+        "next_best_bp": 16.04465628674496,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-07-16",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 2.1084616311062924e-13,
+        "next_best_bp": 17.25189001657337,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2025,
+        "day": "2025-10-29",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 1.9335379086974474e-13,
+        "next_best_bp": 29.62561627318299,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-01-14",
+        "window": "winter",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1423005690531599e-13,
+        "next_best_bp": 65.43033022970846,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-03-11",
+        "window": "March, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 2.1031172390832483e-13,
+        "next_best_bp": 41.6146011271515,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-07-15",
+        "window": "summer",
+        "status": "ok",
+        "best_offset_h": 4.0,
+        "residual_bp": 0.023637514250288292,
+        "next_best_bp": 44.00293727256974,
+        "applied_offset_h": 4.0,
+        "applied_is_best": true
+      },
+      {
+        "year": 2026,
+        "day": "2026-10-28",
+        "window": "Oct/Nov, US summer time only",
+        "status": "ok",
+        "best_offset_h": 5.0,
+        "residual_bp": 0.07567462840329912,
+        "next_best_bp": 28.274864289312013,
+        "applied_offset_h": 5.0,
+        "applied_is_best": true
+      }
+    ],
+    "coverage": [
+      {
+        "year": 2009,
+        "one_minute_rows": 204903,
+        "sessions": 173,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2010,
+        "one_minute_rows": 298572,
+        "sessions": 260,
+        "sessions_with_2plus_missing_hours": 2
+      },
+      {
+        "year": 2011,
+        "one_minute_rows": 332009,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2012,
+        "one_minute_rows": 347324,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2013,
+        "one_minute_rows": 342532,
+        "sessions": 260,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2014,
+        "one_minute_rows": 335480,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2015,
+        "one_minute_rows": 333551,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2016,
+        "one_minute_rows": 338733,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2017,
+        "one_minute_rows": 322329,
+        "sessions": 257,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2018,
+        "one_minute_rows": 345881,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2019,
+        "one_minute_rows": 334830,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2020,
+        "one_minute_rows": 351420,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2021,
+        "one_minute_rows": 350676,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2022,
+        "one_minute_rows": 351300,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2023,
+        "one_minute_rows": 348439,
+        "sessions": 257,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2024,
+        "one_minute_rows": 353319,
+        "sessions": 259,
+        "sessions_with_2plus_missing_hours": 1
+      },
+      {
+        "year": 2025,
+        "one_minute_rows": 353641,
+        "sessions": 258,
+        "sessions_with_2plus_missing_hours": 0
+      },
+      {
+        "year": 2026,
+        "one_minute_rows": 301448,
+        "sessions": 220,
+        "sessions_with_2plus_missing_hours": 0
+      }
+    ],
+    "spread": {
+      "overall": {
+        "sample_days": 47,
+        "bp_median_all_hours": 13.60866220933654,
+        "bp_median_active_hours": 13.340448239061338,
+        "bp_mean_all_hours": 13.702961363232951,
+        "bp_p90": 16.261074352361206,
+        "bp_median_since_2022": 11.227511647292728,
+        "bp_max_yearly_median": 22.45172878311715,
+        "days_without_usable_ask": [
+          "2010-01-19",
+          "2010-05-18",
+          "2010-09-14",
+          "2011-01-13"
+        ]
+      },
+      "by_year": [
+        {
+          "year": 2011,
+          "days": 2,
+          "price": 37.281,
+          "spread_median": 0.05850000000000222,
+          "spread_active_median": 0.05150000000000077,
+          "spread_p90": 0.06909999999999883,
+          "bp_median": 16.23148293008436,
+          "bp_active_median": 14.124701462519877,
+          "bp_p90": 19.23045072021114
+        },
+        {
+          "year": 2012,
+          "days": 3,
+          "price": 29.936,
+          "spread_median": 0.036000000000001364,
+          "spread_active_median": 0.03400000000000247,
+          "spread_p90": 0.04000000000000625,
+          "bp_median": 12.69374665954044,
+          "bp_active_median": 11.357562800642194,
+          "bp_p90": 14.242478191204965
+        },
+        {
+          "year": 2013,
+          "days": 3,
+          "price": 23.938000000000002,
+          "spread_median": 0.038000000000000256,
+          "spread_active_median": 0.03500000000000014,
+          "spread_p90": 0.04100000000000037,
+          "bp_median": 15.874342050296706,
+          "bp_active_median": 14.621104520010084,
+          "bp_p90": 17.127579580583326
+        },
+        {
+          "year": 2014,
+          "days": 3,
+          "price": 19.588,
+          "spread_median": 0.045000000000001705,
+          "spread_active_median": 0.045000000000001705,
+          "spread_p90": 0.045000000000001705,
+          "bp_median": 22.45172878311715,
+          "bp_active_median": 22.45172878311715,
+          "bp_p90": 22.45172878311715
+        },
+        {
+          "year": 2015,
+          "days": 3,
+          "price": 16.271500000000003,
+          "spread_median": 0.031000000000000583,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.036000000000001364,
+          "bp_median": 20.89543066097097,
+          "bp_active_median": 20.437359493154258,
+          "bp_p90": 23.037284025462416
+        },
+        {
+          "year": 2016,
+          "days": 3,
+          "price": 17.55,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.03300000000000125,
+          "bp_median": 17.09401709401774,
+          "bp_active_median": 17.09401709401774,
+          "bp_p90": 18.803418803419515
+        },
+        {
+          "year": 2017,
+          "days": 4,
+          "price": 16.839,
+          "spread_median": 0.026500000000000412,
+          "spread_active_median": 0.0259999999999998,
+          "spread_p90": 0.031000000000000583,
+          "bp_median": 15.48933670027896,
+          "bp_active_median": 15.191309639421469,
+          "bp_p90": 18.1009423575742
+        },
+        {
+          "year": 2018,
+          "days": 3,
+          "price": 14.86,
+          "spread_median": 0.022999999999999687,
+          "spread_active_median": 0.022999999999999687,
+          "spread_p90": 0.027999999999998693,
+          "bp_median": 15.47779273216668,
+          "bp_active_median": 15.47779273216668,
+          "bp_p90": 17.238194914731693
+        },
+        {
+          "year": 2019,
+          "days": 3,
+          "price": 17.582,
+          "spread_median": 0.022000000000002018,
+          "spread_active_median": 0.02200000000000024,
+          "spread_p90": 0.02900000000000098,
+          "bp_median": 14.052462526767126,
+          "bp_active_median": 14.219087703332145,
+          "bp_p90": 17.06290524400019
+        },
+        {
+          "year": 2020,
+          "days": 3,
+          "price": 25.866,
+          "spread_median": 0.03100000000000236,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.038999999999997925,
+          "bp_median": 11.697230397706724,
+          "bp_active_median": 11.59823706796611,
+          "bp_p90": 14.715870500338815
+        },
+        {
+          "year": 2021,
+          "days": 3,
+          "price": 23.713,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.030000000000001137,
+          "bp_median": 12.651288322861358,
+          "bp_active_median": 12.651288322861358,
+          "bp_p90": 12.651288322861358
+        },
+        {
+          "year": 2022,
+          "days": 3,
+          "price": 23.7195,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.030000000000001137,
+          "bp_median": 12.64782141276213,
+          "bp_active_median": 12.64782141276213,
+          "bp_p90": 12.64782141276213
+        },
+        {
+          "year": 2023,
+          "days": 3,
+          "price": 23.924,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.030000000000001137,
+          "bp_median": 12.53970907874985,
+          "bp_active_median": 12.53970907874985,
+          "bp_p90": 12.53970907874985
+        },
+        {
+          "year": 2024,
+          "days": 3,
+          "price": 28.312,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.030000000000001137,
+          "bp_median": 10.818998160770724,
+          "bp_active_median": 10.818998160770724,
+          "bp_p90": 10.818998160770724
+        },
+        {
+          "year": 2025,
+          "days": 3,
+          "price": 37.853,
+          "spread_median": 0.030000000000001137,
+          "spread_active_median": 0.030000000000001137,
+          "spread_p90": 0.03300000000000125,
+          "bp_median": 7.925395609331132,
+          "bp_active_median": 7.925395609331132,
+          "bp_p90": 7.925395609331132
+        },
+        {
+          "year": 2026,
+          "days": 2,
+          "price": 71.31700000000001,
+          "spread_median": 0.04549999999999699,
+          "spread_active_median": 0.03849999999999909,
+          "spread_p90": 0.0660000000000025,
+          "bp_median": 6.285641745273313,
+          "bp_active_median": 5.3725874122741395,
+          "bp_p90": 9.139080994286953
+        }
+      ]
+    },
+    "daily_reference": {
+      "vendor": "Alpha Vantage GOLD_SILVER_HISTORY (one price per day)",
+      "days_compared": 3836,
+      "first_day": "2012-01-03",
+      "last_day": "2026-11-06",
+      "vendor_price_inside_our_daily_range": 0.9697601668404588,
+      "median_abs_close_gap_bp": 12.648922504914026,
+      "p95_abs_close_gap_bp": 84.25291918372453,
+      "daily_return_correlation": 0.9414551484597267,
+      "median_abs_close_gap_bp_by_year": {
+        "2012": 7.583801001063455,
+        "2013": 20.923647562960333,
+        "2014": 9.840921314576141,
+        "2015": 11.192461253041127,
+        "2016": 11.26728952305046,
+        "2017": 7.733012399881621,
+        "2018": 7.881673670579749,
+        "2019": 20.857394132068528,
+        "2020": 21.65811312426425,
+        "2021": 10.514709677356148,
+        "2022": 11.575383873445249,
+        "2023": 22.399503661771035,
+        "2024": 14.714601765301753,
+        "2025": 13.876985272567412,
+        "2026": 23.397752838298537
+      }
+    }
+  }
+}

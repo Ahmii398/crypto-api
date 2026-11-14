@@ -1,0 +1,7 @@
+# Downloaded market data and derived bar files are reproducible with `python -m gsms.data`.
+data/
+# Per-config trade caches written by the optimiser.
+results/cache/
+__pycache__/
+*.pyc
+.pytest_cache/
