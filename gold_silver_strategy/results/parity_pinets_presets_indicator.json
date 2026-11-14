@@ -1,0 +1,980 @@
+[
+ {
+  "job": 0,
+  "symbol": "XAUUSD",
+  "timeframe": "30m",
+  "first": "2013-03-04",
+  "last": "2013-07-26",
+  "modules": "EMA+SD",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": true,
+   "use_ls": false,
+   "use_sd": true,
+   "use_cp": false,
+   "conf_window": 20,
+   "ema_fast": 9,
+   "ema_slow": 25,
+   "ema_mode": 0,
+   "ls_swing": 5,
+   "ls_source": 0,
+   "ls_mode": 0,
+   "ls_reclaim": 3,
+   "ls_max_age": 300,
+   "sd_swing": 8,
+   "sd_width": 0.5,
+   "sd_strength": 0.5,
+   "sd_max_touch": 99,
+   "sd_inval": 0,
+   "sd_confirm": 0,
+   "sd_max_age": 500,
+   "cp_mask": 15,
+   "cp_strict": false,
+   "cp_confirm": false,
+   "sl_mode": 0,
+   "sl_atr": 2.0,
+   "sl_lookback": 10,
+   "sl_buffer": 0.25,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 3.0,
+   "direction": 0,
+   "trend_len": 100,
+   "sess_start": 0,
+   "sess_end": 7,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 4863,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.433644397115131e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.4370016288012266e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 2.560227585490793e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 104,
+    "true_python": 104,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 20,
+    "true_python": 20,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 94,
+    "true_python": 94,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 110,
+    "true_python": 110,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 322,
+    "true_python": 322,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 105,
+    "true_python": 105,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 105,
+    "true_python": 105,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 451,
+    "true_python": 451,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 146,
+    "true_python": 146,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 101,
+    "true_python": 101,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 924,
+    "true_python": 924,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 920,
+    "true_python": 920,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 8,
+   "python_closed": 8,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 0,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 8,
+   "python": 8,
+   "open_in_pine": 0,
+   "wins_pine": 3,
+   "wins_python": 3,
+   "net_r_pine": 3.2176279757,
+   "net_r_python": 3.217627975730937,
+   "max_dd_r_pine": 3.3218410192,
+   "max_dd_r_python": 3.3218410192288172
+  }
+ },
+ {
+  "job": 1,
+  "symbol": "XAUUSD",
+  "timeframe": "2h",
+  "first": "2018-01-01",
+  "last": "2019-03-29",
+  "modules": "EMA+SD",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": true,
+   "use_ls": false,
+   "use_sd": true,
+   "use_cp": false,
+   "conf_window": 20,
+   "ema_fast": 12,
+   "ema_slow": 18,
+   "ema_mode": 0,
+   "ls_swing": 5,
+   "ls_source": 0,
+   "ls_mode": 0,
+   "ls_reclaim": 3,
+   "ls_max_age": 300,
+   "sd_swing": 5,
+   "sd_width": 0.5,
+   "sd_strength": 2.0,
+   "sd_max_touch": 2,
+   "sd_inval": 0,
+   "sd_confirm": 0,
+   "sd_max_age": 500,
+   "cp_mask": 15,
+   "cp_strict": false,
+   "cp_confirm": false,
+   "sl_mode": 1,
+   "sl_atr": 1.5,
+   "sl_lookback": 5,
+   "sl_buffer": 0.25,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 2.0,
+   "direction": 0,
+   "trend_len": 0,
+   "sess_start": 7,
+   "sess_end": 20,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 3832,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.567519530316531e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.9122126104775816e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 1.9258550310041755e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 320,
+    "true_python": 320,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 64,
+    "true_python": 64,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 97,
+    "true_python": 97,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 79,
+    "true_python": 79,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 206,
+    "true_python": 206,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 61,
+    "true_python": 61,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 65,
+    "true_python": 65,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 242,
+    "true_python": 242,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 73,
+    "true_python": 73,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 70,
+    "true_python": 70,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 695,
+    "true_python": 695,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 701,
+    "true_python": 701,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 27,
+   "python_closed": 27,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 0,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 27,
+   "python": 27,
+   "open_in_pine": 0,
+   "wins_pine": 8,
+   "wins_python": 8,
+   "net_r_pine": -5.1342680934,
+   "net_r_python": -5.134268093551486,
+   "max_dd_r_pine": 8.7562911628,
+   "max_dd_r_python": 8.756291162900409
+  }
+ },
+ {
+  "job": 2,
+  "symbol": "XAUUSD",
+  "timeframe": "1h",
+  "first": "2024-01-01",
+  "last": "2024-06-28",
+  "modules": "LS+SD+CP",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": false,
+   "use_ls": true,
+   "use_sd": true,
+   "use_cp": true,
+   "conf_window": 3,
+   "ema_fast": 9,
+   "ema_slow": 20,
+   "ema_mode": 0,
+   "ls_swing": 8,
+   "ls_source": 1,
+   "ls_mode": 0,
+   "ls_reclaim": 3,
+   "ls_max_age": 300,
+   "sd_swing": 8,
+   "sd_width": 0.5,
+   "sd_strength": 0.0,
+   "sd_max_touch": 3,
+   "sd_inval": 0,
+   "sd_confirm": 0,
+   "sd_max_age": 200,
+   "cp_mask": 11,
+   "cp_strict": true,
+   "cp_confirm": false,
+   "sl_mode": 1,
+   "sl_atr": 1.5,
+   "sl_lookback": 5,
+   "sl_buffer": 0.25,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 4.0,
+   "direction": 0,
+   "trend_len": 0,
+   "sess_start": 7,
+   "sess_end": 20,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 2931,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.4211654903183444e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.6893864085432142e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 2.2282620193436742e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 127,
+    "true_python": 127,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 25,
+    "true_python": 25,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 62,
+    "true_python": 62,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 54,
+    "true_python": 54,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 199,
+    "true_python": 199,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 54,
+    "true_python": 54,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 62,
+    "true_python": 62,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 223,
+    "true_python": 223,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 75,
+    "true_python": 75,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 70,
+    "true_python": 70,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 186,
+    "true_python": 186,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 166,
+    "true_python": 166,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 19,
+   "python_closed": 18,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 1,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 18,
+   "python": 18,
+   "open_in_pine": 0,
+   "wins_pine": 3,
+   "wins_python": 3,
+   "net_r_pine": -4.5684583639,
+   "net_r_python": -4.568458364010523,
+   "max_dd_r_pine": 8.5055837928,
+   "max_dd_r_python": 8.505583792866346
+  }
+ },
+ {
+  "job": 3,
+  "symbol": "XAGUSD",
+  "timeframe": "2h",
+  "first": "2022-06-06",
+  "last": "2023-09-01",
+  "modules": "EMA+SD",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": true,
+   "use_ls": false,
+   "use_sd": true,
+   "use_cp": false,
+   "conf_window": 1,
+   "ema_fast": 12,
+   "ema_slow": 30,
+   "ema_mode": 1,
+   "ls_swing": 5,
+   "ls_source": 0,
+   "ls_mode": 0,
+   "ls_reclaim": 3,
+   "ls_max_age": 300,
+   "sd_swing": 5,
+   "sd_width": 1.5,
+   "sd_strength": 1.0,
+   "sd_max_touch": 99,
+   "sd_inval": 1,
+   "sd_confirm": 1,
+   "sd_max_age": 2000,
+   "cp_mask": 15,
+   "cp_strict": false,
+   "cp_confirm": false,
+   "sl_mode": 1,
+   "sl_atr": 1.5,
+   "sl_lookback": 5,
+   "sl_buffer": 0.1,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 4.0,
+   "direction": 0,
+   "trend_len": 200,
+   "sess_start": 7,
+   "sess_end": 20,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 3852,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.8988716982425444e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.837143770444527e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 2.4370550022467796e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 321,
+    "true_python": 321,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 64,
+    "true_python": 64,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 91,
+    "true_python": 91,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 96,
+    "true_python": 96,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 535,
+    "true_python": 535,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 137,
+    "true_python": 137,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 64,
+    "true_python": 64,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 500,
+    "true_python": 500,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 119,
+    "true_python": 119,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 70,
+    "true_python": 70,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 715,
+    "true_python": 715,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 687,
+    "true_python": 687,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 15,
+   "python_closed": 14,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 1,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 14,
+   "python": 14,
+   "open_in_pine": 0,
+   "wins_pine": 2,
+   "wins_python": 2,
+   "net_r_pine": -5.3401707353,
+   "net_r_python": -5.340170736103262,
+   "max_dd_r_pine": 5.3401707353,
+   "max_dd_r_python": 5.340170736103262
+  }
+ },
+ {
+  "job": 4,
+  "symbol": "XAGUSD",
+  "timeframe": "2h",
+  "first": "2022-06-06",
+  "last": "2023-09-01",
+  "modules": "LS+SD",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": false,
+   "use_ls": true,
+   "use_sd": true,
+   "use_cp": false,
+   "conf_window": 8,
+   "ema_fast": 9,
+   "ema_slow": 20,
+   "ema_mode": 0,
+   "ls_swing": 21,
+   "ls_source": 1,
+   "ls_mode": 0,
+   "ls_reclaim": 3,
+   "ls_max_age": 300,
+   "sd_swing": 3,
+   "sd_width": 2.0,
+   "sd_strength": 0.5,
+   "sd_max_touch": 99,
+   "sd_inval": 1,
+   "sd_confirm": 1,
+   "sd_max_age": 200,
+   "cp_mask": 15,
+   "cp_strict": false,
+   "cp_confirm": false,
+   "sl_mode": 0,
+   "sl_atr": 2.0,
+   "sl_lookback": 10,
+   "sl_buffer": 0.25,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 3.0,
+   "direction": 0,
+   "trend_len": 100,
+   "sess_start": -1,
+   "sess_end": -1,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 3852,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.8988716982425444e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.6254020351880172e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 2.0895996044600906e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 321,
+    "true_python": 321,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 64,
+    "true_python": 64,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 80,
+    "true_python": 80,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 98,
+    "true_python": 98,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 544,
+    "true_python": 544,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 123,
+    "true_python": 123,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 39,
+    "true_python": 39,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 525,
+    "true_python": 525,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 125,
+    "true_python": 125,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 40,
+    "true_python": 40,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 715,
+    "true_python": 715,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 687,
+    "true_python": 687,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 12,
+   "python_closed": 12,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 0,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 12,
+   "python": 12,
+   "open_in_pine": 0,
+   "wins_pine": 3,
+   "wins_python": 3,
+   "net_r_pine": -0.4140323889,
+   "net_r_python": -0.4140323921367237,
+   "max_dd_r_pine": 4.2038480569,
+   "max_dd_r_python": 4.203848058132744
+  }
+ },
+ {
+  "job": 5,
+  "symbol": "XAGUSD",
+  "timeframe": "30m",
+  "first": "2021-01-04",
+  "last": "2021-05-28",
+  "modules": "EMA+LS+SD",
+  "exact": true,
+  "problems": [],
+  "pinets_version": "0.13.1",
+  "pinets_warnings": [],
+  "params": {
+   "use_ema": true,
+   "use_ls": true,
+   "use_sd": true,
+   "use_cp": false,
+   "conf_window": 12,
+   "ema_fast": 9,
+   "ema_slow": 25,
+   "ema_mode": 0,
+   "ls_swing": 5,
+   "ls_source": 1,
+   "ls_mode": 1,
+   "ls_reclaim": 2,
+   "ls_max_age": 300,
+   "sd_swing": 13,
+   "sd_width": 0.5,
+   "sd_strength": 0.5,
+   "sd_max_touch": 1,
+   "sd_inval": 0,
+   "sd_confirm": 1,
+   "sd_max_age": 2000,
+   "cp_mask": 15,
+   "cp_strict": false,
+   "cp_confirm": false,
+   "sl_mode": 2,
+   "sl_atr": 1.5,
+   "sl_lookback": 10,
+   "sl_buffer": 0.1,
+   "min_stop": 0.5,
+   "max_stop": 5.0,
+   "rr": 3.0,
+   "direction": 0,
+   "trend_len": 200,
+   "sess_start": -1,
+   "sess_end": -1,
+   "atr_len": 14,
+   "warmup": 300
+  },
+  "bars": 4766,
+  "series": {
+   "atr": {
+    "max_abs_diff": 2.3684722239014633e-10,
+    "nan_mismatch": 0
+   },
+   "emaFast": {
+    "max_abs_diff": 1.4725642927260196e-10,
+    "nan_mismatch": 0
+   },
+   "emaSlow": {
+    "max_abs_diff": 2.3998936171665264e-10,
+    "nan_mismatch": 0
+   },
+   "pdh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pdl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwh": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "pwl": {
+    "max_abs_diff": 0.0,
+    "nan_mismatch": 0
+   },
+   "newDay": {
+    "true_pine": 103,
+    "true_python": 103,
+    "mismatch": 0
+   },
+   "newWeek": {
+    "true_pine": 20,
+    "true_python": 20,
+    "mismatch": 0
+   },
+   "lsBull": {
+    "true_pine": 127,
+    "true_python": 127,
+    "mismatch": 0
+   },
+   "lsBear": {
+    "true_pine": 119,
+    "true_python": 119,
+    "mismatch": 0
+   },
+   "sdTouchBull": {
+    "true_pine": 94,
+    "true_python": 94,
+    "mismatch": 0
+   },
+   "sdRejBull": {
+    "true_pine": 30,
+    "true_python": 30,
+    "mismatch": 0
+   },
+   "sdInvalBull": {
+    "true_pine": 57,
+    "true_python": 57,
+    "mismatch": 0
+   },
+   "sdTouchBear": {
+    "true_pine": 169,
+    "true_python": 169,
+    "mismatch": 0
+   },
+   "sdRejBear": {
+    "true_pine": 53,
+    "true_python": 53,
+    "mismatch": 0
+   },
+   "sdInvalBear": {
+    "true_pine": 79,
+    "true_python": 79,
+    "mismatch": 0
+   },
+   "cpBull": {
+    "true_pine": 945,
+    "true_python": 945,
+    "mismatch": 0
+   },
+   "cpBear": {
+    "true_pine": 896,
+    "true_python": 896,
+    "mismatch": 0
+   },
+   "barHour": {
+    "mismatch": 0
+   }
+  },
+  "signals": {
+   "pine": 6,
+   "python_closed": 6,
+   "pine_only_before_last_exit": 0,
+   "pine_only_at_end": 0,
+   "python_only": 0,
+   "direction_mismatch": 0
+  },
+  "trades": {
+   "pine": 6,
+   "python": 6,
+   "open_in_pine": 0,
+   "wins_pine": 1,
+   "wins_python": 1,
+   "net_r_pine": -2.1336985792,
+   "net_r_python": -2.13369857945636,
+   "max_dd_r_pine": 3.0664225506,
+   "max_dd_r_python": 3.0664225504871574
+  }
+ }
+]

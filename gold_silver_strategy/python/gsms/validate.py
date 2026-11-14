@@ -14,6 +14,8 @@ For every preset:
                              entries: does the entry logic add anything?
   final_bootstrap.csv        bootstrap confidence interval of the expectancy
   final_trades/<preset>.csv  every trade
+for every strategy that met the selection rules (not only the presets):
+  eligible_out_of_sample.csv
 and per preset dataset:
   walk_forward.csv           re-optimise on 4 years, trade the next year, roll forward
 """
@@ -190,6 +192,31 @@ def walk_forward(datasets: list[tuple[str, str]], n_random: int, seed: int, work
     return pd.DataFrame(rows)
 
 
+def eligible_out_of_sample() -> pd.DataFrame:
+    """Out-of-sample result of EVERY strategy that met the selection rules, not just the presets.
+
+    Six presets are a small sample. This asks the general question: does being profitable in
+    both the train and the validation period say anything about the following years?
+    """
+    from . import params as P
+    from . import select
+
+    df = search.load()
+    eligible = df[df["use_sd"] & (df["direction"] == P.DIR_BOTH) & select._enough(df) & (df["train_net_r"] > 0) & (df["val_net_r"] > 0)]
+    cache, rows = {}, []
+    for _, row in eligible.iterrows():
+        bars = _bars(row["symbol"], row["timeframe"], cache)
+        trades = backtest.run(bars, search.params_of(row), start=ALL[0])
+        oos = metrics.summarize(trades, *search.OOS)
+        rows.append({
+            "symbol": row["symbol"], "timeframe": row["timeframe"], "strategy_id": row["strategy_id"], "modules": row["modules"],
+            "train_net_r": row["train_net_r"], "train_profit_factor": row["train_profit_factor"], "val_net_r": row["val_net_r"], "val_profit_factor": row["val_profit_factor"],
+            "score": min(row["train_sharpe_monthly"], row["val_sharpe_monthly"]),
+            **{f"oos_{k}": oos[k] for k in ("trades", "win_rate", "profit_factor", "expectancy_r", "gross_expectancy_r", "net_r", "max_dd_r", "sharpe_monthly")},
+        })  # fmt: skip
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     presets = load_presets()
     cache, tables = {}, {}
@@ -213,6 +240,11 @@ def main() -> None:
 
     for name, rows in (("final_performance", perf), ("final_yearly", years), ("final_regimes", regime_rows), ("final_random_baseline", random_rows), ("final_bootstrap", boot)):
         pd.DataFrame(rows).to_csv(RESULTS_DIR / f"{name}.csv", index=False, float_format="%.5f")
+
+    eligible = eligible_out_of_sample()
+    eligible.to_csv(RESULTS_DIR / "eligible_out_of_sample.csv", index=False, float_format="%.5f")
+    for symbol, part in eligible.groupby("symbol"):
+        print(f"all {len(part)} eligible {symbol} strategies out of sample: {(part['oos_net_r'] > 0).mean():.0%} profitable, median expectancy {part['oos_expectancy_r'].median():+.3f} R (before costs {part['oos_gross_expectancy_r'].median():+.3f} R)", flush=True)
 
     datasets = sorted({(preset["symbol"], preset["timeframe"]) for preset in presets})
     n_random = int(search.load([datasets[0][0]], [datasets[0][1]])["group"].eq("random").sum())

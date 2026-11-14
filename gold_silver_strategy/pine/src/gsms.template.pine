@@ -90,6 +90,9 @@ bool   i_showSweeps = input.bool(true, "Liquidity sweep markers", group = G_VIS)
 bool   i_showCandle = input.bool(false, "Candlestick pattern markers", group = G_VIS)
 bool   i_showEma    = input.bool(true, "EMA lines", group = G_VIS)
 bool   i_showLevels = input.bool(true, "Stop / target of the open trade", group = G_VIS)
+//#if STRATEGY
+bool   i_showResults = input.bool(true, "Results table", group = G_VIS)
+//#endif
 //#if INDICATOR
 bool   i_showTable  = input.bool(true, "Dashboard", group = G_VIS)
 float  i_costPct    = input.float(0.0175, "Dashboard: trading cost per side (% of price)", minval = 0.0, step = 0.0025, group = G_VIS, tooltip = "Used only for the net results shown in the dashboard. Research values: 0.0175 for XAUUSD, 0.08 for XAGUSD.")
@@ -747,6 +750,27 @@ bool presetSymOk = presetMetal == "" or str.contains(tickerUpper, presetMetal) o
 var table presetWarning = table.new(position.bottom_center, 1, 1)
 if barstate.islast and not (presetTfOk and presetSymOk)
     table.cell(presetWarning, 0, 0, "Preset \"" + i_preset + "\" was tested on " + presetSymbol + " " + presetTf + " only", text_color = color.white, bgcolor = color.new(color.red, 20), text_size = size.small)
+
+//#if STRATEGY
+// Results table: the same figures as the Strategy Tester, plus the result in R and the tested span.
+var int firstBarTime = time
+var table results = table.new(position.bottom_right, 2, 8, bgcolor = color.new(color.black, 75), border_width = 1, border_color = color.new(color.gray, 60))
+f_result(int row, string name, string value, color valueColor) =>
+    table.cell(results, 0, row, name, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
+    table.cell(results, 1, row, value, text_color = valueColor, text_size = size.small, text_halign = text.align_right)
+
+if i_showResults and barstate.islast
+    color C_TXT = color.new(color.white, 0)
+    int closed = strategy.closedtrades
+    f_result(0, "GSMS Strategy", i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_TXT)
+    f_result(1, "Tested from", str.format_time(firstBarTime, "yyyy-MM-dd", "UTC") + "  (" + str.tostring(bar_index + 1) + " bars)", C_TXT)
+    f_result(2, "Closed trades", str.tostring(closed), C_TXT)
+    f_result(3, "Win rate", closed > 0 ? str.tostring(100.0 * strategy.wintrades / closed, "#.0") + "%" : "-", C_TXT)
+    f_result(4, "Profit factor", strategy.grossloss > 0 ? str.tostring(strategy.grossprofit / strategy.grossloss, "#.00") : "-", C_TXT)
+    f_result(5, "Net profit", str.tostring(strategy.netprofit, "#.00"), strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(6, "Net result in R", str.tostring(strategy.netprofit / i_riskCash, "#.0") + " R", strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(7, "Max drawdown", str.tostring(strategy.max_drawdown, "#.00"), C_TXT)
+//#endif
 
 //#if INDICATOR
 // Dashboard

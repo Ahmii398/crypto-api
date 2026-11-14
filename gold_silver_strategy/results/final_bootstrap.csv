@@ -1,0 +1,25 @@
+preset,period,trades,expectancy_r,ci95_low,ci95_high,prob_expectancy_not_positive
+Gold 30m Conservative,train,183,0.30410,0.02361,0.58657,0.01830
+Gold 30m Conservative,validation,108,0.11486,-0.22361,0.47812,0.25350
+Gold 30m Conservative,out_of_sample,138,-0.06149,-0.35192,0.23342,0.68150
+Gold 30m Conservative,all,429,0.13886,-0.03776,0.31724,0.06270
+Gold 2h Balanced,train,161,0.16669,-0.05485,0.39456,0.07330
+Gold 2h Balanced,validation,92,0.23599,-0.06022,0.53145,0.06060
+Gold 2h Balanced,out_of_sample,94,-0.22776,-0.48555,0.05940,0.94750
+Gold 2h Balanced,all,347,0.07821,-0.07423,0.23372,0.15780
+Gold 1h Aggressive,train,257,0.12839,-0.13043,0.39647,0.18430
+Gold 1h Aggressive,validation,125,0.26029,-0.13530,0.66062,0.09370
+Gold 1h Aggressive,out_of_sample,144,-0.16787,-0.48275,0.16055,0.84510
+Gold 1h Aggressive,all,526,0.07863,-0.09926,0.26671,0.19690
+Silver 2h Conservative,train,131,0.06673,-0.29218,0.45495,0.36990
+Silver 2h Conservative,validation,69,0.21865,-0.29600,0.76439,0.21440
+Silver 2h Conservative,out_of_sample,80,-0.18060,-0.60067,0.26260,0.79140
+Silver 2h Conservative,all,280,0.03350,-0.21163,0.29080,0.39990
+Silver 2h Balanced,train,96,0.12446,-0.24415,0.50217,0.26130
+Silver 2h Balanced,validation,50,0.29570,-0.24996,0.84684,0.15310
+Silver 2h Balanced,out_of_sample,67,0.21212,-0.21186,0.68728,0.17660
+Silver 2h Balanced,all,213,0.19223,-0.05498,0.44216,0.06720
+Silver 30m Aggressive,train,168,0.02558,-0.25322,0.30860,0.42940
+Silver 30m Aggressive,validation,82,0.17231,-0.23859,0.58572,0.21610
+Silver 30m Aggressive,out_of_sample,98,-0.33162,-0.64961,0.00139,0.97420
+Silver 30m Aggressive,all,348,-0.04043,-0.23006,0.14826,0.66220

@@ -122,7 +122,7 @@ def render(target: str, presets: list[dict], default: str = PRESET_CUSTOM, debug
     assert default in names, f"unknown default preset {default!r}"
     params = [Params.from_dict(preset["params"]) for preset in presets]
 
-    tooltip = "A preset replaces every setting in groups 1-8 with values from the research report. Each preset was tested on one symbol and timeframe only; the dashboard warns when the chart does not match."
+    tooltip = "A preset replaces every setting in groups 1-8. Presets are the settings that tested best on 2010-2021 data for one symbol and timeframe. They are not a performance promise: read REPORT.md for their out-of-sample results before relying on them."
     options = (
         f"string i_preset = input.string({_literal('string', default)}, \"Preset\", options = [{', '.join(_literal('string', n) for n in names)}], tooltip = {_literal('string', tooltip)})"
     )

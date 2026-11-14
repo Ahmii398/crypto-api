@@ -242,20 +242,29 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=20261114)
     parser.add_argument("--target", choices=["STRATEGY", "INDICATOR"], default="STRATEGY")
     parser.add_argument("--offset", type=int, default=0, help="rotate the slice order, so the same strategies meet other slices")
+    parser.add_argument("--final", action="store_true", help="check the shipped presets (results/final_configs.json) instead of random strategies")
     args = parser.parse_args()
 
     rng = np.random.default_rng(args.seed)
     frames = {}
     rows = []
-    for index in range(args.jobs):
-        symbol, timeframe, first, last = SLICES[(index + args.offset) % len(SLICES)]
+    shipped = pine_build.load_presets() if args.final else []
+    for index in range(len(shipped) if args.final else args.jobs):
+        if args.final:
+            # The shipped script with all its presets; only the default selection differs.
+            chosen = shipped[index]
+            symbol, timeframe, first, last = next(s for s in SLICES if s[:2] == (chosen["symbol"], chosen["timeframe"]))
+            p = Params.from_dict(chosen["params"])
+            source = pine_build.render(args.target, shipped, default=chosen["name"], debug=True)
+        else:
+            symbol, timeframe, first, last = SLICES[(index + args.offset) % len(SLICES)]
+            p = job_params(rng, index)
+            preset = {"name": "parity", "symbol": symbol, "timeframe": timeframe, "params": p.to_dict()}
+            source = pine_build.render(args.target, [preset], default="parity", debug=True)
         key = (symbol, timeframe)
         if key not in frames:
             frames[key] = _slice(symbol, timeframe, first, last)
         frame = frames[key]
-        p = job_params(rng, index)
-        preset = {"name": "parity", "symbol": symbol, "timeframe": timeframe, "params": p.to_dict()}
-        source = pine_build.render(args.target, [preset], default="parity", debug=True)
         with tempfile.TemporaryDirectory() as tmp:
             result = run_pinets(frame, symbol, timeframe, source, Path(tmp), DEBUG_PLOTS + (INDICATOR_PLOTS if args.target == "INDICATOR" else []))
         report = compare(frame, symbol, timeframe, p, result, args.target)
@@ -266,10 +275,10 @@ def main() -> None:
             "params": p.to_dict(), **report,
         })  # fmt: skip
         trades = report["trades"]
-        print(f"[{index + 1:3d}/{args.jobs}] {symbol} {timeframe:>3s} {p.modules():12s} bars {report['bars']:5d}  trades pine {trades['pine']:4d} python {trades['python']:4d}  {'EXACT' if ok else 'DIFF: ' + '; '.join(problems)[:300]}", flush=True)
+        print(f"[{index + 1:3d}] {symbol} {timeframe:>3s} {p.modules():12s} bars {report['bars']:5d}  trades pine {trades['pine']:4d} python {trades['python']:4d}  {'EXACT' if ok else 'DIFF: ' + '; '.join(problems)[:300]}", flush=True)
 
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
-    (RESULTS_DIR / f"parity_pinets_{args.target.lower()}.json").write_text(json.dumps(rows, indent=1, default=float))
+    (RESULTS_DIR / f"parity_pinets_{'presets_' if args.final else ''}{args.target.lower()}.json").write_text(json.dumps(rows, indent=1, default=float))
     exact = sum(r["exact"] for r in rows)
     print(f"\n{exact}/{len(rows)} jobs match exactly; {sum(r['trades']['python'] for r in rows)} trades compared")
 
