@@ -1,0 +1,41 @@
+{
+ "symbol": "XAUUSD",
+ "timeframe": "1D",
+ "config": "auto",
+ "tradingview_symbol": "OANDA:XAUUSD",
+ "recorded_utc": "2026-11-14T16:02:03.022Z",
+ "applied": {
+  "preset": "Auto (by timeframe)",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.0175,
+  "commission_type": "Percent"
+ },
+ "legend": "GSMS Strategy Auto (by timeframe) 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 3,981.523 4,028.756 ∅ 0.000 0.000 0.000 0",
+ "tester": {
+  "range": "Jan 6, 1833 — Nov 12, 2026",
+  "empty": false,
+  "net_profit_usd": 9895.52,
+  "net_profit_pct": 9.9,
+  "max_drawdown_usd": 84040.34,
+  "max_drawdown_pct": 44.09,
+  "percent_profitable": 20.29,
+  "winning_trades": 128,
+  "total_trades": 631,
+  "profit_factor": 1.017,
+  "gross_profit_usd": 587535.49,
+  "gross_loss_usd": 577639.96,
+  "long_pnl_usd": 42944.71,
+  "short_pnl_usd": -33049.19,
+  "expectancy_usd": 15.68,
+  "avg_profit_pct": 3.35,
+  "avg_loss_pct": -1.25
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n+9,895.52USD+9.90%\nMax drawdown\n84,040.34USD44.09%\nProfitable trades\n20.29%128/631\nProfit factor\n1.017\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n+9,895.52\nBuy and hold\n+11,973,880.00\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n587,535.49USD587.54%\nGross loss\n577,639.96USD577.64%\nProfit factor\n1.017\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n+9,895.53\nUSD\nLong\n+42,944.71\nUSD\nShort\n−33,049.19\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n15.68USD−0.10%\nOutliers PnL\n163,104.95USD163.10%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−1.25%\nAverage profit\n3.35%\nTrades distribution\n631\nTotal trades\nWinners\n128 trades\n20.29%\nLosers\n503 trades\n79.71%\nBreakevens\n0 trades\n0.00%",
+ "trades": [],
+ "open_trade": []
+}

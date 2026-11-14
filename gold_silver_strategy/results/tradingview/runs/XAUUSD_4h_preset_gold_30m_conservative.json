@@ -1,0 +1,144 @@
+{
+ "symbol": "XAUUSD",
+ "timeframe": "4h",
+ "config": "preset_gold_30m_conservative",
+ "tradingview_symbol": "OANDA:XAUUSD",
+ "recorded_utc": "2026-11-14T14:11:53.498Z",
+ "applied": {
+  "preset": "Gold 30m Conservative",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.0175,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Gold Spot / U.S. Dollar 4h OANDA O 3,885.460 H 3,888.010 L 3,869.530 C 3,884.685 −0.825 (−0.02%)",
+ "legend": "GSMS Strategy Gold 30m Conservative 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 3,904.165 3,960.622 4,027.722 0.000 0.0",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Jan 2, 2023 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": -6417.75,
+  "net_profit_pct": -6.42,
+  "max_drawdown_usd": 6694,
+  "max_drawdown_pct": 6.69,
+  "percent_profitable": 10,
+  "winning_trades": 1,
+  "total_trades": 10,
+  "profit_factor": 0.317,
+  "gross_profit_usd": 2979.18,
+  "gross_loss_usd": 9396.93,
+  "long_pnl_usd": -106.19,
+  "short_pnl_usd": -6311.56,
+  "expectancy_usd": -641.77,
+  "avg_profit_pct": null,
+  "avg_loss_pct": -1.17
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n−6,417.75USD−6.42%\nMax drawdown\n6,694.00USD6.69%\nProfitable trades\n10.00%1/10\nProfit factor\n0.317\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n−6,417.75\nBuy and hold\n+110,047.67\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n2,979.18USD2.98%\nGross loss\n9,396.93USD9.40%\nProfit factor\n0.317\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n−6,417.75\nUSD\nLong\n−106.19\nUSD\nShort\n−6,311.56\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n−641.77USD−0.49%\nOutliers PnL\n2,979.18USD2.98%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−1.17%\nAverage profit\n—\nTrades distribution\n10\nTotal trades\nWinners\n1 trade\n10.00%\nLosers\n9 trades\n90.00%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 1,
+   "side": "Long",
+   "exit_time": "Apr 27, 2023, 13:00",
+   "entry_time": "Apr 26, 2023, 05:00",
+   "exit_price": 1975.034,
+   "entry_price": 1995.585,
+   "size": 48.65,
+   "net_pnl": -1033.61
+  },
+  {
+   "n": 2,
+   "side": "Short",
+   "exit_time": "Feb 7, 2024, 14:00",
+   "entry_time": "Feb 5, 2024, 10:00",
+   "exit_price": 2042.142,
+   "entry_price": 2022.745,
+   "size": 51.55,
+   "net_pnl": -1036.59
+  },
+  {
+   "n": 3,
+   "side": "Short",
+   "exit_time": "Jun 19, 2024, 05:00",
+   "entry_time": "Jun 18, 2024, 09:00",
+   "exit_price": 2333.862,
+   "entry_price": 2311.345,
+   "size": 44.45,
+   "net_pnl": -1037.01
+  },
+  {
+   "n": 4,
+   "side": "Long",
+   "exit_time": "Dec 18, 2024, 18:00",
+   "entry_time": "Dec 9, 2024, 10:00",
+   "exit_price": 2626.083,
+   "entry_price": 2655.695,
+   "size": 33.78,
+   "net_pnl": -1031.52
+  },
+  {
+   "n": 5,
+   "side": "Short",
+   "exit_time": "Jul 21, 2025, 05:00",
+   "entry_time": "Jul 17, 2025, 09:00",
+   "exit_price": 3361.5,
+   "entry_price": 3328.795,
+   "size": 30.59,
+   "net_pnl": -1036.26
+  },
+  {
+   "n": 6,
+   "side": "Short",
+   "exit_time": "Aug 22, 2025, 13:00",
+   "entry_time": "Aug 22, 2025, 05:00",
+   "exit_price": 3350.954,
+   "entry_price": 3328.49,
+   "size": 44.55,
+   "net_pnl": -1052.85
+  },
+  {
+   "n": 7,
+   "side": "Long",
+   "exit_time": "Jan 18, 2026, 22:00",
+   "entry_time": "Jan 5, 2026, 10:00",
+   "exit_price": 4686.587,
+   "entry_price": 4434.85,
+   "size": 11.91,
+   "net_pnl": 2979.18
+  },
+  {
+   "n": 8,
+   "side": "Long",
+   "exit_time": "May 14, 2026, 21:00",
+   "entry_time": "May 6, 2026, 09:00",
+   "exit_price": 4620.38,
+   "entry_price": 4700.63,
+   "size": 12.46,
+   "net_pnl": -1020.24
+  },
+  {
+   "n": 9,
+   "side": "Short",
+   "exit_time": "Jul 26, 2026, 21:00",
+   "entry_time": "Jul 24, 2026, 05:00",
+   "exit_price": 4090.16,
+   "entry_price": 4027.13,
+   "size": 17.37,
+   "net_pnl": -1119.51
+  },
+  {
+   "n": 10,
+   "side": "Short",
+   "exit_time": "Oct 16, 2026, 09:00",
+   "entry_time": "Oct 14, 2026, 09:00",
+   "exit_price": 4191.707,
+   "entry_price": 4143.27,
+   "size": 20.63,
+   "net_pnl": -1029.35
+  }
+ ],
+ "open_trade": []
+}

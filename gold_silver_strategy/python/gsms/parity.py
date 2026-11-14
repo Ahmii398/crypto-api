@@ -108,7 +108,9 @@ def compare(frame: pd.DataFrame, symbol: str, timeframe: str, p: Params, result:
     """Bar-by-bar and trade-by-trade differences between PineTS and the Python engine."""
     bars = backtest.Bars(frame, symbol, timeframe)
     tick = MINTICK[symbol]
-    trades = backtest.run(bars, p, cost_pct_per_side=COMMISSION_PCT, tick=tick)
+    # The strategy declares one commission; the indicator's dashboard picks the cost by metal.
+    cost_pct = backtest.COST_PCT_PER_SIDE[symbol] if target == "INDICATOR" else COMMISSION_PCT
+    trades = backtest.run(bars, p, cost_pct_per_side=cost_pct, tick=tick)
     n = len(bars)
     ls = bars.liquidity(p)
     sd = bars.zones(p)

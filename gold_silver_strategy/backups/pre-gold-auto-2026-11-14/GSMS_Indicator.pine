@@ -1,0 +1,804 @@
+//@version=6
+// ─────────────────────────────────────────────────────────────────────────────
+//  GSMS — Gold & Silver Multi-Strategy
+//  Liquidity sweeps + supply/demand zones + EMA crossover + candlestick patterns
+//
+//  GENERATED FILE. Edit pine/src/gsms.template.pine and run
+//      python -m gsms.pine_build
+//  The indicator and the strategy are built from the same template, so their
+//  signal logic is identical line for line. The rules are documented in SPEC.md
+//  and mirrored by the Python engine (python/gsms/engine.py).
+//
+//  No repainting: every signal is evaluated on a closed bar, higher-timeframe
+//  levels use the previous completed day/week, and entries are taken at the
+//  open of the following bar.
+// ─────────────────────────────────────────────────────────────────────────────
+indicator("GSMS - Gold & Silver Multi-Strategy", shorttitle = "GSMS", overlay = true, max_bars_back = 500, max_boxes_count = 300, max_labels_count = 300, max_lines_count = 100)
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Inputs
+// ═════════════════════════════════════════════════════════════════════════════
+string PRESET_CUSTOM = "Custom (inputs below)"
+string i_preset = input.string("Custom (inputs below)", "Preset", options = ["Custom (inputs below)", "Gold 30m Conservative", "Gold 2h Balanced", "Gold 1h Aggressive", "Silver 2h Conservative", "Silver 2h Balanced", "Silver 30m Aggressive"], tooltip = "A preset replaces every setting in groups 1-8. Presets are the settings that tested best on 2010-2021 data for one symbol and timeframe. They are not a performance promise: read REPORT.md for their out-of-sample results before relying on them.")
+
+string G_MOD = "1 · Strategy modules (all enabled modules must agree)"
+bool   i_useEma     = input.bool(true, "EMA crossover", group = G_MOD)
+bool   i_useLs      = input.bool(true, "Liquidity sweep", group = G_MOD)
+bool   i_useSd      = input.bool(true, "Supply / demand zones", group = G_MOD)
+bool   i_useCp      = input.bool(true, "Candlestick patterns", group = G_MOD)
+int    i_confWindow = input.int(5, "Confluence window (bars)", minval = 1, maxval = 50, group = G_MOD, tooltip = "Every enabled module must have signalled in the same direction within this many bars (1 = same bar), and at least one of them must signal on the current bar.")
+
+string G_EMA = "2 · EMA"
+int    i_emaFast = input.int(9, "Fast EMA", minval = 1, group = G_EMA)
+int    i_emaSlow = input.int(20, "Slow EMA", minval = 2, group = G_EMA)
+string i_emaMode = input.string("Cross", "EMA role", options = ["Cross", "Trend"], group = G_EMA, tooltip = "Cross: a fast/slow crossover is a signal. Trend: fast above/below slow is only a direction filter and never triggers a trade by itself.")
+
+string G_LS = "3 · Liquidity sweep"
+int    i_lsSwing   = input.int(5, "Swing length (bars each side)", minval = 1, maxval = 100, group = G_LS)
+string i_lsSource  = input.string("Swings", "Liquidity levels", options = ["Swings", "Swings + PDH/PDL", "Swings + PDH/PDL + PWH/PWL", "PDH/PDL", "PDH/PDL + PWH/PWL"], group = G_LS, tooltip = "PDH/PDL = previous day high/low, PWH/PWL = previous week high/low.")
+string i_lsMode    = input.string("Wick", "Sweep confirmation", options = ["Wick", "Close confirm"], group = G_LS, tooltip = "Wick: the bar pierces the level and closes back inside. Close confirm: after the pierce, a later bar must close back inside in the trade direction.")
+int    i_lsReclaim = input.int(3, "Close confirm: bars allowed to reclaim", minval = 1, maxval = 20, group = G_LS)
+int    i_lsMaxAge  = input.int(300, "Swing level lifetime (bars)", minval = 10, group = G_LS)
+
+string G_SD = "4 · Supply / demand zones"
+int    i_sdSwing    = input.int(10, "Swing length (bars each side)", minval = 1, maxval = 100, group = G_SD)
+float  i_sdWidth    = input.float(1.0, "Zone height (x ATR)", minval = 0.1, step = 0.1, group = G_SD)
+float  i_sdStrength = input.float(1.0, "Minimum departure (x ATR)", minval = 0.0, step = 0.25, group = G_SD, tooltip = "How far price must have moved away from the zone by the time the swing is confirmed. Higher = fewer, stronger zones.")
+int    i_sdMaxTouch = input.int(2, "Maximum touches traded", minval = 1, maxval = 99, group = G_SD, tooltip = "1 = fresh zones only (first return). 99 = no limit.")
+string i_sdInval    = input.string("Close beyond", "Zone invalidation", options = ["Close beyond", "Wick beyond"], group = G_SD)
+string i_sdConfirm  = input.string("Rejection close", "Zone entry confirmation", options = ["Touch", "Rejection close"], group = G_SD, tooltip = "Touch: trading inside the zone is a signal. Rejection close: the bar must also close beyond the zone edge in the trade direction.")
+int    i_sdMaxAge   = input.int(500, "Zone lifetime (bars)", minval = 10, group = G_SD)
+
+string G_CP = "5 · Candlestick patterns"
+bool   i_cpEngulf  = input.bool(true, "Engulfing", group = G_CP)
+bool   i_cpPin     = input.bool(true, "Pin bar (hammer / shooting star)", group = G_CP)
+bool   i_cpStar    = input.bool(true, "Morning / evening star", group = G_CP)
+bool   i_cpPierce  = input.bool(true, "Piercing line / dark cloud cover", group = G_CP)
+bool   i_cpStrict  = input.bool(false, "Strict pattern rules", group = G_CP)
+bool   i_cpConfirm = input.bool(false, "Require confirmation candle", group = G_CP, tooltip = "The bar after the pattern must close beyond the pattern bar's high (bullish) or low (bearish).")
+
+string G_TM = "6 · Trade management"
+string i_slMode     = input.string("ATR", "Stop-loss method", options = ["ATR", "Structure", "Zone"], group = G_TM, tooltip = "ATR: fixed ATR multiple. Structure: beyond the recent swing extreme. Zone: beyond the supply/demand zone that was touched (falls back to Structure when no zone is in play).")
+float  i_slAtr      = input.float(1.5, "ATR stop multiple", minval = 0.1, step = 0.1, group = G_TM)
+int    i_slLookback = input.int(10, "Structure stop lookback (bars)", minval = 1, maxval = 200, group = G_TM)
+float  i_slBuffer   = input.float(0.25, "Structure / zone stop buffer (x ATR)", minval = 0.0, step = 0.05, group = G_TM)
+float  i_minStop    = input.float(0.5, "Minimum stop distance (x ATR)", minval = 0.05, step = 0.05, group = G_TM)
+float  i_maxStop    = input.float(5.0, "Maximum stop distance (x ATR)", minval = 0.5, step = 0.5, group = G_TM)
+float  i_rr         = input.float(2.0, "Risk : reward target", minval = 0.25, step = 0.25, group = G_TM)
+float  i_riskCash   = input.float(1000.0, "Risk per trade (account currency)", minval = 1.0, group = G_TM, tooltip = "Position size = this amount / stop distance. 1000 on a 100,000 account = 1% risk per trade.")
+
+string G_FLT = "7 · Filters"
+string i_direction = input.string("Both", "Trade direction", options = ["Both", "Long only", "Short only"], group = G_FLT)
+int    i_trendLen  = input.int(0, "Trend filter EMA length (0 = off)", minval = 0, group = G_FLT, tooltip = "Longs only above this EMA, shorts only below it.")
+int    i_sessStart = input.int(-1, "Session start hour UTC (-1 = off)", minval = -1, maxval = 23, group = G_FLT)
+int    i_sessEnd   = input.int(-1, "Session end hour UTC", minval = -1, maxval = 24, group = G_FLT, tooltip = "Signals are taken on bars that open at or after the start hour and before the end hour (UTC).")
+bool   i_useDates  = input.bool(false, "Limit to date window", group = G_FLT)
+int    i_dateFrom  = input.time(timestamp("01 Jan 2009 00:00 +0000"), "From", group = G_FLT)
+int    i_dateTo    = input.time(timestamp("01 Jan 2100 00:00 +0000"), "To", group = G_FLT)
+
+string G_ADV = "8 · Advanced"
+int    i_atrLen = input.int(14, "ATR length", minval = 1, group = G_ADV)
+int    i_warmup = input.int(300, "Warm-up bars before the first signal", minval = 0, group = G_ADV)
+
+string G_VIS = "9 · Display"
+bool   i_showZones  = input.bool(true, "Supply / demand zones", group = G_VIS)
+bool   i_showSweeps = input.bool(true, "Liquidity sweep markers", group = G_VIS)
+bool   i_showCandle = input.bool(false, "Candlestick pattern markers", group = G_VIS)
+bool   i_showEma    = input.bool(true, "EMA lines", group = G_VIS)
+bool   i_showLevels = input.bool(true, "Stop / target of the open trade", group = G_VIS)
+bool   i_showTable  = input.bool(true, "Dashboard", group = G_VIS)
+bool   i_costAuto   = input.bool(true, "Dashboard: automatic trading cost (0.0175 % gold, 0.08 % silver per side)", group = G_VIS, tooltip = "Used only for the net results shown in the dashboard. Silver is recognised by XAG or SILVER in the ticker; everything else gets the gold value.")
+float  i_costPct    = input.float(0.0175, "Dashboard: manual trading cost per side (% of price)", minval = 0.0, step = 0.0025, group = G_VIS, tooltip = "Used when the automatic cost is switched off.")
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Effective parameters (preset or inputs)
+// ═════════════════════════════════════════════════════════════════════════════
+int presetId = i_preset == "Gold 30m Conservative" ? 1 : i_preset == "Gold 2h Balanced" ? 2 : i_preset == "Gold 1h Aggressive" ? 3 : i_preset == "Silver 2h Conservative" ? 4 : i_preset == "Silver 2h Balanced" ? 5 : i_preset == "Silver 30m Aggressive" ? 6 : 0
+bool useEma = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? false : presetId == 6 ? true : i_useEma
+bool useLs = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? true : presetId == 6 ? true : i_useLs
+bool useSd = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_useSd
+bool useCp = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_useCp
+int confWindow = presetId == 1 ? 20 : presetId == 2 ? 20 : presetId == 3 ? 3 : presetId == 4 ? 1 : presetId == 5 ? 8 : presetId == 6 ? 12 : i_confWindow
+int emaFastLen = presetId == 1 ? 9 : presetId == 2 ? 12 : presetId == 3 ? 9 : presetId == 4 ? 12 : presetId == 5 ? 9 : presetId == 6 ? 9 : i_emaFast
+int emaSlowLen = presetId == 1 ? 25 : presetId == 2 ? 18 : presetId == 3 ? 20 : presetId == 4 ? 30 : presetId == 5 ? 20 : presetId == 6 ? 25 : i_emaSlow
+string emaMode = presetId == 1 ? "Cross" : presetId == 2 ? "Cross" : presetId == 3 ? "Cross" : presetId == 4 ? "Trend" : presetId == 5 ? "Cross" : presetId == 6 ? "Cross" : i_emaMode
+int lsSwing = presetId == 1 ? 5 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 21 : presetId == 6 ? 5 : i_lsSwing
+string lsSource = presetId == 1 ? "Swings" : presetId == 2 ? "Swings" : presetId == 3 ? "Swings + PDH/PDL" : presetId == 4 ? "Swings" : presetId == 5 ? "Swings + PDH/PDL" : presetId == 6 ? "Swings + PDH/PDL" : i_lsSource
+string lsMode = presetId == 1 ? "Wick" : presetId == 2 ? "Wick" : presetId == 3 ? "Wick" : presetId == 4 ? "Wick" : presetId == 5 ? "Wick" : presetId == 6 ? "Close confirm" : i_lsMode
+int lsReclaim = presetId == 1 ? 3 : presetId == 2 ? 3 : presetId == 3 ? 3 : presetId == 4 ? 3 : presetId == 5 ? 3 : presetId == 6 ? 2 : i_lsReclaim
+int lsMaxAge = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : i_lsMaxAge
+int sdSwing = presetId == 1 ? 8 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 3 : presetId == 6 ? 13 : i_sdSwing
+float sdWidth = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 0.5 : i_sdWidth
+float sdStrength = presetId == 1 ? 0.5 : presetId == 2 ? 2.0 : presetId == 3 ? 0.0 : presetId == 4 ? 1.0 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : i_sdStrength
+int sdMaxTouch = presetId == 1 ? 99 : presetId == 2 ? 2 : presetId == 3 ? 3 : presetId == 4 ? 99 : presetId == 5 ? 99 : presetId == 6 ? 1 : i_sdMaxTouch
+string sdInval = presetId == 1 ? "Close beyond" : presetId == 2 ? "Close beyond" : presetId == 3 ? "Close beyond" : presetId == 4 ? "Wick beyond" : presetId == 5 ? "Wick beyond" : presetId == 6 ? "Close beyond" : i_sdInval
+string sdConfirm = presetId == 1 ? "Touch" : presetId == 2 ? "Touch" : presetId == 3 ? "Touch" : presetId == 4 ? "Rejection close" : presetId == 5 ? "Rejection close" : presetId == 6 ? "Rejection close" : i_sdConfirm
+int sdMaxAge = presetId == 1 ? 500 : presetId == 2 ? 500 : presetId == 3 ? 200 : presetId == 4 ? 2000 : presetId == 5 ? 200 : presetId == 6 ? 2000 : i_sdMaxAge
+bool cpEngulf = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpEngulf
+bool cpPin = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpPin
+bool cpStar = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpStar
+bool cpPierce = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpPierce
+bool cpStrict = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_cpStrict
+bool cpConfirm = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? false : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_cpConfirm
+string slMode = presetId == 1 ? "ATR" : presetId == 2 ? "Structure" : presetId == 3 ? "Structure" : presetId == 4 ? "Structure" : presetId == 5 ? "ATR" : presetId == 6 ? "Zone" : i_slMode
+float slAtr = presetId == 1 ? 2.0 : presetId == 2 ? 1.5 : presetId == 3 ? 1.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 1.5 : i_slAtr
+int slLookback = presetId == 1 ? 10 : presetId == 2 ? 5 : presetId == 3 ? 5 : presetId == 4 ? 5 : presetId == 5 ? 10 : presetId == 6 ? 10 : i_slLookback
+float slBuffer = presetId == 1 ? 0.25 : presetId == 2 ? 0.25 : presetId == 3 ? 0.25 : presetId == 4 ? 0.1 : presetId == 5 ? 0.25 : presetId == 6 ? 0.1 : i_slBuffer
+float minStop = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 0.5 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : i_minStop
+float maxStop = presetId == 1 ? 5.0 : presetId == 2 ? 5.0 : presetId == 3 ? 5.0 : presetId == 4 ? 5.0 : presetId == 5 ? 5.0 : presetId == 6 ? 5.0 : i_maxStop
+float rr = presetId == 1 ? 3.0 : presetId == 2 ? 2.0 : presetId == 3 ? 4.0 : presetId == 4 ? 4.0 : presetId == 5 ? 3.0 : presetId == 6 ? 3.0 : i_rr
+string direction = presetId == 1 ? "Both" : presetId == 2 ? "Both" : presetId == 3 ? "Both" : presetId == 4 ? "Both" : presetId == 5 ? "Both" : presetId == 6 ? "Both" : i_direction
+int trendLen = presetId == 1 ? 100 : presetId == 2 ? 0 : presetId == 3 ? 0 : presetId == 4 ? 200 : presetId == 5 ? 100 : presetId == 6 ? 200 : i_trendLen
+int sessStart = presetId == 1 ? 0 : presetId == 2 ? 7 : presetId == 3 ? 7 : presetId == 4 ? 7 : presetId == 5 ? -1 : presetId == 6 ? -1 : i_sessStart
+int sessEnd = presetId == 1 ? 7 : presetId == 2 ? 20 : presetId == 3 ? 20 : presetId == 4 ? 20 : presetId == 5 ? -1 : presetId == 6 ? -1 : i_sessEnd
+int atrLen = presetId == 1 ? 14 : presetId == 2 ? 14 : presetId == 3 ? 14 : presetId == 4 ? 14 : presetId == 5 ? 14 : presetId == 6 ? 14 : i_atrLen
+int warmup = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : i_warmup
+string presetSymbol = presetId == 1 ? "XAUUSD" : presetId == 2 ? "XAUUSD" : presetId == 3 ? "XAUUSD" : presetId == 4 ? "XAGUSD" : presetId == 5 ? "XAGUSD" : presetId == 6 ? "XAGUSD" : ""
+string presetMetal = presetId == 1 ? "XAU" : presetId == 2 ? "XAU" : presetId == 3 ? "XAU" : presetId == 4 ? "XAG" : presetId == 5 ? "XAG" : presetId == 6 ? "XAG" : ""
+string presetTf = presetId == 1 ? "30m" : presetId == 2 ? "2h" : presetId == 3 ? "1h" : presetId == 4 ? "2h" : presetId == 5 ? "2h" : presetId == 6 ? "30m" : ""
+int presetTfSec = presetId == 1 ? 1800 : presetId == 2 ? 7200 : presetId == 3 ? 3600 : presetId == 4 ? 7200 : presetId == 5 ? 7200 : presetId == 6 ? 1800 : 0
+bool emaCross = emaMode == "Cross"
+bool lsWick = lsMode == "Wick"
+bool lsUseSwings = str.startswith(lsSource, "Swings")
+bool lsUsePd = str.contains(lsSource, "PDH")
+bool lsUsePw = str.contains(lsSource, "PWH")
+bool sdInvalClose = sdInval == "Close beyond"
+bool sdTouchOnly = sdConfirm == "Touch"
+
+string tickerUpper = str.upper(syminfo.ticker)
+bool isSilver = str.contains(tickerUpper, "XAG") or str.contains(tickerUpper, "SILVER")
+float costPct = i_costAuto ? (isSilver ? 0.08 : 0.0175) : i_costPct
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Building blocks
+// ═════════════════════════════════════════════════════════════════════════════
+// EMA and ATR are written out (seeded with the first bar) so the Python engine
+// reproduces them exactly.
+f_ema(float src, int len) =>
+    float alpha = 2.0 / (len + 1.0)
+    float e = na
+    e := na(e[1]) ? src : alpha * src + (1.0 - alpha) * e[1]
+    e
+
+f_atr(int len) =>
+    float tr = na(close[1]) ? high - low : math.max(high - low, math.abs(high - close[1]), math.abs(low - close[1]))
+    float r = na
+    r := na(r[1]) ? tr : (r[1] * (len - 1) + tr) / len
+    r
+
+// Swing confirmed `side` bars ago: strictly beyond every bar within `side` bars on both sides.
+f_pivotLow(int side) =>
+    bool ok = bar_index >= 2 * side
+    if ok
+        float v = low[side]
+        for i = 1 to side
+            if low[side - i] <= v or low[side + i] <= v
+                ok := false
+                break
+    ok
+
+f_pivotHigh(int side) =>
+    bool ok = bar_index >= 2 * side
+    if ok
+        float v = high[side]
+        for i = 1 to side
+            if high[side - i] >= v or high[side + i] >= v
+                ok := false
+                break
+    ok
+
+// A resting sell-side level against the current bar: [bullish sweep, level still alive, pierce bar].
+f_testLow(float price, int pierce) =>
+    bool ev = false
+    bool alive = true
+    int pc = pierce
+    if lsWick
+        if low < price
+            ev := close > price
+            alive := false
+    else
+        if pc < 0
+            if low < price
+                pc := bar_index
+        else
+            if close > price and close > open
+                ev := true
+                alive := false
+            else
+                alive := bar_index - pc < lsReclaim
+    [ev, alive, pc]
+
+f_testHigh(float price, int pierce) =>
+    bool ev = false
+    bool alive = true
+    int pc = pierce
+    if lsWick
+        if high > price
+            ev := close < price
+            alive := false
+    else
+        if pc < 0
+            if high > price
+                pc := bar_index
+        else
+            if close < price and close < open
+                ev := true
+                alive := false
+            else
+                alive := bar_index - pc < lsReclaim
+    [ev, alive, pc]
+
+float atr = f_atr(atrLen)
+int NEVER = -1000000000
+int LS_CAPACITY = 10
+int SD_CAPACITY = 8
+int w = confWindow - 1
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Virtual broker (same fill rules as the strategy's broker emulator)
+// ═════════════════════════════════════════════════════════════════════════════
+var int   vPos = 0
+var int   vPending = 0
+var float vStop = na
+var float vTarget = na
+var float vEntry = na
+var float vDist = na
+var int   vTrades = 0
+var int   vWins = 0
+var float vNetR = 0.0
+var float vGrossWin = 0.0
+var float vGrossLoss = 0.0
+var float vPeakR = 0.0
+var float vMaxDdR = 0.0
+bool  vClosed = false
+float vLastR = na
+
+if vPending != 0
+    vPos := vPending
+    vPending := 0
+    vEntry := open
+if vPos != 0
+    float vOut = na
+    if vPos == 1
+        if open <= vStop or open >= vTarget
+            vOut := open
+        else
+            bool hitStop = low <= vStop
+            bool hitTarget = high >= vTarget
+            if hitStop and hitTarget
+                vOut := high - open < open - low ? vTarget : vStop
+            else if hitStop
+                vOut := vStop
+            else if hitTarget
+                vOut := vTarget
+    else
+        if open >= vStop or open <= vTarget
+            vOut := open
+        else
+            bool hitStop = high >= vStop
+            bool hitTarget = low <= vTarget
+            if hitStop and hitTarget
+                vOut := high - open < open - low ? vStop : vTarget
+            else if hitStop
+                vOut := vStop
+            else if hitTarget
+                vOut := vTarget
+    if not na(vOut)
+        float r = (vPos * (vOut - vEntry) - costPct / 100.0 * (vEntry + vOut)) / vDist
+        vTrades += 1
+        vNetR += r
+        if r > 0
+            vWins += 1
+            vGrossWin += r
+        else
+            vGrossLoss -= r
+        vPeakR := math.max(vPeakR, vNetR)
+        vMaxDdR := math.max(vMaxDdR, vPeakR - vNetR)
+        vClosed := true
+        vLastR := r
+        vPos := 0
+bool flat = vPos == 0 and vPending == 0
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Module 1 — EMA
+// ═════════════════════════════════════════════════════════════════════════════
+float emaFast = f_ema(close, emaFastLen)
+float emaSlow = f_ema(close, emaSlowLen)
+float emaTrend = f_ema(close, math.max(trendLen, 1))
+bool emaUp = emaFast > emaSlow
+bool emaDn = emaFast < emaSlow
+bool xUp = emaUp and emaFast[1] <= emaSlow[1]
+bool xDn = emaDn and emaFast[1] >= emaSlow[1]
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Module 2 — Liquidity sweeps
+// ═════════════════════════════════════════════════════════════════════════════
+[pdh, pdl] = request.security(syminfo.tickerid, "D", [high[1], low[1]], lookahead = barmerge.lookahead_on)
+[pwh, pwl] = request.security(syminfo.tickerid, "W", [high[1], low[1]], lookahead = barmerge.lookahead_on)
+bool newDay = timeframe.change("D")
+bool newWeek = timeframe.change("W")
+bool lsPivLow = f_pivotLow(lsSwing)
+bool lsPivHigh = f_pivotHigh(lsSwing)
+
+var array<float> loPrice = array.new<float>()
+var array<int>   loBorn = array.new<int>()
+var array<int>   loPierce = array.new<int>()
+var array<float> hiPrice = array.new<float>()
+var array<int>   hiBorn = array.new<int>()
+var array<int>   hiPierce = array.new<int>()
+// Higher-timeframe slots: index 0 = previous day, 1 = previous week.
+var array<float> hlPrice = array.new<float>(2, 0.0)
+var array<bool>  hlAlive = array.new<bool>(2, false)
+var array<int>   hlPierce = array.new<int>(2, -1)
+var array<float> hhPrice = array.new<float>(2, 0.0)
+var array<bool>  hhAlive = array.new<bool>(2, false)
+var array<int>   hhPierce = array.new<int>(2, -1)
+
+if lsUsePd and newDay and not na(pdl)
+    array.set(hlPrice, 0, pdl)
+    array.set(hlAlive, 0, true)
+    array.set(hlPierce, 0, -1)
+    array.set(hhPrice, 0, pdh)
+    array.set(hhAlive, 0, true)
+    array.set(hhPierce, 0, -1)
+if lsUsePw and newWeek and not na(pwl)
+    array.set(hlPrice, 1, pwl)
+    array.set(hlAlive, 1, true)
+    array.set(hlPierce, 1, -1)
+    array.set(hhPrice, 1, pwh)
+    array.set(hhAlive, 1, true)
+    array.set(hhPierce, 1, -1)
+
+bool lsBull = false
+bool lsBear = false
+float lsBullLevel = na
+float lsBearLevel = na
+for k = 0 to 1
+    if array.get(hlAlive, k)
+        [ev, alive, pc] = f_testLow(array.get(hlPrice, k), array.get(hlPierce, k))
+        if ev
+            lsBull := true
+            lsBullLevel := array.get(hlPrice, k)
+        array.set(hlAlive, k, alive)
+        array.set(hlPierce, k, pc)
+    if array.get(hhAlive, k)
+        [ev, alive, pc] = f_testHigh(array.get(hhPrice, k), array.get(hhPierce, k))
+        if ev
+            lsBear := true
+            lsBearLevel := array.get(hhPrice, k)
+        array.set(hhAlive, k, alive)
+        array.set(hhPierce, k, pc)
+
+if lsUseSwings
+    int li = array.size(loPrice) - 1
+    while li >= 0
+        bool alive = bar_index - array.get(loBorn, li) <= lsMaxAge
+        if alive
+            [ev, al, pc] = f_testLow(array.get(loPrice, li), array.get(loPierce, li))
+            if ev
+                lsBull := true
+                lsBullLevel := array.get(loPrice, li)
+            alive := al
+            array.set(loPierce, li, pc)
+        if not alive
+            array.remove(loPrice, li)
+            array.remove(loBorn, li)
+            array.remove(loPierce, li)
+        li -= 1
+    int hi = array.size(hiPrice) - 1
+    while hi >= 0
+        bool alive = bar_index - array.get(hiBorn, hi) <= lsMaxAge
+        if alive
+            [ev, al, pc] = f_testHigh(array.get(hiPrice, hi), array.get(hiPierce, hi))
+            if ev
+                lsBear := true
+                lsBearLevel := array.get(hiPrice, hi)
+            alive := al
+            array.set(hiPierce, hi, pc)
+        if not alive
+            array.remove(hiPrice, hi)
+            array.remove(hiBorn, hi)
+            array.remove(hiPierce, hi)
+        hi -= 1
+    if lsPivLow
+        if array.size(loPrice) == LS_CAPACITY
+            array.shift(loPrice)
+            array.shift(loBorn)
+            array.shift(loPierce)
+        array.push(loPrice, low[lsSwing])
+        array.push(loBorn, bar_index)
+        array.push(loPierce, -1)
+    if lsPivHigh
+        if array.size(hiPrice) == LS_CAPACITY
+            array.shift(hiPrice)
+            array.shift(hiBorn)
+            array.shift(hiPierce)
+        array.push(hiPrice, high[lsSwing])
+        array.push(hiBorn, bar_index)
+        array.push(hiPierce, -1)
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Module 3 — Supply / demand zones
+// ═════════════════════════════════════════════════════════════════════════════
+bool sdPivLow = f_pivotLow(sdSwing)
+bool sdPivHigh = f_pivotHigh(sdSwing)
+float sdDepartHigh = ta.highest(high, sdSwing)
+float sdDepartLow = ta.lowest(low, sdSwing)
+
+var array<float> dTop = array.new<float>()
+var array<float> dBot = array.new<float>()
+var array<int>   dBorn = array.new<int>()
+var array<int>   dTouch = array.new<int>()
+var array<bool>  dIn = array.new<bool>()
+var array<box>   dBox = array.new<box>()
+var array<float> sTop = array.new<float>()
+var array<float> sBot = array.new<float>()
+var array<int>   sBorn = array.new<int>()
+var array<int>   sTouch = array.new<int>()
+var array<bool>  sIn = array.new<bool>()
+var array<box>   sBox = array.new<box>()
+
+color C_DEMAND = color.new(color.teal, 80)
+color C_SUPPLY = color.new(color.red, 82)
+color C_DEAD = color.new(color.gray, 90)
+
+bool  sdTouchBull = false
+bool  sdRejBull = false
+bool  sdInvalBull = false
+float sdBotBull = na
+bool  sdTouchBear = false
+bool  sdRejBear = false
+bool  sdInvalBear = false
+float sdTopBear = na
+
+int di = array.size(dTop) - 1
+while di >= 0
+    float zt = array.get(dTop, di)
+    float zb = array.get(dBot, di)
+    bool keep = bar_index - array.get(dBorn, di) <= sdMaxAge
+    if keep
+        bool broken = sdInvalClose ? close < zb : low < zb
+        if broken
+            keep := false
+            sdInvalBull := true
+        else
+            bool inside = low <= zt
+            if inside and not array.get(dIn, di)
+                array.set(dTouch, di, array.get(dTouch, di) + 1)
+            array.set(dIn, di, inside)
+            if inside and array.get(dTouch, di) <= sdMaxTouch
+                sdTouchBull := true
+                sdBotBull := na(sdBotBull) ? zb : math.min(sdBotBull, zb)
+                if close > zt and close > open
+                    sdRejBull := true
+    box zbox = array.get(dBox, di)
+    box.set_right(zbox, bar_index)
+    if not keep
+        box.set_bgcolor(zbox, C_DEAD)
+        box.set_border_color(zbox, C_DEAD)
+        array.remove(dTop, di)
+        array.remove(dBot, di)
+        array.remove(dBorn, di)
+        array.remove(dTouch, di)
+        array.remove(dIn, di)
+        array.remove(dBox, di)
+    di -= 1
+
+int si = array.size(sTop) - 1
+while si >= 0
+    float zt = array.get(sTop, si)
+    float zb = array.get(sBot, si)
+    bool keep = bar_index - array.get(sBorn, si) <= sdMaxAge
+    if keep
+        bool broken = sdInvalClose ? close > zt : high > zt
+        if broken
+            keep := false
+            sdInvalBear := true
+        else
+            bool inside = high >= zb
+            if inside and not array.get(sIn, si)
+                array.set(sTouch, si, array.get(sTouch, si) + 1)
+            array.set(sIn, si, inside)
+            if inside and array.get(sTouch, si) <= sdMaxTouch
+                sdTouchBear := true
+                sdTopBear := na(sdTopBear) ? zt : math.max(sdTopBear, zt)
+                if close < zb and close < open
+                    sdRejBear := true
+    box zbox = array.get(sBox, si)
+    box.set_right(zbox, bar_index)
+    if not keep
+        box.set_bgcolor(zbox, C_DEAD)
+        box.set_border_color(zbox, C_DEAD)
+        array.remove(sTop, si)
+        array.remove(sBot, si)
+        array.remove(sBorn, si)
+        array.remove(sTouch, si)
+        array.remove(sIn, si)
+        array.remove(sBox, si)
+    si -= 1
+
+// A confirmed swing becomes a zone when price has left it with enough force.
+if sdPivLow
+    float bottom = low[sdSwing]
+    float top = bottom + sdWidth * atr
+    if sdDepartHigh - top >= sdStrength * atr and close > top
+        bool overlaps = false
+        if array.size(dTop) > 0
+            for k = 0 to array.size(dTop) - 1
+                if bottom <= array.get(dTop, k) and top >= array.get(dBot, k)
+                    overlaps := true
+        if not overlaps
+            if array.size(dTop) == SD_CAPACITY
+                array.shift(dTop)
+                array.shift(dBot)
+                array.shift(dBorn)
+                array.shift(dTouch)
+                array.shift(dIn)
+                array.shift(dBox)
+            array.push(dTop, top)
+            array.push(dBot, bottom)
+            array.push(dBorn, bar_index)
+            array.push(dTouch, 0)
+            array.push(dIn, false)
+            array.push(dBox, i_showZones ? box.new(bar_index - sdSwing, top, bar_index, bottom, border_color = color.new(color.teal, 40), bgcolor = C_DEMAND) : na)
+if sdPivHigh
+    float top = high[sdSwing]
+    float bottom = top - sdWidth * atr
+    if bottom - sdDepartLow >= sdStrength * atr and close < bottom
+        bool overlaps = false
+        if array.size(sTop) > 0
+            for k = 0 to array.size(sTop) - 1
+                if bottom <= array.get(sTop, k) and top >= array.get(sBot, k)
+                    overlaps := true
+        if not overlaps
+            if array.size(sTop) == SD_CAPACITY
+                array.shift(sTop)
+                array.shift(sBot)
+                array.shift(sBorn)
+                array.shift(sTouch)
+                array.shift(sIn)
+                array.shift(sBox)
+            array.push(sTop, top)
+            array.push(sBot, bottom)
+            array.push(sBorn, bar_index)
+            array.push(sTouch, 0)
+            array.push(sIn, false)
+            array.push(sBox, i_showZones ? box.new(bar_index - sdSwing, top, bar_index, bottom, border_color = color.new(color.red, 40), bgcolor = C_SUPPLY) : na)
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Module 4 — Candlestick patterns
+// ═════════════════════════════════════════════════════════════════════════════
+float engBody  = cpStrict ? 0.6 : 0.3
+float pinWick  = cpStrict ? 0.66 : 0.55
+float pinOpp   = cpStrict ? 0.15 : 0.25
+float pinRng   = cpStrict ? 1.0 : 0.6
+float starBody = cpStrict ? 0.8 : 0.5
+float starMid  = cpStrict ? 0.3 : 0.5
+float starRec  = cpStrict ? 0.66 : 0.5
+float prcBody  = cpStrict ? 0.8 : 0.5
+float prcRec   = cpStrict ? 0.66 : 0.5
+
+float body = math.abs(close - open)
+float rng = high - low
+float upWick = high - math.max(open, close)
+float loWick = math.min(open, close) - low
+float body1 = math.abs(close[1] - open[1])
+float body2 = math.abs(close[2] - open[2])
+bool bull0 = close > open
+bool bear0 = close < open
+bool bull1 = close[1] > open[1]
+bool bear1 = close[1] < open[1]
+
+bool patBull = false
+bool patBear = false
+if bar_index >= 2
+    if cpEngulf
+        if bear1 and bull0 and close > open[1] and body >= engBody * atr
+            if not cpStrict or (close > high[1] and body >= body1)
+                patBull := true
+        if bull1 and bear0 and close < open[1] and body >= engBody * atr
+            if not cpStrict or (close < low[1] and body >= body1)
+                patBear := true
+    if cpPin
+        if rng >= pinRng * atr and loWick >= pinWick * rng and upWick <= pinOpp * rng and low < low[1]
+            patBull := true
+        if rng >= pinRng * atr and upWick >= pinWick * rng and loWick <= pinOpp * rng and high > high[1]
+            patBear := true
+    if cpStar
+        if close[2] < open[2] and body2 >= starBody * atr and body1 <= starMid * body2
+            if bull0 and close >= close[2] + starRec * body2
+                patBull := true
+        if close[2] > open[2] and body2 >= starBody * atr and body1 <= starMid * body2
+            if bear0 and close <= close[2] - starRec * body2
+                patBear := true
+    if cpPierce
+        if bear1 and body1 >= prcBody * atr and bull0 and close >= close[1] + prcRec * body1 and close < open[1]
+            patBull := true
+        if bull1 and body1 >= prcBody * atr and bear0 and close <= close[1] - prcRec * body1 and close > open[1]
+            patBear := true
+
+bool cpBull = cpConfirm ? patBull[1] and close > high[1] : patBull
+bool cpBear = cpConfirm ? patBear[1] and close < low[1] : patBear
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Confluence
+// ═════════════════════════════════════════════════════════════════════════════
+var int lastXUp = NEVER
+var int lastXDn = NEVER
+var int lastLsBull = NEVER
+var int lastLsBear = NEVER
+var int lastSdBull = NEVER
+var int lastSdBear = NEVER
+var int lastCpBull = NEVER
+var int lastCpBear = NEVER
+var float zoneBot = na
+var float zoneTop = na
+
+if xUp
+    lastXUp := bar_index
+if xDn
+    lastXDn := bar_index
+if lsBull
+    lastLsBull := bar_index
+if lsBear
+    lastLsBear := bar_index
+if sdInvalBull
+    lastSdBull := NEVER
+if sdTouchBull
+    lastSdBull := bar_index
+    zoneBot := sdBotBull
+if sdInvalBear
+    lastSdBear := NEVER
+if sdTouchBear
+    lastSdBear := bar_index
+    zoneTop := sdTopBear
+if cpBull
+    lastCpBull := bar_index
+if cpBear
+    lastCpBear := bar_index
+
+bool ctxLong = true
+bool ctxShort = true
+bool evtLong = false
+bool evtShort = false
+if useEma
+    if emaCross
+        ctxLong := ctxLong and emaUp and bar_index - lastXUp <= w
+        ctxShort := ctxShort and emaDn and bar_index - lastXDn <= w
+        evtLong := evtLong or xUp
+        evtShort := evtShort or xDn
+    else
+        ctxLong := ctxLong and emaUp
+        ctxShort := ctxShort and emaDn
+if useLs
+    ctxLong := ctxLong and bar_index - lastLsBull <= w
+    ctxShort := ctxShort and bar_index - lastLsBear <= w
+    evtLong := evtLong or lsBull
+    evtShort := evtShort or lsBear
+if useSd
+    ctxLong := ctxLong and bar_index - lastSdBull <= w
+    ctxShort := ctxShort and bar_index - lastSdBear <= w
+    evtLong := evtLong or (sdTouchOnly ? sdTouchBull : sdRejBull)
+    evtShort := evtShort or (sdTouchOnly ? sdTouchBear : sdRejBear)
+if useCp
+    ctxLong := ctxLong and bar_index - lastCpBull <= w
+    ctxShort := ctxShort and bar_index - lastCpBear <= w
+    evtLong := evtLong or cpBull
+    evtShort := evtShort or cpBear
+
+int barHour = hour(time, "UTC")
+bool inSession = sessStart < 0 ? true : sessStart <= sessEnd ? barHour >= sessStart and barHour < sessEnd : barHour >= sessStart or barHour < sessEnd
+bool inDates = not i_useDates or (time >= i_dateFrom and time < i_dateTo)
+bool tradable = flat and barstate.isconfirmed and bar_index >= warmup and inDates and inSession
+
+bool wantLong = ctxLong and evtLong and direction != "Short only" and (trendLen == 0 or close > emaTrend)
+bool wantShort = ctxShort and evtShort and direction != "Long only" and (trendLen == 0 or close < emaTrend)
+bool goLong = tradable and wantLong and not wantShort
+bool goShort = tradable and wantShort and not wantLong
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Stop and target (fixed from the signal bar's close)
+// ═════════════════════════════════════════════════════════════════════════════
+float structLow = ta.lowest(low, slLookback)
+float structHigh = ta.highest(high, slLookback)
+float stopDist = na
+float stopPx = na
+float targetPx = na
+if goLong or goShort
+    float level = na
+    if goLong
+        if slMode == "ATR"
+            level := close - slAtr * atr
+        else if slMode == "Zone" and useSd and bar_index - lastSdBull <= w
+            level := zoneBot - slBuffer * atr
+        else
+            level := structLow - slBuffer * atr
+        stopDist := close - level
+    else
+        if slMode == "ATR"
+            level := close + slAtr * atr
+        else if slMode == "Zone" and useSd and bar_index - lastSdBear <= w
+            level := zoneTop + slBuffer * atr
+        else
+            level := structHigh + slBuffer * atr
+        stopDist := level - close
+    stopDist := math.max(stopDist, minStop * atr)
+    stopDist := math.min(stopDist, maxStop * atr)
+    stopPx := math.round_to_mintick(goLong ? close - stopDist : close + stopDist)
+    targetPx := math.round_to_mintick(goLong ? close + rr * stopDist : close - rr * stopDist)
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Virtual order + alerts
+// ═════════════════════════════════════════════════════════════════════════════
+if goLong or goShort
+    vPending := goLong ? 1 : -1
+    vStop := stopPx
+    vTarget := targetPx
+    vDist := stopDist
+
+float liveStop = vStop
+float liveTarget = vTarget
+bool inTrade = vPos != 0
+
+alertcondition(goLong, "GSMS long signal", "GSMS LONG {{ticker}} {{interval}} at {{close}}")
+alertcondition(goShort, "GSMS short signal", "GSMS SHORT {{ticker}} {{interval}} at {{close}}")
+alertcondition(vClosed, "GSMS trade closed", "GSMS trade closed on {{ticker}} {{interval}}")
+if goLong or goShort
+    string dirText = goLong ? "LONG" : "SHORT"
+    string qtyText = str.tostring(i_riskCash / stopDist, "#.###")
+    alert("GSMS " + dirText + " " + syminfo.ticker + " " + timeframe.period + " | entry next open (ref " + str.tostring(close, format.mintick) + ") | stop " + str.tostring(stopPx, format.mintick) + " | target " + str.tostring(targetPx, format.mintick) + " | size " + qtyText, alert.freq_once_per_bar_close)
+
+// ═════════════════════════════════════════════════════════════════════════════
+//  Display
+// ═════════════════════════════════════════════════════════════════════════════
+plot(i_showEma ? emaFast : na, "Fast EMA", color = color.new(color.aqua, 0), linewidth = 1)
+plot(i_showEma ? emaSlow : na, "Slow EMA", color = color.new(color.orange, 0), linewidth = 1)
+plot(i_showEma and trendLen > 0 ? emaTrend : na, "Trend EMA", color = color.new(color.gray, 20), linewidth = 2)
+
+plotshape(i_showSweeps and lsBull, "Bullish liquidity sweep", style = shape.diamond, location = location.belowbar, color = color.new(color.teal, 0), size = size.tiny, text = "SSL", textcolor = color.new(color.teal, 0))
+plotshape(i_showSweeps and lsBear, "Bearish liquidity sweep", style = shape.diamond, location = location.abovebar, color = color.new(color.red, 0), size = size.tiny, text = "BSL", textcolor = color.new(color.red, 0))
+plotshape(i_showCandle and cpBull, "Bullish candlestick pattern", style = shape.circle, location = location.belowbar, color = color.new(color.lime, 30), size = size.tiny)
+plotshape(i_showCandle and cpBear, "Bearish candlestick pattern", style = shape.circle, location = location.abovebar, color = color.new(color.maroon, 30), size = size.tiny)
+
+plotshape(goLong, "Long signal", style = shape.triangleup, location = location.belowbar, color = color.new(color.green, 0), size = size.small, text = "LONG", textcolor = color.new(color.green, 0))
+plotshape(goShort, "Short signal", style = shape.triangledown, location = location.abovebar, color = color.new(color.red, 0), size = size.small, text = "SHORT", textcolor = color.new(color.red, 0))
+
+plot(i_showLevels and inTrade ? liveStop : na, "Stop", color = color.new(color.red, 0), style = plot.style_linebr, linewidth = 1)
+plot(i_showLevels and inTrade ? liveTarget : na, "Target", color = color.new(color.green, 0), style = plot.style_linebr, linewidth = 1)
+
+// A preset is only meaningful on the symbol and timeframe it was tested on.
+bool presetTfOk = presetTfSec == 0 or timeframe.in_seconds() == presetTfSec
+bool presetSymOk = presetMetal == "" or str.contains(tickerUpper, presetMetal) or str.contains(tickerUpper, presetMetal == "XAU" ? "GOLD" : "SILVER")
+var table presetWarning = table.new(position.bottom_center, 1, 1)
+if barstate.islast and not (presetTfOk and presetSymOk)
+    table.cell(presetWarning, 0, 0, "Preset \"" + i_preset + "\" was tested on " + presetSymbol + " " + presetTf + " only", text_color = color.white, bgcolor = color.new(color.red, 20), text_size = size.small)
+
+
+// Dashboard
+var table dash = table.new(position.top_right, 2, 9, bgcolor = color.new(color.black, 15), border_width = 1, border_color = color.new(color.gray, 60))
+f_row(int row, string name, string value, color valueColor) =>
+    table.cell(dash, 0, row, name, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
+    table.cell(dash, 1, row, value, text_color = valueColor, text_size = size.small, text_halign = text.align_right)
+
+f_ago(int lastBull, int lastBear) =>
+    int ageBull = bar_index - lastBull
+    int ageBear = bar_index - lastBear
+    string txt = "-"
+    if ageBull <= w and ageBull <= ageBear
+        txt := "bull, " + str.tostring(ageBull) + " bars ago"
+    else if ageBear <= w
+        txt := "bear, " + str.tostring(ageBear) + " bars ago"
+    txt
+
+if i_showTable and barstate.islast
+    color C_ON = color.new(color.white, 0)
+    color C_OFF = color.new(color.gray, 30)
+    f_row(0, "GSMS", i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_ON)
+    f_row(1, "EMA " + str.tostring(emaFastLen) + "/" + str.tostring(emaSlowLen), not useEma ? "off" : emaUp ? "bullish" : emaDn ? "bearish" : "flat", not useEma ? C_OFF : emaUp ? color.lime : color.red)
+    f_row(2, "Liquidity sweep", useLs ? f_ago(lastLsBull, lastLsBear) : "off", useLs ? C_ON : C_OFF)
+    f_row(3, "Supply / demand", useSd ? f_ago(lastSdBull, lastSdBear) : "off", useSd ? C_ON : C_OFF)
+    f_row(4, "Candle pattern", useCp ? f_ago(lastCpBull, lastCpBear) : "off", useCp ? C_ON : C_OFF)
+    f_row(5, "Position", vPos == 1 ? "LONG" : vPos == -1 ? "SHORT" : vPending != 0 ? "entry next bar" : "flat", vPos == 1 ? color.lime : vPos == -1 ? color.red : C_ON)
+    f_row(6, "Trades on chart", str.tostring(vTrades) + "  win " + (vTrades > 0 ? str.tostring(100.0 * vWins / vTrades, "0.0") + "%" : "-"), C_ON)
+    f_row(7, "Net result", str.tostring(vNetR, "0.0") + " R   PF " + (vGrossLoss > 0 ? str.tostring(vGrossWin / vGrossLoss, "0.00") : "-"), vNetR >= 0 ? color.lime : color.red)
+    f_row(8, "Max drawdown", str.tostring(vMaxDdR, "0.0") + " R", C_ON)

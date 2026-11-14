@@ -1,0 +1,314 @@
+{
+ "symbol": "XAUUSD",
+ "timeframe": "30m",
+ "config": "preset_gold_30m_conservative",
+ "tradingview_symbol": "OANDA:XAUUSD",
+ "recorded_utc": "2026-11-14T14:05:34.165Z",
+ "applied": {
+  "preset": "Gold 30m Conservative",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.0175,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Gold Spot / U.S. Dollar 30 OANDA O 3,876.040 H 3,884.835 L 3,872.630 C 3,884.685 +8.595 (+0.22%)",
+ "legend": "GSMS Strategy Gold 30m Conservative 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 3,880.178 3,884.511 3,922.337 0.000 0.0",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Jan 1, 2026 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": 3213.19,
+  "net_profit_pct": 3.21,
+  "max_drawdown_usd": 9503.43,
+  "max_drawdown_pct": 8.84,
+  "percent_profitable": 29.63,
+  "winning_trades": 8,
+  "total_trades": 27,
+  "profit_factor": 1.159,
+  "gross_profit_usd": 23439.93,
+  "gross_loss_usd": 20226.74,
+  "long_pnl_usd": -5832.25,
+  "short_pnl_usd": 9045.43,
+  "expectancy_usd": 119.01,
+  "avg_profit_pct": 1.39,
+  "avg_loss_pct": -0.67
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n+3,213.19USD+3.21%\nMax drawdown\n9,503.43USD8.84%\nProfitable trades\n29.63%8/27\nProfit factor\n1.159\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n+3,213.19\nBuy and hold\n−11,839.79\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n23,439.93USD23.44%\nGross loss\n20,226.74USD20.23%\nProfit factor\n1.159\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n+3,213.19\nUSD\nShort\n+9,045.43\nUSD\nLong\n−5,832.25\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n119.01USD0.03%\nOutliers PnL\n2,970.94USD2.97%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−0.67%\nAverage profit\n1.39%\nTrades distribution\n27\nTotal trades\nWinners\n8 trades\n29.63%\nLosers\n19 trades\n70.37%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 1,
+   "side": "Long",
+   "exit_time": "Jan 15, 2026, 01:30",
+   "entry_time": "Jan 14, 2026, 00:30",
+   "exit_price": 4584.53,
+   "entry_price": 4610.05,
+   "size": 39.53,
+   "net_pnl": -1072.41
+  },
+  {
+   "n": 2,
+   "side": "Short",
+   "exit_time": "Jan 16, 2026, 15:30",
+   "entry_time": "Jan 16, 2026, 00:30",
+   "exit_price": 4550.728,
+   "entry_price": 4607.65,
+   "size": 52.69,
+   "net_pnl": 2914.77
+  },
+  {
+   "n": 3,
+   "side": "Long",
+   "exit_time": "Feb 5, 2026, 01:00",
+   "entry_time": "Feb 5, 2026, 00:30",
+   "exit_price": 4945.916,
+   "entry_price": 5015.89,
+   "size": 14.27,
+   "net_pnl": -1023.41
+  },
+  {
+   "n": 4,
+   "side": "Short",
+   "exit_time": "Mar 17, 2026, 03:00",
+   "entry_time": "Mar 17, 2026, 01:00",
+   "exit_price": 5031.913,
+   "entry_price": 5002.91,
+   "size": 34.62,
+   "net_pnl": -1064.88
+  },
+  {
+   "n": 5,
+   "side": "Short",
+   "exit_time": "Mar 30, 2026, 02:30",
+   "entry_time": "Mar 30, 2026, 01:00",
+   "exit_price": 4486.668,
+   "entry_price": 4431.87,
+   "size": 18.39,
+   "net_pnl": -1036.44
+  },
+  {
+   "n": 6,
+   "side": "Long",
+   "exit_time": "Mar 31, 2026, 19:00",
+   "entry_time": "Mar 30, 2026, 03:30",
+   "exit_price": 4677.919,
+   "entry_price": 4507.22,
+   "size": 17.57,
+   "net_pnl": 2970.94
+  },
+  {
+   "n": 7,
+   "side": "Short",
+   "exit_time": "Apr 29, 2026, 13:30",
+   "entry_time": "Apr 29, 2026, 06:00",
+   "exit_price": 4525.117,
+   "entry_price": 4591.105,
+   "size": 45.43,
+   "net_pnl": 2925.36
+  },
+  {
+   "n": 8,
+   "side": "Short",
+   "exit_time": "May 4, 2026, 15:00",
+   "entry_time": "May 4, 2026, 01:30",
+   "exit_price": 4516.887,
+   "entry_price": 4594.905,
+   "size": 38.44,
+   "net_pnl": 2937.72
+  },
+  {
+   "n": 9,
+   "side": "Long",
+   "exit_time": "May 10, 2026, 22:00",
+   "entry_time": "May 8, 2026, 04:00",
+   "exit_price": 4687.43,
+   "entry_price": 4719.72,
+   "size": 31.91,
+   "net_pnl": -1082.91
+  },
+  {
+   "n": 10,
+   "side": "Short",
+   "exit_time": "May 14, 2026, 04:30",
+   "entry_time": "May 14, 2026, 03:00",
+   "exit_price": 4709.319,
+   "entry_price": 4686.475,
+   "size": 43.78,
+   "net_pnl": -1072.1
+  },
+  {
+   "n": 11,
+   "side": "Long",
+   "exit_time": "May 14, 2026, 13:30",
+   "entry_time": "May 14, 2026, 05:00",
+   "exit_price": 4675.054,
+   "entry_price": 4702.54,
+   "size": 36.62,
+   "net_pnl": -1066.63
+  },
+  {
+   "n": 12,
+   "side": "Long",
+   "exit_time": "Jun 17, 2026, 18:00",
+   "entry_time": "Jun 16, 2026, 05:30",
+   "exit_price": 4308.659,
+   "entry_price": 4327.39,
+   "size": 53.35,
+   "net_pnl": -1079.93
+  },
+  {
+   "n": 13,
+   "side": "Short",
+   "exit_time": "Jul 9, 2026, 06:00",
+   "entry_time": "Jul 9, 2026, 01:30",
+   "exit_price": 4092.372,
+   "entry_price": 4066.775,
+   "size": 39.08,
+   "net_pnl": -1056.13
+  },
+  {
+   "n": 14,
+   "side": "Short",
+   "exit_time": "Jul 30, 2026, 10:00",
+   "entry_time": "Jul 30, 2026, 05:30",
+   "exit_price": 4076.727,
+   "entry_price": 4046.955,
+   "size": 33.64,
+   "net_pnl": -1049.35
+  },
+  {
+   "n": 15,
+   "side": "Long",
+   "exit_time": "Aug 7, 2026, 11:00",
+   "entry_time": "Aug 7, 2026, 03:00",
+   "exit_price": 4326.513,
+   "entry_price": 4250.39,
+   "size": 39.39,
+   "net_pnl": 2939.36
+  },
+  {
+   "n": 16,
+   "side": "Long",
+   "exit_time": "Aug 13, 2026, 06:30",
+   "entry_time": "Aug 12, 2026, 01:30",
+   "exit_price": 4369.789,
+   "entry_price": 4390.63,
+   "size": 47.93,
+   "net_pnl": -1072.39
+  },
+  {
+   "n": 17,
+   "side": "Long",
+   "exit_time": "Aug 26, 2026, 15:00",
+   "entry_time": "Aug 25, 2026, 03:00",
+   "exit_price": 4593.956,
+   "entry_price": 4629.525,
+   "size": 28.11,
+   "net_pnl": -1045.22
+  },
+  {
+   "n": 18,
+   "side": "Long",
+   "exit_time": "Sep 10, 2026, 09:00",
+   "entry_time": "Sep 10, 2026, 02:00",
+   "exit_price": 4390,
+   "entry_price": 4412.43,
+   "size": 44.59,
+   "net_pnl": -1068.84
+  },
+  {
+   "n": 19,
+   "side": "Short",
+   "exit_time": "Sep 15, 2026, 18:30",
+   "entry_time": "Sep 15, 2026, 06:30",
+   "exit_price": 4310.084,
+   "entry_price": 4289.565,
+   "size": 48.72,
+   "net_pnl": -1073.01
+  },
+  {
+   "n": 20,
+   "side": "Short",
+   "exit_time": "Sep 22, 2026, 19:30",
+   "entry_time": "Sep 22, 2026, 03:00",
+   "exit_price": 4368.609,
+   "entry_price": 4344.855,
+   "size": 42.08,
+   "net_pnl": -1063.73
+  },
+  {
+   "n": 21,
+   "side": "Short",
+   "exit_time": "Sep 23, 2026, 17:30",
+   "entry_time": "Sep 23, 2026, 03:00",
+   "exit_price": 4275.491,
+   "entry_price": 4334.215,
+   "size": 51.14,
+   "net_pnl": 2926.09
+  },
+  {
+   "n": 22,
+   "side": "Long",
+   "exit_time": "Oct 1, 2026, 08:30",
+   "entry_time": "Oct 1, 2026, 04:30",
+   "exit_price": 4153.69,
+   "entry_price": 4171.895,
+   "size": 54.88,
+   "net_pnl": -1079.05
+  },
+  {
+   "n": 23,
+   "side": "Short",
+   "exit_time": "Oct 2, 2026, 03:00",
+   "entry_time": "Oct 2, 2026, 01:00",
+   "exit_price": 4175.563,
+   "entry_price": 4153.51,
+   "size": 45.45,
+   "net_pnl": -1068.56
+  },
+  {
+   "n": 24,
+   "side": "Long",
+   "exit_time": "Oct 2, 2026, 14:30",
+   "entry_time": "Oct 2, 2026, 04:30",
+   "exit_price": 4165.514,
+   "entry_price": 4188.105,
+   "size": 44.44,
+   "net_pnl": -1068.91
+  },
+  {
+   "n": 25,
+   "side": "Short",
+   "exit_time": "Oct 7, 2026, 12:00",
+   "entry_time": "Oct 7, 2026, 02:00",
+   "exit_price": 4099.996,
+   "entry_price": 4147.3,
+   "size": 63.4,
+   "net_pnl": 2907.57
+  },
+  {
+   "n": 26,
+   "side": "Long",
+   "exit_time": "Oct 13, 2026, 14:00",
+   "entry_time": "Oct 13, 2026, 03:30",
+   "exit_price": 4165.916,
+   "entry_price": 4183.32,
+   "size": 57.4,
+   "net_pnl": -1082.86
+  },
+  {
+   "n": 27,
+   "side": "Short",
+   "exit_time": "Oct 22, 2026, 11:00",
+   "entry_time": "Oct 22, 2026, 00:30",
+   "exit_price": 4064.186,
+   "entry_price": 4119.26,
+   "size": 54.4,
+   "net_pnl": 2918.12
+  }
+ ],
+ "open_trade": []
+}

@@ -1,0 +1,124 @@
+{
+ "symbol": "XAGUSD",
+ "timeframe": "2h",
+ "config": "preset_silver_2h_conservative",
+ "tradingview_symbol": "OANDA:XAGUSD",
+ "recorded_utc": "2026-11-14T14:24:57.158Z",
+ "applied": {
+  "preset": "Silver 2h Conservative",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.08,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Silver / U.S. Dollar 2h OANDA O 48.89150 H 48.92850 L 48.48650 C 48.77400 −0.11900 (−0.24%)",
+ "legend": "GSMS Strategy Silver 2h Conservative 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 49.61309 50.43058 52.74158 1.00000 0.0",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Jan 1, 2025 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": 1726.47,
+  "net_profit_pct": 1.73,
+  "max_drawdown_usd": 7545.33,
+  "max_drawdown_pct": 6.91,
+  "percent_profitable": 25,
+  "winning_trades": 5,
+  "total_trades": 20,
+  "profit_factor": 1.099,
+  "gross_profit_usd": 19092.88,
+  "gross_loss_usd": 17366.4,
+  "long_pnl_usd": 4826.85,
+  "short_pnl_usd": -3100.37,
+  "expectancy_usd": 86.32,
+  "avg_profit_pct": 2.76,
+  "avg_loss_pct": -1.84
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n+1,726.47USD+1.73%\nMax drawdown\n7,545.33USD6.91%\nProfitable trades\n25.00%5/20\nProfit factor\n1.099\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n+1,726.47\nBuy and hold\n+95,170.52\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n19,092.88USD19.09%\nGross loss\n17,366.40USD17.37%\nProfit factor\n1.099\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n+1,726.47\nUSD\nLong\n+4,826.85\nUSD\nShort\n−3,100.37\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n86.32USD−0.14%\nOutliers PnL\n7,835.37USD7.84%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−1.84%\nAverage profit\n2.76%\nTrades distribution\n20\nTotal trades\nWinners\n5 trades\n25.00%\nLosers\n15 trades\n75.00%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 8,
+   "side": "Long",
+   "exit_time": "Oct 8, 2025, 11:00",
+   "entry_time": "Sep 25, 2025, 09:00",
+   "exit_price": 49.01533,
+   "entry_price": 44.8051,
+   "size": 948.98,
+   "net_pnl": 3924.2
+  },
+  {
+   "n": 9,
+   "side": "Long",
+   "exit_time": "Dec 30, 2025, 16:00",
+   "entry_time": "Dec 29, 2025, 18:00",
+   "exit_price": 76.98565,
+   "entry_price": 71.63875,
+   "size": 748.12,
+   "net_pnl": 3911.17
+  },
+  {
+   "n": 10,
+   "side": "Long",
+   "exit_time": "Jan 21, 2026, 14:00",
+   "entry_time": "Jan 21, 2026, 14:00",
+   "exit_price": 93.59587,
+   "entry_price": 94.98625,
+   "size": 720.23,
+   "net_pnl": -1110.05
+  },
+  {
+   "n": 11,
+   "side": "Long",
+   "exit_time": "Jan 30, 2026, 08:00",
+   "entry_time": "Jan 27, 2026, 20:00",
+   "exit_price": 104.64776,
+   "entry_price": 109.307,
+   "size": 214.56,
+   "net_pnl": -1036.41
+  },
+  {
+   "n": 12,
+   "side": "Long",
+   "exit_time": "Mar 3, 2026, 06:00",
+   "entry_time": "Feb 24, 2026, 16:00",
+   "exit_price": 85.24713,
+   "entry_price": 87.8273,
+   "size": 388.59,
+   "net_pnl": -1056.43
+  },
+  {
+   "n": 13,
+   "side": "Short",
+   "exit_time": "Apr 7, 2026, 21:00",
+   "entry_time": "Apr 7, 2026, 19:00",
+   "exit_price": 73.75755,
+   "entry_price": 71.3652,
+   "size": 525.72,
+   "net_pnl": -1318.74
+  },
+  {
+   "n": 18,
+   "side": "Long",
+   "exit_time": "Aug 28, 2026, 15:00",
+   "entry_time": "Aug 27, 2026, 15:00",
+   "exit_price": 67.55919,
+   "entry_price": 68.74,
+   "size": 846.51,
+   "net_pnl": -1091.87
+  },
+  {
+   "n": 20,
+   "side": "Short",
+   "exit_time": "Oct 2, 2026, 07:00",
+   "entry_time": "Oct 1, 2026, 09:00",
+   "exit_price": 61.48861,
+   "entry_price": 60.395,
+   "size": 916.49,
+   "net_pnl": -1091.65
+  }
+ ],
+ "open_trade": []
+}

@@ -1,0 +1,64 @@
+{
+ "symbol": "XAGUSD",
+ "timeframe": "15m",
+ "config": "preset_silver_30m_aggressive",
+ "tradingview_symbol": "OANDA:XAGUSD",
+ "recorded_utc": "2026-11-14T14:16:36.258Z",
+ "applied": {
+  "preset": "Silver 30m Aggressive",
+  "modules": {
+   "EMA crossover": true,
+   "Liquidity sweep": true,
+   "Supply / demand zones": true,
+   "Candlestick patterns": true
+  },
+  "commission": 0.08,
+  "commission_type": "Percent"
+ },
+ "chart_header": "X Silver / U.S. Dollar 15 OANDA O 48.64400 H 48.80400 L 48.62000 C 48.77400 +0.13050 (+0.27%)",
+ "legend": "GSMS Strategy Silver 30m Aggressive 5 9 20 Cross 5 Swings Wick 3 300 10 1 1 2 Close beyond Rejection close 500 ATR 1.5 10 0.25 0.5 5 2 1,000 Both 0 -1 -1 14 300 48.80451 49.02176 50.32216 0.00000 0.00",
+ "upgrade_dialog": null,
+ "tester": {
+  "range": "Aug 2, 2026 — Nov 13, 2026",
+  "empty": false,
+  "net_profit_usd": -5193.77,
+  "net_profit_pct": -5.19,
+  "max_drawdown_usd": 5866.65,
+  "max_drawdown_pct": 5.83,
+  "percent_profitable": 12.5,
+  "winning_trades": 1,
+  "total_trades": 8,
+  "profit_factor": 0.363,
+  "gross_profit_usd": 2957.54,
+  "gross_loss_usd": 8151.31,
+  "long_pnl_usd": -3448.01,
+  "short_pnl_usd": -1745.76,
+  "expectancy_usd": -649.22,
+  "avg_profit_pct": null,
+  "avg_loss_pct": -1.31
+ },
+ "tester_text": "Key stats\n\nTotal PnL\n−5,193.77USD−5.19%\nMax drawdown\n5,866.65USD5.83%\nProfitable trades\n12.50%1/8\nProfit factor\n0.363\nPerformance\n\t\n\t\n\n\t\n\t\nCumulative PnL\n−5,193.77\nBuy and hold\n−19,966.70\nMargin calls\n\nPerformance analysis\n\nBreakdown\nPeriodical\nBenchmarking\nMargin usage\nGrowth and decline\nMore\nGross profit\n2,957.54USD2.96%\nGross loss\n8,151.31USD8.15%\nProfit factor\n0.363\nCommission load\nProfits and losses\nBy signals\nBy side\nAll signals\n−5,193.77\nUSD\nShort\n−1,745.76\nUSD\nLong\n−3,448.01\nUSD\n\nTrades analysis\n\nDistribution\nStreaks\nTime patterns\nMore\nExpectancy\n−649.22USD0.16%\nOutliers PnL\n2,957.54USD2.96%\nLargest profit\nLargest loss\nReturns distribution\n\t\n\t\n\n\t\n\t\nLosers\nWinners\nAverage loss\n−1.31%\nAverage profit\n—\nTrades distribution\n8\nTotal trades\nWinners\n1 trade\n12.50%\nLosers\n7 trades\n87.50%\nBreakevens\n0 trades\n0.00%",
+ "trades": [
+  {
+   "n": 2,
+   "side": "Short",
+   "exit_time": "Aug 19, 2026, 20:15",
+   "entry_time": "Aug 18, 2026, 02:15",
+   "exit_price": 66.58274,
+   "entry_price": 65.4205,
+   "size": 862.63,
+   "net_pnl": -1093.68
+  },
+  {
+   "n": 3,
+   "side": "Short",
+   "exit_time": "Sep 28, 2026, 07:00",
+   "entry_time": "Aug 28, 2026, 14:15",
+   "exit_price": 61.25946,
+   "entry_price": 68.567,
+   "size": 410.56,
+   "net_pnl": 2957.54
+  }
+ ],
+ "open_trade": []
+}

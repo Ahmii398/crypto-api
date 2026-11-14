@@ -16,6 +16,7 @@ so the out-of-sample period cannot influence which settings are chosen.
 from __future__ import annotations
 
 import argparse
+import multiprocessing as mp
 import time
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from dataclasses import fields
@@ -97,6 +98,53 @@ def load(symbols=SYMBOLS, timeframes=TIMEFRAMES) -> pd.DataFrame:
 
 def params_of(row) -> Params:
     return Params.from_dict({name: row[name] for name in PARAM_FIELDS})
+
+
+# Forked workers inherit this. It is filled in the parent before the pool starts.
+_FORK = {}
+
+
+def _row_from_record(record) -> dict:
+    index, group, raw = record
+    bars = _FORK["bars"]
+    p = Params.from_dict(raw)
+    row = {"symbol": bars.symbol, "timeframe": bars.timeframe, "strategy_id": index, "group": group, "modules": p.modules(), **p.to_dict()}
+    row.update(evaluate(bars, p))
+    return row
+
+
+def _rows_from_chunk(records) -> list[dict]:
+    return [_row_from_record(record) for record in records]
+
+
+def run_parallel(symbol: str, timeframe: str, n_random: int, seed: int, workers: int, frame: pd.DataFrame | None = None) -> str:
+    """Same search as `run_dataset`, with the strategy list split across forked workers.
+
+    Used for the 1-minute gold run, where one process would spend hours. The parent loads
+    the bars and compiles the engine once; forked workers share that memory.
+    """
+    if frame is None:
+        frame = data.load_bars(symbol, timeframe)
+    _FORK["bars"] = backtest.Bars(frame, symbol, timeframe, cache_limit=2)
+    evaluate(_FORK["bars"], Params())
+    strategies = strategy_list(n_random, seed)
+    records = [(index, group, p.to_dict()) for index, (group, p) in enumerate(strategies)]
+    chunks = [records[i : i + 100] for i in range(0, len(records), 100)]
+    rows = []
+    started = time.time()
+    context = mp.get_context("fork")
+    with ProcessPoolExecutor(max_workers=workers, mp_context=context) as pool:
+        futures = [pool.submit(_rows_from_chunk, chunk) for chunk in chunks]
+        done = 0
+        for future in as_completed(futures):
+            rows.extend(future.result())
+            done += 1
+            print(f"  {symbol} {timeframe}: {done}/{len(chunks)} chunks in {time.time() - started:.0f}s", flush=True)
+    frame_out = pd.DataFrame(rows).sort_values("strategy_id").reset_index(drop=True)
+    path = SEARCH_DIR / f"{symbol}_{timeframe}.parquet"
+    SEARCH_DIR.mkdir(parents=True, exist_ok=True)
+    frame_out.to_parquet(path, index=False)
+    return f"{symbol} {timeframe}: {len(frame_out)} strategies in {time.time() - started:.0f}s -> {path.name}"
 
 
 def main() -> None:

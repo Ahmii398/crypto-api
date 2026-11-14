@@ -19,7 +19,7 @@ strategy("GSMS - Gold & Silver Multi-Strategy (Strategy)", shorttitle = "GSMS St
 //  Inputs
 // ═════════════════════════════════════════════════════════════════════════════
 string PRESET_CUSTOM = "Custom (inputs below)"
-string i_preset = input.string("Custom (inputs below)", "Preset", options = ["Custom (inputs below)", "Gold 30m Conservative", "Gold 2h Balanced", "Gold 1h Aggressive", "Silver 2h Conservative", "Silver 2h Balanced", "Silver 30m Aggressive"], tooltip = "A preset replaces every setting in groups 1-8. Presets are the settings that tested best on 2010-2021 data for one symbol and timeframe. They are not a performance promise: read REPORT.md for their out-of-sample results before relying on them.")
+string i_preset = input.string("Auto (by timeframe)", "Preset", options = ["Auto (by timeframe)", "Custom (inputs below)", "Gold 30m Conservative", "Gold 2h Balanced", "Gold 1h Aggressive", "Silver 2h Conservative", "Silver 2h Balanced", "Silver 30m Aggressive"], tooltip = "Auto follows the chart timeframe with the gold settings chosen on 2010-2021 data (XAUUSD only). A named preset replaces every setting in groups 1-8. Neither is a performance promise: read REPORT.md and GOLD_REPORT.md.")
 
 string G_MOD = "1 · Strategy modules (all enabled modules must agree)"
 bool   i_useEma     = input.bool(true, "EMA crossover", group = G_MOD)
@@ -89,48 +89,58 @@ bool   i_showLevels = input.bool(true, "Stop / target of the open trade", group 
 bool   i_showResults = input.bool(true, "Results table", group = G_VIS)
 
 // ═════════════════════════════════════════════════════════════════════════════
-//  Effective parameters (preset or inputs)
+//  Effective parameters (preset, automatic timeframe settings, or inputs)
 // ═════════════════════════════════════════════════════════════════════════════
-int presetId = i_preset == "Gold 30m Conservative" ? 1 : i_preset == "Gold 2h Balanced" ? 2 : i_preset == "Gold 1h Aggressive" ? 3 : i_preset == "Silver 2h Conservative" ? 4 : i_preset == "Silver 2h Balanced" ? 5 : i_preset == "Silver 30m Aggressive" ? 6 : 0
-bool useEma = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? false : presetId == 6 ? true : i_useEma
-bool useLs = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? true : presetId == 6 ? true : i_useLs
-bool useSd = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_useSd
-bool useCp = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_useCp
-int confWindow = presetId == 1 ? 20 : presetId == 2 ? 20 : presetId == 3 ? 3 : presetId == 4 ? 1 : presetId == 5 ? 8 : presetId == 6 ? 12 : i_confWindow
-int emaFastLen = presetId == 1 ? 9 : presetId == 2 ? 12 : presetId == 3 ? 9 : presetId == 4 ? 12 : presetId == 5 ? 9 : presetId == 6 ? 9 : i_emaFast
-int emaSlowLen = presetId == 1 ? 25 : presetId == 2 ? 18 : presetId == 3 ? 20 : presetId == 4 ? 30 : presetId == 5 ? 20 : presetId == 6 ? 25 : i_emaSlow
-string emaMode = presetId == 1 ? "Cross" : presetId == 2 ? "Cross" : presetId == 3 ? "Cross" : presetId == 4 ? "Trend" : presetId == 5 ? "Cross" : presetId == 6 ? "Cross" : i_emaMode
-int lsSwing = presetId == 1 ? 5 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 21 : presetId == 6 ? 5 : i_lsSwing
-string lsSource = presetId == 1 ? "Swings" : presetId == 2 ? "Swings" : presetId == 3 ? "Swings + PDH/PDL" : presetId == 4 ? "Swings" : presetId == 5 ? "Swings + PDH/PDL" : presetId == 6 ? "Swings + PDH/PDL" : i_lsSource
-string lsMode = presetId == 1 ? "Wick" : presetId == 2 ? "Wick" : presetId == 3 ? "Wick" : presetId == 4 ? "Wick" : presetId == 5 ? "Wick" : presetId == 6 ? "Close confirm" : i_lsMode
-int lsReclaim = presetId == 1 ? 3 : presetId == 2 ? 3 : presetId == 3 ? 3 : presetId == 4 ? 3 : presetId == 5 ? 3 : presetId == 6 ? 2 : i_lsReclaim
-int lsMaxAge = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : i_lsMaxAge
-int sdSwing = presetId == 1 ? 8 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 3 : presetId == 6 ? 13 : i_sdSwing
-float sdWidth = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 0.5 : i_sdWidth
-float sdStrength = presetId == 1 ? 0.5 : presetId == 2 ? 2.0 : presetId == 3 ? 0.0 : presetId == 4 ? 1.0 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : i_sdStrength
-int sdMaxTouch = presetId == 1 ? 99 : presetId == 2 ? 2 : presetId == 3 ? 3 : presetId == 4 ? 99 : presetId == 5 ? 99 : presetId == 6 ? 1 : i_sdMaxTouch
-string sdInval = presetId == 1 ? "Close beyond" : presetId == 2 ? "Close beyond" : presetId == 3 ? "Close beyond" : presetId == 4 ? "Wick beyond" : presetId == 5 ? "Wick beyond" : presetId == 6 ? "Close beyond" : i_sdInval
-string sdConfirm = presetId == 1 ? "Touch" : presetId == 2 ? "Touch" : presetId == 3 ? "Touch" : presetId == 4 ? "Rejection close" : presetId == 5 ? "Rejection close" : presetId == 6 ? "Rejection close" : i_sdConfirm
-int sdMaxAge = presetId == 1 ? 500 : presetId == 2 ? 500 : presetId == 3 ? 200 : presetId == 4 ? 2000 : presetId == 5 ? 200 : presetId == 6 ? 2000 : i_sdMaxAge
-bool cpEngulf = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpEngulf
-bool cpPin = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpPin
-bool cpStar = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpStar
-bool cpPierce = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : i_cpPierce
-bool cpStrict = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_cpStrict
-bool cpConfirm = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? false : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : i_cpConfirm
-string slMode = presetId == 1 ? "ATR" : presetId == 2 ? "Structure" : presetId == 3 ? "Structure" : presetId == 4 ? "Structure" : presetId == 5 ? "ATR" : presetId == 6 ? "Zone" : i_slMode
-float slAtr = presetId == 1 ? 2.0 : presetId == 2 ? 1.5 : presetId == 3 ? 1.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 1.5 : i_slAtr
-int slLookback = presetId == 1 ? 10 : presetId == 2 ? 5 : presetId == 3 ? 5 : presetId == 4 ? 5 : presetId == 5 ? 10 : presetId == 6 ? 10 : i_slLookback
-float slBuffer = presetId == 1 ? 0.25 : presetId == 2 ? 0.25 : presetId == 3 ? 0.25 : presetId == 4 ? 0.1 : presetId == 5 ? 0.25 : presetId == 6 ? 0.1 : i_slBuffer
-float minStop = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 0.5 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : i_minStop
-float maxStop = presetId == 1 ? 5.0 : presetId == 2 ? 5.0 : presetId == 3 ? 5.0 : presetId == 4 ? 5.0 : presetId == 5 ? 5.0 : presetId == 6 ? 5.0 : i_maxStop
-float rr = presetId == 1 ? 3.0 : presetId == 2 ? 2.0 : presetId == 3 ? 4.0 : presetId == 4 ? 4.0 : presetId == 5 ? 3.0 : presetId == 6 ? 3.0 : i_rr
-string direction = presetId == 1 ? "Both" : presetId == 2 ? "Both" : presetId == 3 ? "Both" : presetId == 4 ? "Both" : presetId == 5 ? "Both" : presetId == 6 ? "Both" : i_direction
-int trendLen = presetId == 1 ? 100 : presetId == 2 ? 0 : presetId == 3 ? 0 : presetId == 4 ? 200 : presetId == 5 ? 100 : presetId == 6 ? 200 : i_trendLen
-int sessStart = presetId == 1 ? 0 : presetId == 2 ? 7 : presetId == 3 ? 7 : presetId == 4 ? 7 : presetId == 5 ? -1 : presetId == 6 ? -1 : i_sessStart
-int sessEnd = presetId == 1 ? 7 : presetId == 2 ? 20 : presetId == 3 ? 20 : presetId == 4 ? 20 : presetId == 5 ? -1 : presetId == 6 ? -1 : i_sessEnd
-int atrLen = presetId == 1 ? 14 : presetId == 2 ? 14 : presetId == 3 ? 14 : presetId == 4 ? 14 : presetId == 5 ? 14 : presetId == 6 ? 14 : i_atrLen
-int warmup = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : i_warmup
+string tickerUpper = str.upper(syminfo.ticker)
+bool isSilver = str.contains(tickerUpper, "XAG") or str.contains(tickerUpper, "SILVER")
+bool isGold = str.contains(tickerUpper, "XAU") or str.contains(tickerUpper, "GOLD")
+bool wantAuto = i_preset == "Auto (by timeframe)"
+int chartSec = timeframe.in_seconds()
+int autoSlot = chartSec == 86400 ? 8 : chartSec == 14400 ? 7 : chartSec == 7200 ? 6 : chartSec == 3600 ? 5 : chartSec == 1800 ? 4 : chartSec == 900 ? 3 : chartSec == 300 ? 2 : chartSec == 60 ? 1 : 0
+string autoLabel = not wantAuto ? "" : not isGold ? "XAUUSD only" : autoSlot == 8 ? "1D selected" : autoSlot == 7 ? "4h selected" : autoSlot == 6 ? "2h selected" : autoSlot == 5 ? "1h selected" : autoSlot == 4 ? "30m selected" : autoSlot == 3 ? "15m selected" : autoSlot == 2 ? "5m selected" : autoSlot == 1 ? "1m unoptimized" : "Manual inputs"
+string autoNote = not wantAuto ? "" : not isGold ? "Automatic settings were researched on XAUUSD only. Manual inputs are used." : autoSlot == 8 ? "1D chosen on 2010-2021. 2022-2026: 68 trades, PF 0.92, -4.5 R, CI -0.50 to +0.43 R/trade." : autoSlot == 7 ? "4h chosen on 2010-2021. 2022-2026: 166 trades, PF 1.01, +1.1 R, CI -0.21 to +0.23 R/trade." : autoSlot == 6 ? "2h chosen on 2010-2021. 2022-2026: 94 trades, PF 0.70, -21.4 R, CI -0.49 to +0.06 R/trade." : autoSlot == 5 ? "1h chosen on 2010-2021. 2022-2026: 144 trades, PF 0.81, -24.2 R, CI -0.48 to +0.16 R/trade." : autoSlot == 4 ? "30m chosen on 2010-2021. 2022-2026: 138 trades, PF 0.92, -8.5 R, CI -0.35 to +0.23 R/trade." : autoSlot == 3 ? "15m chosen on 2010-2021. 2022-2026: 103 trades, PF 1.27, +22.4 R, CI -0.20 to +0.66 R/trade." : autoSlot == 2 ? "5m chosen on 2010-2021. 2022-2026: 77 trades, PF 1.32, +20.8 R, CI -0.22 to +0.80 R/trade." : autoSlot == 1 ? "1m unoptimized, original defaults. 2022-2026: 1555 trades, PF 0.28, -1439.8 R, CI -1.00 to -0.85 R/trade." : "No gold configuration for this chart timeframe. Manual inputs are used."
+color autoNoteColor = autoSlot == 8 ? color.new(color.orange, 20) : autoSlot == 7 ? color.new(color.orange, 20) : autoSlot == 6 ? color.new(color.orange, 20) : autoSlot == 5 ? color.new(color.orange, 20) : autoSlot == 4 ? color.new(color.orange, 20) : autoSlot == 3 ? color.new(color.orange, 20) : autoSlot == 2 ? color.new(color.orange, 20) : autoSlot == 1 ? color.new(color.red, 20) : color.new(color.orange, 20)
+int namedId = i_preset == "Gold 30m Conservative" ? 1 : i_preset == "Gold 2h Balanced" ? 2 : i_preset == "Gold 1h Aggressive" ? 3 : i_preset == "Silver 2h Conservative" ? 4 : i_preset == "Silver 2h Balanced" ? 5 : i_preset == "Silver 30m Aggressive" ? 6 : 0
+int presetId = wantAuto ? (isGold and autoSlot != 0 ? 100 + autoSlot : 0) : namedId
+bool useEma = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? false : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? true : presetId == 103 ? true : presetId == 104 ? true : presetId == 105 ? false : presetId == 106 ? true : presetId == 107 ? false : presetId == 108 ? false : i_useEma
+bool useLs = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? false : presetId == 103 ? false : presetId == 104 ? false : presetId == 105 ? true : presetId == 106 ? false : presetId == 107 ? false : presetId == 108 ? false : i_useLs
+bool useSd = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? true : presetId == 103 ? true : presetId == 104 ? true : presetId == 105 ? true : presetId == 106 ? true : presetId == 107 ? true : presetId == 108 ? true : i_useSd
+bool useCp = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : presetId == 101 ? true : presetId == 102 ? true : presetId == 103 ? true : presetId == 104 ? false : presetId == 105 ? true : presetId == 106 ? false : presetId == 107 ? true : presetId == 108 ? false : i_useCp
+int confWindow = presetId == 1 ? 20 : presetId == 2 ? 20 : presetId == 3 ? 3 : presetId == 4 ? 1 : presetId == 5 ? 8 : presetId == 6 ? 12 : presetId == 101 ? 5 : presetId == 102 ? 2 : presetId == 103 ? 8 : presetId == 104 ? 20 : presetId == 105 ? 3 : presetId == 106 ? 20 : presetId == 107 ? 8 : presetId == 108 ? 1 : i_confWindow
+int emaFastLen = presetId == 1 ? 9 : presetId == 2 ? 12 : presetId == 3 ? 9 : presetId == 4 ? 12 : presetId == 5 ? 9 : presetId == 6 ? 9 : presetId == 101 ? 9 : presetId == 102 ? 5 : presetId == 103 ? 7 : presetId == 104 ? 9 : presetId == 105 ? 9 : presetId == 106 ? 12 : presetId == 107 ? 9 : presetId == 108 ? 9 : i_emaFast
+int emaSlowLen = presetId == 1 ? 25 : presetId == 2 ? 18 : presetId == 3 ? 20 : presetId == 4 ? 30 : presetId == 5 ? 20 : presetId == 6 ? 25 : presetId == 101 ? 20 : presetId == 102 ? 20 : presetId == 103 ? 30 : presetId == 104 ? 25 : presetId == 105 ? 20 : presetId == 106 ? 18 : presetId == 107 ? 20 : presetId == 108 ? 20 : i_emaSlow
+string emaMode = presetId == 1 ? "Cross" : presetId == 2 ? "Cross" : presetId == 3 ? "Cross" : presetId == 4 ? "Trend" : presetId == 5 ? "Cross" : presetId == 6 ? "Cross" : presetId == 101 ? "Cross" : presetId == 102 ? "Cross" : presetId == 103 ? "Trend" : presetId == 104 ? "Cross" : presetId == 105 ? "Cross" : presetId == 106 ? "Cross" : presetId == 107 ? "Cross" : presetId == 108 ? "Cross" : i_emaMode
+int lsSwing = presetId == 1 ? 5 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 21 : presetId == 6 ? 5 : presetId == 101 ? 5 : presetId == 102 ? 5 : presetId == 103 ? 5 : presetId == 104 ? 5 : presetId == 105 ? 8 : presetId == 106 ? 5 : presetId == 107 ? 5 : presetId == 108 ? 5 : i_lsSwing
+string lsSource = presetId == 1 ? "Swings" : presetId == 2 ? "Swings" : presetId == 3 ? "Swings + PDH/PDL" : presetId == 4 ? "Swings" : presetId == 5 ? "Swings + PDH/PDL" : presetId == 6 ? "Swings + PDH/PDL" : presetId == 101 ? "Swings" : presetId == 102 ? "Swings" : presetId == 103 ? "Swings" : presetId == 104 ? "Swings" : presetId == 105 ? "Swings + PDH/PDL" : presetId == 106 ? "Swings" : presetId == 107 ? "Swings" : presetId == 108 ? "Swings" : i_lsSource
+string lsMode = presetId == 1 ? "Wick" : presetId == 2 ? "Wick" : presetId == 3 ? "Wick" : presetId == 4 ? "Wick" : presetId == 5 ? "Wick" : presetId == 6 ? "Close confirm" : presetId == 101 ? "Wick" : presetId == 102 ? "Wick" : presetId == 103 ? "Wick" : presetId == 104 ? "Wick" : presetId == 105 ? "Wick" : presetId == 106 ? "Wick" : presetId == 107 ? "Wick" : presetId == 108 ? "Wick" : i_lsMode
+int lsReclaim = presetId == 1 ? 3 : presetId == 2 ? 3 : presetId == 3 ? 3 : presetId == 4 ? 3 : presetId == 5 ? 3 : presetId == 6 ? 2 : presetId == 101 ? 3 : presetId == 102 ? 3 : presetId == 103 ? 3 : presetId == 104 ? 3 : presetId == 105 ? 3 : presetId == 106 ? 3 : presetId == 107 ? 3 : presetId == 108 ? 3 : i_lsReclaim
+int lsMaxAge = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : presetId == 101 ? 300 : presetId == 102 ? 300 : presetId == 103 ? 300 : presetId == 104 ? 300 : presetId == 105 ? 300 : presetId == 106 ? 300 : presetId == 107 ? 300 : presetId == 108 ? 300 : i_lsMaxAge
+int sdSwing = presetId == 1 ? 8 : presetId == 2 ? 5 : presetId == 3 ? 8 : presetId == 4 ? 5 : presetId == 5 ? 3 : presetId == 6 ? 13 : presetId == 101 ? 10 : presetId == 102 ? 13 : presetId == 103 ? 8 : presetId == 104 ? 8 : presetId == 105 ? 8 : presetId == 106 ? 5 : presetId == 107 ? 8 : presetId == 108 ? 5 : i_sdSwing
+float sdWidth = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 0.5 : presetId == 101 ? 1.0 : presetId == 102 ? 0.5 : presetId == 103 ? 1.0 : presetId == 104 ? 0.5 : presetId == 105 ? 0.5 : presetId == 106 ? 0.5 : presetId == 107 ? 2.0 : presetId == 108 ? 0.5 : i_sdWidth
+float sdStrength = presetId == 1 ? 0.5 : presetId == 2 ? 2.0 : presetId == 3 ? 0.0 : presetId == 4 ? 1.0 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : presetId == 101 ? 1.0 : presetId == 102 ? 0.0 : presetId == 103 ? 1.0 : presetId == 104 ? 0.5 : presetId == 105 ? 0.0 : presetId == 106 ? 2.0 : presetId == 107 ? 0.5 : presetId == 108 ? 0.0 : i_sdStrength
+int sdMaxTouch = presetId == 1 ? 99 : presetId == 2 ? 2 : presetId == 3 ? 3 : presetId == 4 ? 99 : presetId == 5 ? 99 : presetId == 6 ? 1 : presetId == 101 ? 2 : presetId == 102 ? 3 : presetId == 103 ? 99 : presetId == 104 ? 99 : presetId == 105 ? 3 : presetId == 106 ? 2 : presetId == 107 ? 99 : presetId == 108 ? 3 : i_sdMaxTouch
+string sdInval = presetId == 1 ? "Close beyond" : presetId == 2 ? "Close beyond" : presetId == 3 ? "Close beyond" : presetId == 4 ? "Wick beyond" : presetId == 5 ? "Wick beyond" : presetId == 6 ? "Close beyond" : presetId == 101 ? "Close beyond" : presetId == 102 ? "Close beyond" : presetId == 103 ? "Close beyond" : presetId == 104 ? "Close beyond" : presetId == 105 ? "Close beyond" : presetId == 106 ? "Close beyond" : presetId == 107 ? "Close beyond" : presetId == 108 ? "Wick beyond" : i_sdInval
+string sdConfirm = presetId == 1 ? "Touch" : presetId == 2 ? "Touch" : presetId == 3 ? "Touch" : presetId == 4 ? "Rejection close" : presetId == 5 ? "Rejection close" : presetId == 6 ? "Rejection close" : presetId == 101 ? "Rejection close" : presetId == 102 ? "Rejection close" : presetId == 103 ? "Rejection close" : presetId == 104 ? "Touch" : presetId == 105 ? "Touch" : presetId == 106 ? "Touch" : presetId == 107 ? "Touch" : presetId == 108 ? "Touch" : i_sdConfirm
+int sdMaxAge = presetId == 1 ? 500 : presetId == 2 ? 500 : presetId == 3 ? 200 : presetId == 4 ? 2000 : presetId == 5 ? 200 : presetId == 6 ? 2000 : presetId == 101 ? 500 : presetId == 102 ? 200 : presetId == 103 ? 500 : presetId == 104 ? 500 : presetId == 105 ? 200 : presetId == 106 ? 500 : presetId == 107 ? 2000 : presetId == 108 ? 2000 : i_sdMaxAge
+bool cpEngulf = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? true : presetId == 103 ? true : presetId == 104 ? true : presetId == 105 ? true : presetId == 106 ? true : presetId == 107 ? true : presetId == 108 ? true : i_cpEngulf
+bool cpPin = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? false : presetId == 103 ? false : presetId == 104 ? true : presetId == 105 ? true : presetId == 106 ? true : presetId == 107 ? true : presetId == 108 ? true : i_cpPin
+bool cpStar = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? false : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? false : presetId == 103 ? true : presetId == 104 ? true : presetId == 105 ? false : presetId == 106 ? true : presetId == 107 ? true : presetId == 108 ? true : i_cpStar
+bool cpPierce = presetId == 1 ? true : presetId == 2 ? true : presetId == 3 ? true : presetId == 4 ? true : presetId == 5 ? true : presetId == 6 ? true : presetId == 101 ? true : presetId == 102 ? true : presetId == 103 ? false : presetId == 104 ? true : presetId == 105 ? true : presetId == 106 ? true : presetId == 107 ? true : presetId == 108 ? true : i_cpPierce
+bool cpStrict = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? true : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : presetId == 101 ? false : presetId == 102 ? false : presetId == 103 ? true : presetId == 104 ? false : presetId == 105 ? true : presetId == 106 ? false : presetId == 107 ? false : presetId == 108 ? false : i_cpStrict
+bool cpConfirm = presetId == 1 ? false : presetId == 2 ? false : presetId == 3 ? false : presetId == 4 ? false : presetId == 5 ? false : presetId == 6 ? false : presetId == 101 ? false : presetId == 102 ? false : presetId == 103 ? true : presetId == 104 ? false : presetId == 105 ? false : presetId == 106 ? false : presetId == 107 ? true : presetId == 108 ? false : i_cpConfirm
+string slMode = presetId == 1 ? "ATR" : presetId == 2 ? "Structure" : presetId == 3 ? "Structure" : presetId == 4 ? "Structure" : presetId == 5 ? "ATR" : presetId == 6 ? "Zone" : presetId == 101 ? "ATR" : presetId == 102 ? "Structure" : presetId == 103 ? "ATR" : presetId == 104 ? "ATR" : presetId == 105 ? "Structure" : presetId == 106 ? "Structure" : presetId == 107 ? "ATR" : presetId == 108 ? "Structure" : i_slMode
+float slAtr = presetId == 1 ? 2.0 : presetId == 2 ? 1.5 : presetId == 3 ? 1.5 : presetId == 4 ? 1.5 : presetId == 5 ? 2.0 : presetId == 6 ? 1.5 : presetId == 101 ? 1.5 : presetId == 102 ? 1.5 : presetId == 103 ? 3.0 : presetId == 104 ? 2.0 : presetId == 105 ? 1.5 : presetId == 106 ? 1.5 : presetId == 107 ? 1.0 : presetId == 108 ? 1.5 : i_slAtr
+int slLookback = presetId == 1 ? 10 : presetId == 2 ? 5 : presetId == 3 ? 5 : presetId == 4 ? 5 : presetId == 5 ? 10 : presetId == 6 ? 10 : presetId == 101 ? 10 : presetId == 102 ? 20 : presetId == 103 ? 10 : presetId == 104 ? 10 : presetId == 105 ? 5 : presetId == 106 ? 5 : presetId == 107 ? 10 : presetId == 108 ? 10 : i_slLookback
+float slBuffer = presetId == 1 ? 0.25 : presetId == 2 ? 0.25 : presetId == 3 ? 0.25 : presetId == 4 ? 0.1 : presetId == 5 ? 0.25 : presetId == 6 ? 0.1 : presetId == 101 ? 0.25 : presetId == 102 ? 0.1 : presetId == 103 ? 0.25 : presetId == 104 ? 0.25 : presetId == 105 ? 0.25 : presetId == 106 ? 0.25 : presetId == 107 ? 0.25 : presetId == 108 ? 0.25 : i_slBuffer
+float minStop = presetId == 1 ? 0.5 : presetId == 2 ? 0.5 : presetId == 3 ? 0.5 : presetId == 4 ? 0.5 : presetId == 5 ? 0.5 : presetId == 6 ? 0.5 : presetId == 101 ? 0.5 : presetId == 102 ? 0.5 : presetId == 103 ? 0.5 : presetId == 104 ? 0.5 : presetId == 105 ? 0.5 : presetId == 106 ? 0.5 : presetId == 107 ? 0.5 : presetId == 108 ? 0.5 : i_minStop
+float maxStop = presetId == 1 ? 5.0 : presetId == 2 ? 5.0 : presetId == 3 ? 5.0 : presetId == 4 ? 5.0 : presetId == 5 ? 5.0 : presetId == 6 ? 5.0 : presetId == 101 ? 5.0 : presetId == 102 ? 5.0 : presetId == 103 ? 5.0 : presetId == 104 ? 5.0 : presetId == 105 ? 5.0 : presetId == 106 ? 5.0 : presetId == 107 ? 5.0 : presetId == 108 ? 5.0 : i_maxStop
+float rr = presetId == 1 ? 3.0 : presetId == 2 ? 2.0 : presetId == 3 ? 4.0 : presetId == 4 ? 4.0 : presetId == 5 ? 3.0 : presetId == 6 ? 3.0 : presetId == 101 ? 2.0 : presetId == 102 ? 4.0 : presetId == 103 ? 4.0 : presetId == 104 ? 3.0 : presetId == 105 ? 4.0 : presetId == 106 ? 2.0 : presetId == 107 ? 2.0 : presetId == 108 ? 4.0 : i_rr
+string direction = presetId == 1 ? "Both" : presetId == 2 ? "Both" : presetId == 3 ? "Both" : presetId == 4 ? "Both" : presetId == 5 ? "Both" : presetId == 6 ? "Both" : presetId == 101 ? "Both" : presetId == 102 ? "Both" : presetId == 103 ? "Both" : presetId == 104 ? "Both" : presetId == 105 ? "Both" : presetId == 106 ? "Both" : presetId == 107 ? "Both" : presetId == 108 ? "Both" : i_direction
+int trendLen = presetId == 1 ? 100 : presetId == 2 ? 0 : presetId == 3 ? 0 : presetId == 4 ? 200 : presetId == 5 ? 100 : presetId == 6 ? 200 : presetId == 101 ? 0 : presetId == 102 ? 200 : presetId == 103 ? 100 : presetId == 104 ? 100 : presetId == 105 ? 0 : presetId == 106 ? 0 : presetId == 107 ? 200 : presetId == 108 ? 0 : i_trendLen
+int sessStart = presetId == 1 ? 0 : presetId == 2 ? 7 : presetId == 3 ? 7 : presetId == 4 ? 7 : presetId == 5 ? -1 : presetId == 6 ? -1 : presetId == 101 ? -1 : presetId == 102 ? 12 : presetId == 103 ? 0 : presetId == 104 ? 0 : presetId == 105 ? 7 : presetId == 106 ? 7 : presetId == 107 ? -1 : presetId == 108 ? -1 : i_sessStart
+int sessEnd = presetId == 1 ? 7 : presetId == 2 ? 20 : presetId == 3 ? 20 : presetId == 4 ? 20 : presetId == 5 ? -1 : presetId == 6 ? -1 : presetId == 101 ? -1 : presetId == 102 ? 20 : presetId == 103 ? 7 : presetId == 104 ? 7 : presetId == 105 ? 20 : presetId == 106 ? 20 : presetId == 107 ? -1 : presetId == 108 ? -1 : i_sessEnd
+int atrLen = presetId == 1 ? 14 : presetId == 2 ? 14 : presetId == 3 ? 14 : presetId == 4 ? 14 : presetId == 5 ? 14 : presetId == 6 ? 14 : presetId == 101 ? 14 : presetId == 102 ? 14 : presetId == 103 ? 14 : presetId == 104 ? 14 : presetId == 105 ? 14 : presetId == 106 ? 14 : presetId == 107 ? 14 : presetId == 108 ? 14 : i_atrLen
+int warmup = presetId == 1 ? 300 : presetId == 2 ? 300 : presetId == 3 ? 300 : presetId == 4 ? 300 : presetId == 5 ? 300 : presetId == 6 ? 300 : presetId == 101 ? 300 : presetId == 102 ? 300 : presetId == 103 ? 300 : presetId == 104 ? 300 : presetId == 105 ? 300 : presetId == 106 ? 300 : presetId == 107 ? 300 : presetId == 108 ? 300 : i_warmup
 string presetSymbol = presetId == 1 ? "XAUUSD" : presetId == 2 ? "XAUUSD" : presetId == 3 ? "XAUUSD" : presetId == 4 ? "XAGUSD" : presetId == 5 ? "XAGUSD" : presetId == 6 ? "XAGUSD" : ""
 string presetMetal = presetId == 1 ? "XAU" : presetId == 2 ? "XAU" : presetId == 3 ? "XAU" : presetId == 4 ? "XAG" : presetId == 5 ? "XAG" : presetId == 6 ? "XAG" : ""
 string presetTf = presetId == 1 ? "30m" : presetId == 2 ? "2h" : presetId == 3 ? "1h" : presetId == 4 ? "2h" : presetId == 5 ? "2h" : presetId == 6 ? "30m" : ""
@@ -142,6 +152,7 @@ bool lsUsePd = str.contains(lsSource, "PDH")
 bool lsUsePw = str.contains(lsSource, "PWH")
 bool sdInvalClose = sdInval == "Close beyond"
 bool sdTouchOnly = sdConfirm == "Touch"
+
 
 // ═════════════════════════════════════════════════════════════════════════════
 //  Building blocks
@@ -693,17 +704,19 @@ plotshape(goShort, "Short signal", style = shape.triangledown, location = locati
 plot(i_showLevels and inTrade ? liveStop : na, "Stop", color = color.new(color.red, 0), style = plot.style_linebr, linewidth = 1)
 plot(i_showLevels and inTrade ? liveTarget : na, "Target", color = color.new(color.green, 0), style = plot.style_linebr, linewidth = 1)
 
-// A preset is only meaningful on the symbol and timeframe it was tested on.
-string tickerUpper = str.upper(syminfo.ticker)
-bool presetTfOk = presetTfSec == 0 or timeframe.in_seconds() == presetTfSec
-bool presetSymOk = presetMetal == "" or str.contains(tickerUpper, presetMetal) or str.contains(tickerUpper, presetMetal == "XAU" ? "GOLD" : "SILVER")
+// A named preset is only meaningful on the symbol and timeframe it was tested on.
+// Auto carries its own note (passed checks, unoptimized, or the wrong symbol).
+bool presetTfOk = wantAuto or presetTfSec == 0 or timeframe.in_seconds() == presetTfSec
+bool presetSymOk = wantAuto or presetMetal == "" or str.contains(tickerUpper, presetMetal) or str.contains(tickerUpper, presetMetal == "XAU" ? "GOLD" : "SILVER")
 var table presetWarning = table.new(position.bottom_center, 1, 1)
-if barstate.islast and not (presetTfOk and presetSymOk)
+if barstate.islast and autoNote != ""
+    table.cell(presetWarning, 0, 0, autoNote, text_color = color.white, bgcolor = autoNoteColor, text_size = size.small)
+else if barstate.islast and not (presetTfOk and presetSymOk)
     table.cell(presetWarning, 0, 0, "Preset \"" + i_preset + "\" was tested on " + presetSymbol + " " + presetTf + " only", text_color = color.white, bgcolor = color.new(color.red, 20), text_size = size.small)
 
 // Results table: the same figures as the Strategy Tester, plus the result in R and the tested span.
 var int firstBarTime = time
-var table results = table.new(position.bottom_right, 2, 8, bgcolor = color.new(color.black, 75), border_width = 1, border_color = color.new(color.gray, 60))
+var table results = table.new(position.bottom_right, 2, 9, bgcolor = color.new(color.black, 15), border_width = 1, border_color = color.new(color.gray, 60))
 f_result(int row, string name, string value, color valueColor) =>
     table.cell(results, 0, row, name, text_color = color.new(color.white, 20), text_size = size.small, text_halign = text.align_left)
     table.cell(results, 1, row, value, text_color = valueColor, text_size = size.small, text_halign = text.align_right)
@@ -711,12 +724,14 @@ f_result(int row, string name, string value, color valueColor) =>
 if i_showResults and barstate.islast
     color C_TXT = color.new(color.white, 0)
     int closed = strategy.closedtrades
-    f_result(0, "GSMS Strategy", i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_TXT)
+    f_result(0, "GSMS Strategy", wantAuto ? autoLabel : i_preset == PRESET_CUSTOM ? "Custom" : i_preset, C_TXT)
     f_result(1, "Tested from", str.format_time(firstBarTime, "yyyy-MM-dd", "UTC") + "  (" + str.tostring(bar_index + 1) + " bars)", C_TXT)
     f_result(2, "Closed trades", str.tostring(closed), C_TXT)
-    f_result(3, "Win rate", closed > 0 ? str.tostring(100.0 * strategy.wintrades / closed, "#.0") + "%" : "-", C_TXT)
-    f_result(4, "Profit factor", strategy.grossloss > 0 ? str.tostring(strategy.grossprofit / strategy.grossloss, "#.00") : "-", C_TXT)
-    f_result(5, "Net profit", str.tostring(strategy.netprofit, "#.00"), strategy.netprofit >= 0 ? color.lime : color.red)
-    f_result(6, "Net result in R", str.tostring(strategy.netprofit / i_riskCash, "#.0") + " R", strategy.netprofit >= 0 ? color.lime : color.red)
-    f_result(7, "Max drawdown", str.tostring(strategy.max_drawdown, "#.00"), C_TXT)
+    f_result(3, "Win rate", closed > 0 ? str.tostring(100.0 * strategy.wintrades / closed, "0.0") + "%" : "-", C_TXT)
+    f_result(4, "Profit factor", strategy.grossloss > 0 ? str.tostring(strategy.grossprofit / strategy.grossloss, "0.00") : "-", C_TXT)
+    f_result(5, "Net profit", str.tostring(strategy.netprofit, "0.00"), strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(6, "Net result in R", str.tostring(strategy.netprofit / i_riskCash, "0.0") + " R", strategy.netprofit >= 0 ? color.lime : color.red)
+    f_result(7, "Max drawdown", str.tostring(strategy.max_drawdown, "0.00"), C_TXT)
+    // The script cannot read or change the commission; this row says what the research used.
+    f_result(8, "Commission to set", isSilver ? "0.08 % (Properties tab)" : "0.0175 % (default)", isSilver ? color.orange : C_TXT)
 
