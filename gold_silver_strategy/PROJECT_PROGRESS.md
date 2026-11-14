@@ -74,7 +74,7 @@ Out of sample (2022-01-01 to 2026-11-07), selected settings, costs included:
 | 1h | 144 | 18.1% | 0.81 | −24.2 | 49.0 | −0.48 to +0.16 |
 | 2h | 94 | 27.7% | 0.70 | −21.4 | 37.5 | −0.49 to +0.06 |
 | 4h | 166 | 35.5% | 1.01 | +1.1 | 28.7 | −0.21 to +0.23 |
-| 1m | 1555 | 31.1% | 0.28 | −1439.8 | 1444.4 | unoptimized, original defaults |
+| 1m | 1555 | 31.1% | 0.28 | −1439.8 | 1444.4 | −1.00 to −0.85 (unoptimized) |
 | 1D | 68 | 19.1% | 0.92 | −4.5 | 12.9 | −0.50 to +0.43 |
 
 No timeframe met win rate above 60% and profit factor above 1.3 with an out-of-sample
