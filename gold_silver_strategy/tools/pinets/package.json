@@ -1,0 +1,9 @@
+{
+  "name": "gsms-pinets-parity",
+  "private": true,
+  "type": "module",
+  "description": "Runs the generated GSMS Pine scripts in PineTS (an open-source Pine Script runtime) so their trades can be compared with the Python engine. Development tool only; nothing here is needed to use the indicator.",
+  "dependencies": {
+    "pinets": "0.13.1"
+  }
+}
